@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Theme or Main Idea of the Story</title>
+  <style>
+    :root {
+      --orange: #f7b267;
+      --light-orange: #fff1df;
+      --dark-orange: #d97932;
+      --brown: #4b2e1f;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--light-orange);
+      color: var(--brown);
+    }
+
+    .slideshow {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6vw;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(70px) scale(0.98);
+      transition:
+        opacity 0.7s ease,
+        transform 0.7s ease,
+        visibility 0.7s ease;
+      background: var(--light-orange);
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0) scale(1);
+      z-index: 2;
+    }
+
+    .slide.previous {
+      transform: translateX(-70px) scale(0.98);
+    }
+
+    .content {
+      width: min(1000px, 92vw);
+      text-align: center;
+      animation: contentIn 0.8s ease both;
+    }
+
+    .slide-number {
+      position: absolute;
+      top: 28px;
+      left: 34px;
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: var(--dark-orange);
+      font-weight: bold;
+    }
+
+    .eyebrow {
+      margin-bottom: 20px;
+      color: var(--dark-orange);
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      font-size: clamp(12px, 1.4vw, 18px);
+      font-weight: bold;
+    }
+
+    h1 {
+      font-size: clamp(42px, 8vw, 105px);
+      line-height: 0.98;
+      margin-bottom: 28px;
+      color: var(--brown);
+    }
+
+    h2 {
+      font-size: clamp(34px, 5vw, 70px);
+      line-height: 1.05;
+      margin-bottom: 24px;
+      color: var(--brown);
+    }
+
+    p {
+      max-width: 850px;
+      margin: 0 auto;
+      font-size: clamp(18px, 2.3vw, 30px);
+      line-height: 1.5;
+    }
+
+    .subtitle {
+      font-size: clamp(20px, 2.8vw, 34px);
+      color: var(--dark-orange);
+      font-weight: bold;
+    }
+
+    .decorative-shape {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .shape-one {
+      width: 300px;
+      height: 300px;
+      right: -90px;
+      top: -80px;
+      background: var(--orange);
+    }
+
+    .shape-two {
+      width: 220px;
+      height: 220px;
+      left: -80px;
+      bottom: -60px;
+      background: #f6d19b;
+    }
+
+    .shape-three {
+      width: 100px;
+      height: 100px;
+      right: 15%;
+      bottom: 12%;
+      background: var(--orange);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 35px;
+    }
+
+    .card {
+      padding: 28px 20px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 2px solid rgba(217, 121, 50, 0.25);
+      box-shadow: 0 12px 30px rgba(75, 46, 31, 0.08);
+    }
+
+    .card strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 24px;
+      color: var(--dark-orange);
+    }
+
+    .card span {
+      font-size: 18px;
+      line-height: 1.4;
+    }
+
+    .quote {
+      margin: 35px auto 0;
+      max-width: 800px;
+      padding: 28px;
+      border-left: 7px solid var(--orange);
+      background: rgba(255, 255, 255, 0.55);
+      font-size: clamp(22px, 3vw, 38px);
+      font-style: italic;
+      line-height: 1.35;
+    }
+
+    .timeline {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 35px;
+      flex-wrap: wrap;
+    }
+
+    .timeline span {
+      padding: 13px 20px;
+      border-radius: 999px;
+      background: var(--orange);
+      color: var(--brown);
+      font-weight: bold;
+    }
+
+    .controls {
+      position: fixed;
+      z-index: 10;
+      bottom: 26px;
+      left: 50%;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transform: translateX(-50%);
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: var(--brown);
+      color: var(--white);
+      font-size: 15px;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      background: var(--dark-orange);
+    }
+
+    .dots {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 0 8px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      padding: 0;
+      border-radius: 50%;
+      background: rgba(75, 46, 31, 0.28);
+    }
+
+    .dot.active {
+      width: 28px;
+      border-radius: 999px;
+      background: var(--dark-orange);
+    }
+
+    .progress {
+      position: fixed;
+      z-index: 10;
+      top: 0;
+      left: 0;
+      height: 5px;
+      width: 0%;
+      background: var(--dark-orange);
+      transition: width 0.3s ease;
+    }
+
+    @keyframes contentIn {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .slide {
+        padding: 50px 24px 100px;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .card {
+        padding: 18px;
+      }
+
+      .controls {
+        bottom: 14px;
+      }
+
+      button {
+        padding: 10px 13px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slideshow">
+    <div class="progress" id="progress"></div>
+<section class="slide active">
+  <span class="slide-number">01 / 07</span>
+  <div class="decorative-shape shape-one"></div>
+  <div class="decorative-shape shape-two"></div>
+
+  <div class="content">
+    <div class="eyebrow">Presentation</div>
+    <h1>The Theme or Main Idea of the Story</h1>
+    <p class="subtitle">Understanding what a story is really about</p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="slide-number">02 / 07</span>
+  <div class="decorative-shape shape-three"></div>
+
+  <div class="content">
+    <div class="eyebrow">What Is a Theme?</div>
+    <h2>The theme is the message behind the story.</h2>
+    <p>
+      It is the lesson, idea, or belief that the author wants readers
+      to understand after reading.
+    </p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="slide-number">03 / 07</span>
+  <div class="decorative-shape shape-one"></div>
+
+  <div class="content">
+    <div class="eyebrow">Main Idea</div>
+    <h2>What is the story mostly about?</h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <strong>Characters</strong>
+        <span>Who is involved in the story?</span>
+      </div>
+
+      <div class="card">
+        <strong>Events</strong>
+        <span>What important things happen?</span>
+      </div>
+
+      <div class="card">
+        <strong>Message</strong>
+        <span>What can we learn from it?</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="slide-number">04 / 07</span>
+  <div class="decorative-shape shape-two"></div>
+
+  <div class="content">
+    <div class="eyebrow">Finding the Theme</div>
+    <h2>Look for repeated ideas.</h2>
+
+    <div class="timeline">
+      <span>Problems</span>
+      <span>Choices</span>
+      <span>Consequences</span>
+      <span>Changes</span>
+    </div>
+
+    <p class="quote">
+      Ask yourself: “What does the character learn by the end?”
+    </p>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="slide-number">05 / 07</span>
+  <div class="decorative-shape shape-three"></div>
+
+  <div class="content">
+    <div class="eyebrow">Example Themes</div>
+    <h2>Common messages in stories</h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <strong>Friendship</strong>
+        <span>Good friends support each other.</span>
+      </div>
+
+      <div class="card">
+        <strong>Courage</strong>
+        <span>Being brave means facing difficulties.</span>
+      </div>
+
+      <div class="card">
+        <strong>Honesty</strong>
+        <span>Truthfulness builds trust.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="slide-number">06 / 07</span>
+  <div class="decorative-shape shape-one"></div>
+  <div class="decorative-shape shape-two"></div>
+
+  <div class="content">
+    <div class="eyebrow">Think About It</div>
+    <h2>Ask these questions while reading.</h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <strong>1</strong>
+        <span>What problem does the character face?</span>
+      </div>
+
+      <div class="card">
+        <strong>2</strong>
+        <span>How does the character respond?</span>
+      </div>
+
+      <div class="card">
+        <strong>3</strong>
+        <span>What lesson does the story teach?</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <span class="slide-number">07 / 07</span>
+  <div class="decorative-shape shape-three"></div>
+
+  <div class="content">
+    <div class="eyebrow">Final Thought</div>
+    <h2>Stories entertain us, but they also teach us.</h2>
+    <p>
+      When you identify the theme, you understand the deeper meaning
+      of the story.
+    </p>
+
+    <div class="quote">
+      Every story has something important to say.
+    </div>
+  </div>
+</section>
+
+  </div>
+  <div class="controls">
+    <button id="previousButton" aria-label="Previous slide">← Previous</button>
+<div class="dots" id="dots"></div>
+
+<button id="nextButton" aria-label="Next slide">Next →</button>
+
+  </div>
+  <script>
+    const slides = document.querySelectorAll(".slide");
+    const dotsContainer = document.getElementById("dots");
+    const progress = document.getElementById("progress");
+    const previousButton = document.getElementById("previousButton");
+    const nextButton = document.getElementById("nextButton");
+
+    let currentSlide = 0;
+    let autoPlay;
+
+    slides.forEach((_, index) => {
+      const dot = document.createElement("button");
+      dot.className = "dot";
+      dot.setAttribute("aria-label", `Go to slide ${index + 1}`);
+
+      dot.addEventListener("click", () => {
+        showSlide(index);
+        restartAutoPlay();
+      });
+
+      dotsContainer.appendChild(dot);
+    });
+
+    const dots = document.querySelectorAll(".dot");
+
+    function showSlide(index) {
+      if (index < 0) {
+        index = slides.length - 1;
+      }
+
+      if (index >= slides.length) {
+        index = 0;
+      }
+
+      slides.forEach((slide, slideIndex) => {
+        slide.classList.remove("active", "previous");
+
+        if (slideIndex < index) {
+          slide.classList.add("previous");
+        }
+      });
+
+      slides[index].classList.add("active");
+
+      dots.forEach((dot, dotIndex) => {
+        dot.classList.toggle("active", dotIndex === index);
+      });
+
+      progress.style.width = `${((index + 1) / slides.length) * 100}%`;
+      currentSlide = index;
+    }
+
+    function nextSlide() {
+      showSlide(currentSlide + 1);
+    }
+
+    function previousSlide() {
+      showSlide(currentSlide - 1);
+    }
+
+    function startAutoPlay() {
+      autoPlay = setInterval(nextSlide, 7000);
+    }
+
+    function restartAutoPlay() {
+      clearInterval(autoPlay);
+      startAutoPlay();
+    }
+
+    nextButton.addEventListener("click", () => {
+      nextSlide();
+      restartAutoPlay();
+    });
+
+    previousButton.addEventListener("click", () => {
+      previousSlide();
+      restartAutoPlay();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === " ") {
+        event.preventDefault();
+        nextSlide();
+        restartAutoPlay();
+      }
+
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        previousSlide();
+        restartAutoPlay();
+      }
+    });
+
+    let touchStartX = 0;
+
+    document.addEventListener("touchstart", (event) => {
+      touchStartX = event.changedTouches[0].screenX;
+    });
+
+    document.addEventListener("touchend", (event) => {
+      const touchEndX = event.changedTouches[0].screenX;
+      const distance = touchStartX - touchEndX;
+
+      if (Math.abs(distance) > 50) {
+        if (distance > 0) {
+          nextSlide();
+        } else {
+          previousSlide();
+        }
+
+        restartAutoPlay();
+      }
+    });
+
+    showSlide(0);
+    startAutoPlay();
+  </script>
+</body>
+</html>
