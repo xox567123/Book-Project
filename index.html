@@ -17,7 +17,6 @@
       --white: #ffffff;
       --red: #a3142f;
       --dark-red: #26030a;
-      --wine: #4d0710;
       --blue: #11698e;
       --shadow: rgba(50, 23, 13, 0.18);
       --soft-shadow: rgba(255, 159, 67, 0.28);
@@ -27,10 +26,6 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
     }
 
     body {
@@ -98,7 +93,12 @@
       display: block;
       width: 260px;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255, 159, 67, 0.5), transparent);
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 159, 67, 0.5),
+        transparent
+      );
       transform: rotate(-35deg);
       animation: lineDrift 11s linear infinite;
     }
@@ -539,79 +539,6 @@
       line-height: 1.4;
     }
 
-    .controls {
-      position: fixed;
-      z-index: 20;
-      bottom: 22px;
-      left: 50%;
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      padding: 10px 12px;
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.54);
-      box-shadow: 0 14px 35px rgba(50, 23, 13, 0.16);
-      backdrop-filter: blur(20px);
-      transform: translateX(-50%);
-    }
-
-    button {
-      color: var(--white);
-      background: var(--brown);
-      transition:
-        transform 0.25s ease,
-        background 0.25s ease,
-        box-shadow 0.25s ease;
-    }
-
-    .controls button {
-      min-width: 116px;
-      padding: 12px 18px;
-      border-radius: 999px;
-      font-size: 14px;
-      font-weight: 800;
-    }
-
-    button:hover {
-      background: var(--dark-orange);
-      box-shadow: 0 8px 22px rgba(231, 111, 36, 0.28);
-      transform: translateY(-3px);
-    }
-
-    button:active {
-      transform: translateY(0) scale(0.96);
-    }
-
-    .dots {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 0 7px;
-    }
-
-    .dot {
-      width: 9px;
-      height: 9px;
-      padding: 0;
-      border-radius: 50%;
-      background: rgba(50, 23, 13, 0.24);
-      box-shadow: none;
-    }
-
-    .dot:hover {
-      background: var(--orange);
-      box-shadow: none;
-      transform: scale(1.2);
-    }
-
-    .dot.active {
-      width: 30px;
-      border-radius: 999px;
-      background: var(--dark-orange);
-      box-shadow: 0 0 15px rgba(231, 111, 36, 0.45);
-    }
-
     .progress {
       position: fixed;
       z-index: 30;
@@ -887,7 +814,9 @@
       }
 
       to {
-        box-shadow: 0 18px 48px var(--shadow), 0 0 26px rgba(255, 159, 67, 0.11);
+        box-shadow:
+          0 18px 48px var(--shadow),
+          0 0 26px rgba(255, 159, 67, 0.11);
       }
     }
 
@@ -980,7 +909,7 @@
       .slide {
         position: relative;
         min-height: 100vh;
-        padding: 65px 18px 120px;
+        padding: 65px 18px 80px;
       }
 
       .slide::before {
@@ -1018,32 +947,6 @@
         padding: 25px 22px 25px 30px;
       }
 
-      .controls {
-        bottom: 12px;
-        width: calc(100% - 22px);
-        justify-content: center;
-        gap: 7px;
-      }
-
-      .controls button {
-        min-width: 0;
-        padding: 11px 13px;
-        font-size: 12px;
-      }
-
-      .dots {
-        gap: 5px;
-      }
-
-      .dot {
-        width: 7px;
-        height: 7px;
-      }
-
-      .dot.active {
-        width: 22px;
-      }
-
       .slide-number {
         top: 20px;
         left: 22px;
@@ -1068,6 +971,7 @@
     <div class="start-content">
       <h1>Deep Water</h1>
       <p>A cinematic book presentation by Colton Reinhart</p>
+
       <button class="start-button" id="startButton">
         Begin Presentation
       </button>
@@ -1414,27 +1318,12 @@
     </section>
   </div>
 
-  <div class="controls">
-    <button id="previousButton" aria-label="Previous slide">
-      ← Previous
-    </button>
-
-    <div class="dots" id="dots"></div>
-
-    <button id="nextButton" aria-label="Next slide">
-      Next →
-    </button>
-  </div>
-
   <script>
     const startScreen = document.getElementById("startScreen");
     const startButton = document.getElementById("startButton");
 
     const slides = document.querySelectorAll(".slide");
-    const dotsContainer = document.getElementById("dots");
     const progress = document.getElementById("progress");
-    const previousButton = document.getElementById("previousButton");
-    const nextButton = document.getElementById("nextButton");
 
     const ratingStars = document.getElementById("ratingStars");
     const ratingNumber = document.getElementById("ratingNumber");
@@ -1452,24 +1341,6 @@
     });
 
     ratingNumber.textContent = rating;
-
-    slides.forEach((_, index) => {
-      const dot = document.createElement("button");
-
-      dot.className = "dot";
-      dot.setAttribute("aria-label", `Go to slide ${index + 1}`);
-
-      dot.addEventListener("click", () => {
-        if (!presentationStarted) return;
-
-        showSlide(index);
-        restartAutoPlay();
-      });
-
-      dotsContainer.appendChild(dot);
-    });
-
-    const dots = document.querySelectorAll(".dot");
 
     function showSlide(index) {
       if (index < 0) {
@@ -1490,11 +1361,8 @@
 
       slides[index].classList.add("active");
 
-      dots.forEach((dot, dotIndex) => {
-        dot.classList.toggle("active", dotIndex === index);
-      });
-
-      progress.style.width = `${((index + 1) / slides.length) * 100}%`;
+      progress.style.width =
+        `${((index + 1) / slides.length) * 100}%`;
 
       currentSlide = index;
     }
@@ -1532,20 +1400,6 @@
     }
 
     startButton.addEventListener("click", startPresentation);
-
-    nextButton.addEventListener("click", () => {
-      if (!presentationStarted) return;
-
-      nextSlide();
-      restartAutoPlay();
-    });
-
-    previousButton.addEventListener("click", () => {
-      if (!presentationStarted) return;
-
-      previousSlide();
-      restartAutoPlay();
-    });
 
     document.addEventListener("keydown", (event) => {
       if (event.key === "Enter" && !presentationStarted) {
