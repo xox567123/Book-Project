@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Deep Water</title>
+  <title>Book Presentation</title>
+
   <style>
     :root {
       --cream: #fff7ed;
@@ -12,6 +13,7 @@
       --dark-orange: #d66a2c;
       --brown: #432818;
       --white: #ffffff;
+      --gray: #806f63;
       --shadow: rgba(67, 40, 24, 0.14);
     }
 
@@ -40,8 +42,8 @@
       position: absolute;
       inset: 0;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       padding: 6vw;
       visibility: hidden;
       opacity: 0;
@@ -51,8 +53,16 @@
         transform 0.7s ease,
         visibility 0.7s ease;
       background:
-        radial-gradient(circle at 85% 12%, rgba(244, 162, 97, 0.35), transparent 24%),
-        radial-gradient(circle at 10% 90%, rgba(255, 216, 168, 0.7), transparent 28%),
+        radial-gradient(
+          circle at 85% 12%,
+          rgba(244, 162, 97, 0.35),
+          transparent 24%
+        ),
+        radial-gradient(
+          circle at 10% 90%,
+          rgba(255, 216, 168, 0.7),
+          transparent 28%
+        ),
         var(--cream);
     }
 
@@ -68,7 +78,9 @@
     }
 
     .content {
-      width: min(1050px, 92vw);
+      width: min(1100px, 94vw);
+      max-height: 88vh;
+      overflow-y: auto;
       text-align: center;
       animation: contentIn 0.8s ease both;
     }
@@ -106,10 +118,16 @@
       line-height: 1.05;
     }
 
+    h3 {
+      margin-bottom: 10px;
+      color: var(--dark-orange);
+      font-size: clamp(22px, 2.5vw, 32px);
+    }
+
     p {
       max-width: 850px;
       margin: 0 auto;
-      font-size: clamp(18px, 2.2vw, 29px);
+      font-size: clamp(18px, 2.2vw, 28px);
       line-height: 1.5;
     }
 
@@ -123,6 +141,10 @@
       color: var(--dark-orange);
     }
 
+    .editable {
+      color: var(--dark-orange);
+    }
+
     .card-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -130,12 +152,19 @@
       margin-top: 34px;
     }
 
+    .card-grid.two-columns {
+      grid-template-columns: repeat(2, 1fr);
+      max-width: 850px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
     .card {
       min-height: 170px;
       padding: 28px 22px;
       border: 2px solid rgba(214, 106, 44, 0.22);
       border-radius: 24px;
-      background: rgba(255, 255, 255, 0.78);
+      background: rgba(255, 255, 255, 0.82);
       box-shadow: 0 14px 34px var(--shadow);
     }
 
@@ -148,6 +177,7 @@
 
     .card span {
       display: block;
+      color: var(--brown);
       font-size: 18px;
       line-height: 1.45;
     }
@@ -163,11 +193,11 @@
     .character-role {
       display: block;
       margin-bottom: 12px;
-      color: var(--brown);
+      color: var(--gray);
       font-size: 16px;
       font-weight: bold;
-      text-transform: uppercase;
       letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
     .quote {
@@ -176,11 +206,11 @@
       padding: 26px 30px;
       border-left: 7px solid var(--orange);
       border-radius: 0 18px 18px 0;
-      background: rgba(255, 255, 255, 0.65);
+      background: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 10px 25px var(--shadow);
       font-size: clamp(22px, 3vw, 38px);
       font-style: italic;
       line-height: 1.35;
-      box-shadow: 0 10px 25px var(--shadow);
     }
 
     .timeline {
@@ -197,6 +227,81 @@
       background: var(--orange);
       color: var(--brown);
       font-weight: bold;
+    }
+
+    .story-map {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      max-width: 950px;
+      margin: 30px auto 0;
+    }
+
+    .story-step {
+      padding: 22px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: 0 12px 28px var(--shadow);
+      text-align: left;
+    }
+
+    .story-step span {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--orange);
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .story-step p {
+      font-size: 18px;
+    }
+
+    .review-box {
+      max-width: 850px;
+      margin: 30px auto 0;
+      padding: 34px;
+      border: 2px solid rgba(214, 106, 44, 0.22);
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: 0 14px 34px var(--shadow);
+    }
+
+    .stars {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 20px 0;
+      font-size: clamp(42px, 7vw, 76px);
+    }
+
+    .star {
+      color: #d9cfc8;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .star.filled {
+      color: #f5b700;
+      transform: scale(1.08);
+    }
+
+    .rating-number {
+      margin-bottom: 18px;
+      color: var(--dark-orange);
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .review-quote {
+      margin-top: 24px;
+      color: var(--brown);
+      font-size: clamp(20px, 2.5vw, 30px);
+      font-style: italic;
+      line-height: 1.4;
     }
 
     .controls {
@@ -286,7 +391,14 @@
         padding: 60px 24px 110px;
       }
 
-      .card-grid {
+      .content {
+        max-height: none;
+        overflow: visible;
+      }
+
+      .card-grid,
+      .card-grid.two-columns,
+      .story-map {
         grid-template-columns: 1fr;
         gap: 14px;
       }
@@ -307,210 +419,370 @@
     }
   </style>
 </head>
+
 <body>
   <div class="slideshow">
     <div class="progress" id="progress"></div>
-<section class="slide active">
-  <span class="slide-number">01 / 09</span>
 
-  <div class="content">
-    <div class="eyebrow">Book Presentation</div>
-    <h1>Deep Water</h1>
-    <p class="subtitle">Understanding what the story is really about</p>
-  </div>
-</section>
+    <!-- Slide 1: Book Title -->
+    <section class="slide active">
+      <span class="slide-number">01 / 15</span>
 
-<section class="slide">
-  <span class="slide-number">02 / 09</span>
+      <div class="content">
+        <div class="eyebrow">Book Presentation</div>
 
-  <div class="content">
-    <div class="eyebrow">Book Project by Colton Reinhart</div>
-    <h2>About the Book</h2>
-    <p>
-      <span class="highlight">Deep Water</span> was written by
-      <strong>Maren Stoffels</strong>.
-    </p>
-
-    <div class="quote">
-      The story follows young people trapped in a dangerous situation,
-      where fear, secrets, and difficult choices shape their lives.
-    </div>
-  </div>
-</section>
-
-<section class="slide">
-  <span class="slide-number">03 / 09</span>
-
-  <div class="content">
-    <div class="eyebrow">Main Idea</div>
-    <h2>What is the story mostly about?</h2>
-
-    <div class="card-grid">
-      <div class="card">
-        <strong>Characters</strong>
-        <span>Several young people are forced to deal with fear, danger, and one another.</span>
+        <!-- EDIT THESE TEXT FIELDS -->
+        <h1 class="editable">[BOOK TITLE]</h1>
+        <p class="subtitle editable">[SHORT SUBTITLE]</p>
       </div>
+    </section>
 
-      <div class="card">
-        <strong>Conflict</strong>
-        <span>The characters must survive a threatening situation while facing hidden secrets.</span>
+    <!-- Slide 2: Author Introduction -->
+    <section class="slide">
+      <span class="slide-number">02 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">Author Introduction</div>
+        <h2 class="editable">[AUTHOR NAME]</h2>
+
+        <div class="quote editable">
+          [Write a short introduction about the author.]
+        </div>
       </div>
+    </section>
 
-      <div class="card">
-        <strong>Message</strong>
-        <span>The story shows how people respond when they are pushed into extreme circumstances.</span>
+    <!-- Slide 3: Why I Read It -->
+    <section class="slide">
+      <span class="slide-number">03 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">My Reading Choice</div>
+        <h2 class="editable">Why I Read This Book</h2>
+
+        <div class="quote editable">
+          [Explain why you chose to read this book.]
+        </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<section class="slide">
-  <span class="slide-number">04 / 09</span>
+    <!-- Slide 4: Protagonist and Antagonist -->
+    <section class="slide">
+      <span class="slide-number">04 / 15</span>
 
-  <div class="content">
-    <div class="eyebrow">Main Characters</div>
-    <h2>Who is important in the story?</h2>
+      <div class="content">
+        <div class="eyebrow">Main Characters</div>
+        <h2>Protagonist and Antagonist</h2>
 
-    <div class="card-grid">
-      <div class="card character-card">
-        <strong>Vesper</strong>
-        <span class="character-role">Main character</span>
-        <span>
-          Vesper is one of the main characters. The book never directly tells us what he did, but throughout it slowly hints that what he did most of the time has been pretty bad.
-        </span>
+        <div class="card-grid two-columns">
+          <div class="card character-card">
+            <strong class="editable">[PROTAGONIST]</strong>
+            <span class="character-role editable">Protagonist</span>
+            <span class="editable">
+              [Describe the protagonist and their role in the story.]
+            </span>
+          </div>
+
+          <div class="card character-card">
+            <strong class="editable">[ANTAGONIST]</strong>
+            <span class="character-role editable">Antagonist</span>
+            <span class="editable">
+              [Describe the antagonist or main opposing force.]
+            </span>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="card character-card">
-        <strong>Gwen</strong>
-        <span class="character-role">Main character</span>
-        <span>
-         Gwen is one of the main characters. She is blind and claims to be innocent throughout the book while still keeping a lot about what she did secret.
-        </span>
+    <!-- Slide 5: Important Side Characters -->
+    <section class="slide">
+      <span class="slide-number">05 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">Supporting Cast</div>
+        <h2>Important Side Characters</h2>
+
+        <div class="card-grid">
+          <div class="card character-card">
+            <strong class="editable">[SIDE CHARACTER 1]</strong>
+            <span class="character-role editable">Side Character</span>
+            <span class="editable">
+              [Explain why this character is important.]
+            </span>
+          </div>
+
+          <div class="card character-card">
+            <strong class="editable">[SIDE CHARACTER 2]</strong>
+            <span class="character-role editable">Side Character</span>
+            <span class="editable">
+              [Explain why this character is important.]
+            </span>
+          </div>
+
+          <div class="card character-card">
+            <strong class="editable">[SIDE CHARACTER 3]</strong>
+            <span class="character-role editable">Side Character</span>
+            <span class="editable">
+              [Explain why this character is important.]
+            </span>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="card character-card">
-        <strong>Jonah</strong>
-        <span class="character-role">Main character</span>
-        <span>
-         Jonah is also one of the main characters. He seems to be the strongest and oldest person in the group, but while on the ship, he struggles with his roommate, Jumper.
-        </span>
+    <!-- Slide 6: Setting -->
+    <section class="slide">
+      <span class="slide-number">06 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">Where and When</div>
+        <h2>Setting</h2>
+
+        <div class="card-grid two-columns">
+          <div class="card">
+            <strong>Location</strong>
+            <span class="editable">[Where does the story take place?]</span>
+          </div>
+
+          <div class="card">
+            <strong>Time Period</strong>
+            <span class="editable">[When does the story take place?]</span>
+          </div>
+        </div>
+
+        <div class="quote editable">
+          [Explain how the setting affects the story.]
+        </div>
       </div>
-    </div>
+    </section>
+
+    <!-- Slide 7: Theme -->
+    <section class="slide">
+      <span class="slide-number">07 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">Big Idea</div>
+        <h2>Theme</h2>
+
+        <div class="timeline">
+          <span class="editable">[THEME 1]</span>
+          <span class="editable">[THEME 2]</span>
+          <span class="editable">[THEME 3]</span>
+          <span class="editable">[THEME 4]</span>
+        </div>
+
+        <div class="quote editable">
+          [Explain the main message or lesson of the book.]
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 8: Main Conflict -->
+    <section class="slide">
+      <span class="slide-number">08 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">Story Problem</div>
+        <h2>Main Conflict</h2>
+
+        <div class="quote editable">
+          [Describe the main problem or struggle in the story.]
+        </div>
+
+        <div class="card-grid two-columns">
+          <div class="card">
+            <strong>Internal Conflict</strong>
+            <span class="editable">
+              [What is a character struggling with inside?]
+            </span>
+          </div>
+
+          <div class="card">
+            <strong>External Conflict</strong>
+            <span class="editable">
+              [What outside force creates the main problem?]
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 9: Exposition -->
+    <section class="slide">
+      <span class="slide-number">09 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">Plot Structure</div>
+        <h2>Exposition</h2>
+
+        <div class="story-map">
+          <div class="story-step">
+            <span>Characters</span>
+            <p class="editable">[Who is introduced at the beginning?]</p>
+          </div>
+
+          <div class="story-step">
+            <span>Setting</span>
+            <p class="editable">[Where does the story begin?]</p>
+          </div>
+
+          <div class="story-step">
+            <span>Situation</span>
+            <p class="editable">[What is happening before the main conflict begins?]</p>
+          </div>
+
+          <div class="story-step">
+            <span>Important Information</span>
+            <p class="editable">[What does the reader need to know?]</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 10: Rising Action -->
+    <section class="slide">
+      <span class="slide-number">10 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">Plot Structure</div>
+        <h2>Rising Action</h2>
+
+        <div class="quote editable">
+          [Describe the events that increase the tension and move the story toward the climax.]
+        </div>
+
+        <div class="timeline">
+          <span class="editable">[Event 1]</span>
+          <span class="editable">[Event 2]</span>
+          <span class="editable">[Event 3]</span>
+          <span class="editable">[Event 4]</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 11: Climax -->
+    <section class="slide">
+      <span class="slide-number">11 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">Plot Structure</div>
+        <h2>Climax</h2>
+
+        <div class="quote editable">
+          [Describe the most intense or important moment in the story.]
+        </div>
+
+        <p class="editable" style="margin-top: 30px;">
+          [Explain why this moment changes the direction of the story.]
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 12: Falling Action -->
+    <section class="slide">
+      <span class="slide-number">12 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">Plot Structure</div>
+        <h2>Falling Action</h2>
+
+        <div class="quote editable">
+          [Describe what happens after the climax.]
+        </div>
+
+        <p class="editable" style="margin-top: 30px;">
+          [Explain how the characters and story begin to move toward the ending.]
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 13: Resolution -->
+    <section class="slide">
+      <span class="slide-number">13 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">Plot Structure</div>
+        <h2>Resolution</h2>
+
+        <div class="quote editable">
+          [Explain how the main conflict is resolved.]
+        </div>
+
+        <p class="editable" style="margin-top: 30px;">
+          [Describe what the characters learn or how their lives change.]
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 14: Final Thoughts -->
+    <section class="slide">
+      <span class="slide-number">14 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">Final Thoughts</div>
+        <h2 class="editable">[What I Learned]</h2>
+
+        <div class="quote editable">
+          [Write your final thought about the story.]
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 15: Book Review -->
+    <section class="slide">
+      <span class="slide-number">15 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">Final Rating</div>
+        <h2>Book Review</h2>
+
+        <div class="review-box">
+          <h3 class="editable">[BOOK TITLE]</h3>
+
+          <!--
+            Change data-rating to a number from 0 to 5.
+            Examples: 1, 2, 3, 4, or 5
+          -->
+          <div
+            class="stars"
+            id="ratingStars"
+            data-rating="0"
+            aria-label="Book rating"
+          >
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+          </div>
+
+          <div class="rating-number">
+            Rating: <span id="ratingNumber">0</span> / 5
+          </div>
+
+          <p class="editable">
+            [Write your book review here.]
+          </p>
+
+          <div class="review-quote editable">
+            “[Write a one-line quote about the book.]”
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
-</section>
 
-<section class="slide">
-  <span class="slide-number">05 / 09</span>
-
-  <div class="content">
-    <div class="eyebrow">Character Focus</div>
-    <h2>Vesper</h2>
-
-    <div class="quote">
-      Vesper is mysterious because the story does not directly explain
-      what he did to end up in No Exit.
-    </div>
-
-    <p style="margin-top: 30px;">
-      However, the details surrounding him suggest that his past is
-      serious. This makes the reader question whether Vesper can be trusted
-      and what he may be hiding.
-    </p>
-  </div>
-</section>
-
-<section class="slide">
-  <span class="slide-number">06 / 09</span>
-
-  <div class="content">
-    <div class="eyebrow">Character Focus</div>
-    <h2>Gwen</h2>
-
-    <div class="quote">
-      Gwen is a blind girl who is one of the only innocent girls on the
-      ship.
-    </div>
-
-    <p style="margin-top: 30px;">
-      Her innocence creates a contrast with the darker backgrounds and
-      secrets of the other characters. Gwen helps show how dangerous the
-      situation really is.
-    </p>
-  </div>
-</section>
-
-<section class="slide">
-  <span class="slide-number">07 / 09</span>
-
-  <div class="content">
-    <div class="eyebrow">Character Focus</div>
-    <h2>Jonah</h2>
-
-    <div class="quote">
-      Jonah is seen as one of the stronger characters in the group.
-    </div>
-
-    <p style="margin-top: 30px;">
-      Even though he appears strong, Jonah is still struggling with his
-      roommate, Jumper. This shows that strength does not mean a person is
-      free from stress or fear.
-    </p>
-  </div>
-</section>
-
-<section class="slide">
-  <span class="slide-number">08 / 09</span>
-
-  <div class="content">
-    <div class="eyebrow">Finding the Theme</div>
-    <h2>Look for repeated ideas.</h2>
-
-    <div class="timeline">
-      <span>Secrets</span>
-      <span>Fear</span>
-      <span>Choices</span>
-      <span>Trust</span>
-      <span>Consequences</span>
-    </div>
-
-    <div class="quote">
-      Ask yourself: “What do the characters reveal about themselves when
-      they are under pressure?”
-    </div>
-  </div>
-</section>
-
-<section class="slide">
-  <span class="slide-number">09 / 09</span>
-
-  <div class="content">
-    <div class="eyebrow">Final Thought</div>
-    <h2>Stories entertain us, but they also teach us.</h2>
-
-    <p>
-      In <span class="highlight">Deep Water</span>, the characters show
-      that people can have hidden pasts, personal struggles, and different
-      ideas of strength and innocence.
-    </p>
-
-    <div class="quote">
-      The deeper we look, the more we understand the characters.
-    </div>
-  </div>
-</section>
-
-  </div>
   <div class="controls">
     <button id="previousButton" aria-label="Previous slide">
       ← Previous
     </button>
-<div class="dots" id="dots"></div>
 
-<button id="nextButton" aria-label="Next slide">
-  Next →
-</button>
+    <div class="dots" id="dots"></div>
 
+    <button id="nextButton" aria-label="Next slide">
+      Next →
+    </button>
   </div>
+
   <script>
     const slides = document.querySelectorAll(".slide");
     const dotsContainer = document.getElementById("dots");
@@ -518,8 +790,24 @@
     const previousButton = document.getElementById("previousButton");
     const nextButton = document.getElementById("nextButton");
 
+    const ratingStars = document.getElementById("ratingStars");
+    const ratingNumber = document.getElementById("ratingNumber");
+    const stars = document.querySelectorAll(".star");
+
     let currentSlide = 0;
     let autoPlay;
+
+    /*
+      EDIT YOUR RATING HERE:
+      Change data-rating="0" to a number from 0 to 5.
+    */
+    const rating = Number(ratingStars.dataset.rating);
+
+    stars.forEach((star, index) => {
+      star.classList.toggle("filled", index < rating);
+    });
+
+    ratingNumber.textContent = rating;
 
     slides.forEach((_, index) => {
       const dot = document.createElement("button");
