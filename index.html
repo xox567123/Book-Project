@@ -380,10 +380,8 @@
 <body>
   <div class="slideshow">
     <div class="progress" id="progress"></div>
-<!-- Slide 1 -->
 <section class="slide active">
   <span class="slide-number">01 / 14</span>
-
   <div class="content">
     <div class="eyebrow">Book Presentation</div>
     <h1 class="editable">Deep Water</h1>
@@ -391,38 +389,28 @@
   </div>
 </section>
 
-<!-- Slide 2 -->
 <section class="slide">
   <span class="slide-number">02 / 14</span>
-
   <div class="content">
     <div class="eyebrow">Author Introduction</div>
     <h2 class="editable">Maren Stoffels</h2>
-
-    <div class="quote editable">
-      The author of Deep Water.
-    </div>
+    <div class="quote editable">The author of Deep Water.</div>
   </div>
 </section>
 
-<!-- Slide 3 -->
 <section class="slide">
   <span class="slide-number">03 / 14</span>
-
   <div class="content">
     <div class="eyebrow">My Reading Choice</div>
     <h2 class="editable">Why I Read This Book</h2>
-
     <div class="quote editable">
       I chose to read this book because it stood out among all of the other books, and I prefer horror, so after I read the back of the book, I decided to try it out.
     </div>
   </div>
 </section>
 
-<!-- Slide 4 -->
 <section class="slide">
   <span class="slide-number">04 / 14</span>
-
   <div class="content">
     <div class="eyebrow">Main Characters</div>
     <h2>Protagonist and Antagonist</h2>
@@ -447,10 +435,8 @@
   </div>
 </section>
 
-<!-- Slide 5 -->
 <section class="slide">
   <span class="slide-number">05 / 14</span>
-
   <div class="content">
     <div class="eyebrow">Supporting Cast</div>
     <h2>Important Side Characters</h2>
@@ -475,10 +461,8 @@
   </div>
 </section>
 
-<!-- Slide 6 -->
 <section class="slide">
   <span class="slide-number">06 / 14</span>
-
   <div class="content">
     <div class="eyebrow">Where and When</div>
     <h2>Setting</h2>
@@ -505,10 +489,8 @@
   </div>
 </section>
 
-<!-- Slide 7 -->
 <section class="slide">
   <span class="slide-number">07 / 14</span>
-
   <div class="content">
     <div class="eyebrow">Big Idea</div>
     <h2>Theme</h2>
@@ -524,10 +506,8 @@
   </div>
 </section>
 
-<!-- Slide 8 -->
 <section class="slide">
   <span class="slide-number">08 / 14</span>
-
   <div class="content">
     <div class="eyebrow">Story Problem</div>
     <h2>Main Conflict</h2>
@@ -554,10 +534,8 @@
   </div>
 </section>
 
-<!-- Slide 9 -->
 <section class="slide">
   <span class="slide-number">09 / 14</span>
-
   <div class="content">
     <div class="eyebrow">Plot Structure</div>
     <h2>Exposition</h2>
@@ -565,39 +543,29 @@
     <div class="story-map">
       <div class="story-step">
         <span>Characters</span>
-        <p class="editable">
-          Vesper is introduced at the very beginning of the story.
-        </p>
+        <p class="editable">Vesper is introduced at the very beginning of the story.</p>
       </div>
 
       <div class="story-step">
         <span>Setting</span>
-        <p class="editable">
-          The story begins on the cruise ship No Exit.
-        </p>
+        <p class="editable">The story begins on the cruise ship No Exit.</p>
       </div>
 
       <div class="story-step">
         <span>Situation</span>
-        <p class="editable">
-          The characters are enjoying the cruise ship.
-        </p>
+        <p class="editable">The characters are enjoying the cruise ship.</p>
       </div>
 
       <div class="story-step">
         <span>Important Information</span>
-        <p class="editable">
-          The reader needs to know that Gwen is blind.
-        </p>
+        <p class="editable">The reader needs to know that Gwen is blind.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Slide 10 -->
 <section class="slide">
   <span class="slide-number">10 / 14</span>
-
   <div class="content">
     <div class="eyebrow">Plot Structure</div>
     <h2>Rising Action</h2>
@@ -615,10 +583,8 @@
   </div>
 </section>
 
-<!-- Slide 11 -->
 <section class="slide">
   <span class="slide-number">11 / 14</span>
-
   <div class="content">
     <div class="eyebrow">Plot Structure</div>
     <h2>Climax</h2>
@@ -633,10 +599,8 @@
   </div>
 </section>
 
-<!-- Slide 12 -->
 <section class="slide">
   <span class="slide-number">12 / 14</span>
-
   <div class="content">
     <div class="eyebrow">Plot Structure</div>
     <h2>Falling Action</h2>
@@ -651,10 +615,8 @@
   </div>
 </section>
 
-<!-- Slide 13 -->
 <section class="slide">
   <span class="slide-number">13 / 14</span>
-
   <div class="content">
     <div class="eyebrow">Plot Structure</div>
     <h2>Resolution</h2>
@@ -669,10 +631,8 @@
   </div>
 </section>
 
-<!-- Slide 14 -->
 <section class="slide">
   <span class="slide-number">14 / 14</span>
-
   <div class="content">
     <div class="eyebrow">Final Thoughts</div>
     <h2 class="editable">What I Learned</h2>
@@ -696,158 +656,160 @@
 
   </div>
   <script>
-    const slides = document.querySelectorAll(".slide");
-    const dotsContainer = document.getElementById("dots");
-    const progress = document.getElementById("progress");
-    const previousButton = document.getElementById("previousButton");
-    const nextButton = document.getElementById("nextButton");
+    document.addEventListener("DOMContentLoaded", () => {
+      const slides = Array.from(document.querySelectorAll(".slide"));
+      const dotsContainer = document.getElementById("dots");
+      const progress = document.getElementById("progress");
+      const previousButton = document.getElementById("previousButton");
+      const nextButton = document.getElementById("nextButton");
 
-    let currentSlide = 0;
-    let autoPlay;
+      let currentSlide = 0;
+      let autoPlay;
 
-    slides.forEach((slide, index) => {
-      const dot = document.createElement("button");
+      function createDots() {
+        slides.forEach((slide, index) => {
+          const dot = document.createElement("button");
 
-      dot.type = "button";
-      dot.className = "dot";
-      dot.setAttribute("aria-label", `Go to slide ${index + 1}`);
+          dot.type = "button";
+          dot.className = "dot";
+          dot.setAttribute("aria-label", `Go to slide ${index + 1}`);
 
-      dot.addEventListener("click", () => {
-        showSlide(index);
-        restartAutoPlay();
-      });
+          dot.addEventListener("click", () => {
+            showSlide(index);
+            restartAutoPlay();
+          });
 
-      dotsContainer.appendChild(dot);
-    });
-
-    const dots = document.querySelectorAll(".dot");
-
-    function showSlide(index) {
-      if (index < 0) {
-        index = slides.length - 1;
+          dotsContainer.appendChild(dot);
+        });
       }
 
-      if (index >= slides.length) {
-        index = 0;
-      }
-
-      slides.forEach((slide, slideIndex) => {
-        slide.classList.remove("active", "previous");
-
-        if (slideIndex < index) {
-          slide.classList.add("previous");
+      function showSlide(index) {
+        if (index < 0) {
+          index = slides.length - 1;
         }
-      });
 
-      slides[index].classList.add("active");
+        if (index >= slides.length) {
+          index = 0;
+        }
 
-      dots.forEach((dot, dotIndex) => {
-        dot.classList.toggle("active", dotIndex === index);
-      });
+        slides.forEach((slide, slideIndex) => {
+          slide.classList.remove("active", "previous");
 
-      progress.style.width = `${((index + 1) / slides.length) * 100}%`;
-      currentSlide = index;
-    }
+          if (slideIndex < index) {
+            slide.classList.add("previous");
+          }
+        });
 
-    function nextSlide() {
-      showSlide(currentSlide + 1);
-    }
+        slides[index].classList.add("active");
 
-    function previousSlide() {
-      showSlide(currentSlide - 1);
-    }
+        document.querySelectorAll(".dot").forEach((dot, dotIndex) => {
+          dot.classList.toggle("active", dotIndex === index);
+        });
 
-    function startAutoPlay() {
-      clearInterval(autoPlay);
-      autoPlay = setInterval(() => {
-        nextSlide();
-      }, 15000);
-    }
-
-    function restartAutoPlay() {
-      startAutoPlay();
-    }
-
-    nextButton.addEventListener("click", () => {
-      nextSlide();
-      restartAutoPlay();
-    });
-
-    previousButton.addEventListener("click", () => {
-      previousSlide();
-      restartAutoPlay();
-    });
-
-    document.addEventListener("keydown", (event) => {
-      const isTyping =
-        event.target.tagName === "INPUT" ||
-        event.target.tagName === "TEXTAREA" ||
-        event.target.isContentEditable;
-
-      if (isTyping) {
-        return;
+        progress.style.width = `${((index + 1) / slides.length) * 100}%`;
+        currentSlide = index;
       }
 
-      if (event.key === "ArrowRight") {
-        event.preventDefault();
-        nextSlide();
-        restartAutoPlay();
+      function nextSlide() {
+        showSlide(currentSlide + 1);
       }
 
-      if (event.key === "ArrowLeft") {
-        event.preventDefault();
-        previousSlide();
-        restartAutoPlay();
+      function previousSlide() {
+        showSlide(currentSlide - 1);
       }
 
-      if (event.key === " " || event.key === "PageDown") {
-        event.preventDefault();
-        nextSlide();
-        restartAutoPlay();
-      }
+      function startAutoPlay() {
+        clearInterval(autoPlay);
 
-      if (event.key === "PageUp") {
-        event.preventDefault();
-        previousSlide();
-        restartAutoPlay();
-      }
-
-      if (event.key === "Home") {
-        event.preventDefault();
-        showSlide(0);
-        restartAutoPlay();
-      }
-
-      if (event.key === "End") {
-        event.preventDefault();
-        showSlide(slides.length - 1);
-        restartAutoPlay();
-      }
-    });
-
-    let touchStartX = 0;
-
-    document.addEventListener("touchstart", (event) => {
-      touchStartX = event.changedTouches[0].screenX;
-    });
-
-    document.addEventListener("touchend", (event) => {
-      const touchEndX = event.changedTouches[0].screenX;
-      const distance = touchStartX - touchEndX;
-
-      if (Math.abs(distance) > 50) {
-        if (distance > 0) {
+        autoPlay = setInterval(() => {
           nextSlide();
-        } else {
-          previousSlide();
-        }
-
-        restartAutoPlay();
+        }, 15000);
       }
-    });
 
-    showSlide(0);
-    startAutoPlay();
+      function restartAutoPlay() {
+        startAutoPlay();
+      }
+
+      nextButton.addEventListener("click", () => {
+        nextSlide();
+        restartAutoPlay();
+      });
+
+      previousButton.addEventListener("click", () => {
+        previousSlide();
+        restartAutoPlay();
+      });
+
+      /*
+        Capture the keyboard event before GitHub, buttons, or other elements
+        can interfere with it.
+      */
+      document.addEventListener(
+        "keydown",
+        (event) => {
+          const key = event.key;
+
+          if (
+            key === "ArrowRight" ||
+            key === "ArrowLeft" ||
+            key === "PageDown" ||
+            key === "PageUp" ||
+            key === "Home" ||
+            key === "End" ||
+            key === " "
+          ) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+
+          if (key === "ArrowRight" || key === "PageDown" || key === " ") {
+            nextSlide();
+            restartAutoPlay();
+          }
+
+          if (key === "ArrowLeft" || key === "PageUp") {
+            previousSlide();
+            restartAutoPlay();
+          }
+
+          if (key === "Home") {
+            showSlide(0);
+            restartAutoPlay();
+          }
+
+          if (key === "End") {
+            showSlide(slides.length - 1);
+            restartAutoPlay();
+          }
+        },
+        true
+      );
+
+      let touchStartX = 0;
+
+      document.addEventListener("touchstart", (event) => {
+        touchStartX = event.changedTouches[0].screenX;
+      });
+
+      document.addEventListener("touchend", (event) => {
+        const touchEndX = event.changedTouches[0].screenX;
+        const distance = touchStartX - touchEndX;
+
+        if (Math.abs(distance) > 50) {
+          if (distance > 0) {
+            nextSlide();
+          } else {
+            previousSlide();
+          }
+
+          restartAutoPlay();
+        }
+      });
+
+      createDots();
+      showSlide(0);
+      startAutoPlay();
+    });
   </script>
 </body>
 </html>
