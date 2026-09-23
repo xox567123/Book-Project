@@ -20,1480 +20,1477 @@
       --shadow: rgba(50, 23, 13, 0.18);
       --soft-shadow: rgba(255, 159, 67, 0.28);
     }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  overflow: hidden;
+  color: var(--brown);
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255, 209, 102, 0.24), transparent 28%),
+    radial-gradient(circle at 85% 85%, rgba(17, 105, 142, 0.18), transparent 30%),
+    var(--cream);
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+.slideshow {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.slideshow::before,
+.slideshow::after {
+  position: absolute;
+  z-index: -1;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  content: "";
+  filter: blur(8px);
+  opacity: 0.38;
+  pointer-events: none;
+  animation: orbFloat 12s ease-in-out infinite alternate;
+}
+
+.slideshow::before {
+  top: -140px;
+  right: -100px;
+  background: radial-gradient(circle, rgba(255, 159, 67, 0.55), transparent 68%);
+}
+
+.slideshow::after {
+  bottom: -160px;
+  left: -120px;
+  background: radial-gradient(circle, rgba(17, 105, 142, 0.38), transparent 68%);
+  animation-delay: -4s;
+}
+
+.ambient-lines {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ambient-lines span {
+  position: absolute;
+  display: block;
+  width: 260px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 159, 67, 0.5),
+    transparent
+  );
+  transform: rotate(-35deg);
+  animation: lineDrift 11s linear infinite;
+}
+
+.ambient-lines span:nth-child(1) {
+  top: 18%;
+  left: -20%;
+  animation-delay: -2s;
+}
+
+.ambient-lines span:nth-child(2) {
+  top: 48%;
+  left: 65%;
+  animation-delay: -6s;
+}
+
+.ambient-lines span:nth-child(3) {
+  top: 78%;
+  left: 8%;
+  animation-delay: -9s;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6vw;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateX(90px) scale(0.94) rotateY(-4deg);
+  transform-origin: center;
+  transition:
+    opacity 0.75s ease,
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0.75s ease;
+  perspective: 1200px;
+  background:
+    radial-gradient(circle at 86% 12%, rgba(255, 159, 67, 0.28), transparent 23%),
+    radial-gradient(circle at 8% 92%, rgba(255, 209, 102, 0.26), transparent 25%);
+}
+
+.slide::before {
+  position: absolute;
+  inset: 5%;
+  border: 1px solid rgba(231, 111, 36, 0.1);
+  border-radius: 42px;
+  content: "";
+  pointer-events: none;
+}
+
+.slide.active {
+  z-index: 2;
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(0) scale(1) rotateY(0);
+}
+
+.slide.previous {
+  transform: translateX(-90px) scale(0.94) rotateY(4deg);
+}
+
+.slide.active .content {
+  animation: contentEnter 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  width: min(1120px, 94vw);
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: clamp(24px, 4vw, 56px);
+  text-align: center;
+  scrollbar-width: thin;
+  scrollbar-color: var(--orange) transparent;
+}
+
+.content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.content::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: var(--orange);
+}
+
+.slide-number {
+  position: absolute;
+  top: 32px;
+  left: 38px;
+  z-index: 3;
+  color: var(--dark-orange);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-shadow: 0 0 20px rgba(231, 111, 36, 0.2);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  color: var(--dark-orange);
+  font-size: clamp(12px, 1.4vw, 17px);
+  font-weight: 900;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+}
+
+.eyebrow::before,
+.eyebrow::after {
+  width: 34px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--orange));
+  content: "";
+}
+
+.eyebrow::after {
+  background: linear-gradient(90deg, var(--orange), transparent);
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+h1 {
+  margin-bottom: 22px;
+  color: var(--brown);
+  font-size: clamp(52px, 10vw, 132px);
+  font-weight: 950;
+  letter-spacing: -6px;
+  line-height: 0.88;
+  text-shadow:
+    0 8px 0 rgba(231, 111, 36, 0.08),
+    0 16px 35px rgba(50, 23, 13, 0.12);
+}
+
+h2 {
+  margin-bottom: 28px;
+  color: var(--brown);
+  font-size: clamp(38px, 5.6vw, 78px);
+  font-weight: 900;
+  letter-spacing: -3px;
+  line-height: 0.95;
+}
+
+h3 {
+  margin-bottom: 14px;
+  color: var(--dark-orange);
+  font-size: clamp(24px, 3vw, 38px);
+}
+
+p {
+  max-width: 900px;
+  margin: 0 auto;
+  font-size: clamp(18px, 2.1vw, 28px);
+  line-height: 1.55;
+}
+
+.editable {
+  color: var(--dark-orange);
+}
+
+.subtitle {
+  color: var(--dark-orange);
+  font-size: clamp(21px, 3vw, 36px);
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.slide-graphic {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.graphic-orbit {
+  top: 10%;
+  right: 8%;
+  width: 150px;
+  height: 150px;
+  border: 2px solid rgba(255, 159, 67, 0.32);
+  border-radius: 50%;
+  animation: graphicSpin 18s linear infinite;
+}
+
+.graphic-orbit::before,
+.graphic-orbit::after {
+  position: absolute;
+  border: 1px solid rgba(17, 105, 142, 0.3);
+  border-radius: 50%;
+  content: "";
+}
+
+.graphic-orbit::before {
+  inset: 20px -18px;
+  transform: rotate(55deg);
+}
+
+.graphic-orbit::after {
+  inset: -18px 20px;
+  transform: rotate(-55deg);
+}
+
+.graphic-wave {
+  right: 4%;
+  bottom: 10%;
+  width: 240px;
+  height: 90px;
+  overflow: hidden;
+}
+
+.graphic-wave::before,
+.graphic-wave::after {
+  position: absolute;
+  left: -15%;
+  width: 130%;
+  height: 70px;
+  border: 3px solid rgba(17, 105, 142, 0.3);
+  border-color: rgba(17, 105, 142, 0.3) transparent transparent;
+  border-radius: 50%;
+  content: "";
+  transform: rotate(-8deg);
+}
+
+.graphic-wave::before {
+  top: 22px;
+}
+
+.graphic-wave::after {
+  top: 44px;
+  left: 5%;
+  border-color: rgba(255, 159, 67, 0.34) transparent transparent;
+  transform: rotate(6deg);
+}
+
+.graphic-star {
+  top: 12%;
+  left: 8%;
+  width: 82px;
+  height: 82px;
+  background: var(--gold);
+  clip-path: polygon(
+    50% 0%,
+    61% 37%,
+    100% 50%,
+    61% 63%,
+    50% 100%,
+    39% 63%,
+    0% 50%,
+    39% 37%
+  );
+  opacity: 0.38;
+  animation: graphicPulse 4s ease-in-out infinite;
+}
+
+.graphic-dots {
+  right: 10%;
+  bottom: 12%;
+  display: grid;
+  grid-template-columns: repeat(4, 10px);
+  gap: 10px;
+}
+
+.graphic-dots span {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 14px rgba(255, 159, 67, 0.6);
+  animation: dotFloat 2.8s ease-in-out infinite alternate;
+}
+
+.graphic-dots span:nth-child(2) {
+  animation-delay: -0.4s;
+  background: var(--blue);
+}
+
+.graphic-dots span:nth-child(3) {
+  animation-delay: -0.8s;
+  background: var(--gold);
+}
+
+.graphic-dots span:nth-child(4) {
+  animation-delay: -1.2s;
+  background: var(--red);
+}
+
+.graphic-book {
+  bottom: 10%;
+  left: 8%;
+  width: 100px;
+  height: 72px;
+  border: 4px solid rgba(163, 20, 47, 0.42);
+  border-radius: 8px 12px 12px 8px;
+  transform: rotate(-12deg);
+  box-shadow: inset 45px 0 rgba(255, 209, 102, 0.2);
+}
+
+.graphic-book::before {
+  position: absolute;
+  top: 0;
+  left: 48%;
+  width: 4px;
+  height: 100%;
+  background: rgba(163, 20, 47, 0.42);
+  content: "";
+}
+
+.graphic-book::after {
+  position: absolute;
+  top: 17px;
+  left: 15px;
+  width: 20px;
+  height: 3px;
+  background: rgba(163, 20, 47, 0.3);
+  box-shadow: 0 13px rgba(163, 20, 47, 0.3);
+  content: "";
+}
+
+.graphic-lighthouse {
+  top: 10%;
+  right: 9%;
+  width: 52px;
+  height: 105px;
+  border: 4px solid rgba(17, 105, 142, 0.38);
+  border-top: none;
+  clip-path: polygon(28% 15%, 72% 15%, 100% 100%, 0% 100%);
+}
+
+.graphic-lighthouse::before {
+  position: absolute;
+  top: -17px;
+  left: 11px;
+  width: 22px;
+  height: 20px;
+  border: 3px solid rgba(255, 159, 67, 0.5);
+  border-radius: 6px 6px 0 0;
+  content: "";
+}
+
+.graphic-lighthouse::after {
+  position: absolute;
+  top: 1px;
+  left: 50%;
+  width: 145px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255, 159, 67, 0.65), transparent);
+  content: "";
+  transform: rotate(-17deg);
+  transform-origin: left center;
+}
+
+.graphic-compass {
+  right: 9%;
+  bottom: 9%;
+  width: 104px;
+  height: 104px;
+  border: 3px solid rgba(17, 105, 142, 0.35);
+  border-radius: 50%;
+  transform: rotate(20deg);
+}
+
+.graphic-compass::before,
+.graphic-compass::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 88px;
+  background: rgba(163, 20, 47, 0.42);
+  content: "";
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.graphic-compass::after {
+  background: rgba(17, 105, 142, 0.42);
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.graphic-wave-circle {
+  top: 11%;
+  left: 8%;
+  width: 112px;
+  height: 112px;
+  border: 12px double rgba(17, 105, 142, 0.28);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 13px rgba(255, 159, 67, 0.12),
+    0 0 0 25px rgba(255, 209, 102, 0.1);
+  animation: graphicSpin 20s linear infinite reverse;
+}
+
+.graphic-warning {
+  bottom: 10%;
+  left: 9%;
+  width: 0;
+  height: 0;
+  border-right: 52px solid transparent;
+  border-bottom: 92px solid rgba(163, 20, 47, 0.3);
+  border-left: 52px solid transparent;
+  filter: drop-shadow(0 8px 14px rgba(163, 20, 47, 0.16));
+  transform: rotate(8deg);
+}
+
+.graphic-warning::before {
+  position: absolute;
+  top: 30px;
+  left: -3px;
+  width: 6px;
+  height: 25px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.7);
+  content: "";
+}
+
+.graphic-warning::after {
+  position: absolute;
+  bottom: 23px;
+  left: -3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  content: "";
+}
+
+.graphic-lock {
+  top: 10%;
+  right: 9%;
+  width: 75px;
+  height: 62px;
+  border: 7px solid rgba(163, 20, 47, 0.3);
+  border-radius: 12px;
+}
+
+.graphic-lock::before {
+  position: absolute;
+  top: -48px;
+  left: 13px;
+  width: 35px;
+  height: 45px;
+  border: 7px solid rgba(163, 20, 47, 0.3);
+  border-bottom: 0;
+  border-radius: 25px 25px 0 0;
+  content: "";
+}
+
+.graphic-lock::after {
+  position: absolute;
+  top: 17px;
+  left: 28px;
+  width: 8px;
+  height: 22px;
+  border-radius: 5px;
+  background: rgba(255, 159, 67, 0.72);
+  content: "";
+}
+
+.graphic-spiral {
+  right: 8%;
+  bottom: 9%;
+  width: 110px;
+  height: 110px;
+  border: 4px solid rgba(255, 159, 67, 0.35);
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 12px transparent,
+    inset 0 0 0 16px rgba(17, 105, 142, 0.2),
+    inset 0 0 0 30px transparent,
+    inset 0 0 0 34px rgba(255, 159, 67, 0.22);
+  animation: graphicSpin 13s linear infinite;
+}
+
+.graphic-arrow {
+  top: 11%;
+  left: 8%;
+  width: 125px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(17, 105, 142, 0.38);
+  transform: rotate(-25deg);
+}
+
+.graphic-arrow::after {
+  position: absolute;
+  top: -9px;
+  right: -2px;
+  width: 22px;
+  height: 22px;
+  border-top: 4px solid rgba(17, 105, 142, 0.38);
+  border-right: 4px solid rgba(17, 105, 142, 0.38);
+  content: "";
+  transform: rotate(45deg);
+}
+
+.graphic-crown {
+  bottom: 10%;
+  left: 8%;
+  width: 105px;
+  height: 68px;
+  border: 5px solid rgba(255, 159, 67, 0.4);
+  border-top: 0;
+  clip-path: polygon(0 0, 25% 45%, 50% 5%, 75% 45%, 100% 0, 86% 100%, 14% 100%);
+  animation: graphicPulse 4s ease-in-out infinite;
+}
+
+.graphic-water {
+  top: 11%;
+  right: 8%;
+  width: 150px;
+  height: 82px;
+  border-radius: 50%;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 12px,
+      rgba(17, 105, 142, 0.25) 13px 16px
+    );
+  transform: rotate(-7deg);
+}
+
+.graphic-sun {
+  top: 10%;
+  left: 9%;
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--gold),
+    rgba(255, 159, 67, 0.18) 65%,
+    transparent 68%
+  );
+  animation: graphicPulse 4s ease-in-out infinite;
+}
+
+.graphic-rays {
+  right: 8%;
+  bottom: 10%;
+  width: 115px;
+  height: 115px;
+  border: 3px dashed rgba(255, 159, 67, 0.38);
+  border-radius: 50%;
+  animation: graphicSpin 16s linear infinite;
+}
+
+.graphic-rays::before,
+.graphic-rays::after {
+  position: absolute;
+  inset: 12px;
+  border: 3px solid rgba(17, 105, 142, 0.25);
+  border-radius: 50%;
+  content: "";
+}
+
+.graphic-rays::after {
+  inset: 34px;
+  background: var(--gold);
+  border: none;
+  opacity: 0.45;
+}
+
+.graphic-ticket {
+  bottom: 10%;
+  left: 8%;
+  width: 125px;
+  height: 65px;
+  border: 2px dashed rgba(163, 20, 47, 0.38);
+  border-radius: 10px;
+  transform: rotate(-8deg);
+}
+
+.graphic-ticket::before {
+  position: absolute;
+  top: 20px;
+  left: 18px;
+  width: 70px;
+  height: 4px;
+  background: rgba(163, 20, 47, 0.3);
+  box-shadow: 0 13px rgba(163, 20, 47, 0.22);
+  content: "";
+}
+
+.graphic-film {
+  top: 10%;
+  right: 8%;
+  width: 135px;
+  height: 72px;
+  border: 4px solid rgba(17, 105, 142, 0.32);
+  border-radius: 9px;
+  transform: rotate(8deg);
+}
+
+.graphic-film::before,
+.graphic-film::after {
+  position: absolute;
+  top: 12px;
+  width: 25px;
+  height: 40px;
+  border: 3px solid rgba(255, 159, 67, 0.45);
+  content: "";
+}
+
+.graphic-film::before {
+  left: 14px;
+}
+
+.graphic-film::after {
+  right: 14px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 36px;
+}
+
+.card-grid.two-columns {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 900px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.card,
+.review-box,
+.story-step {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.84), rgba(255, 247, 237, 0.55)),
+    var(--paper);
+  box-shadow:
+    0 18px 50px var(--shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.card {
+  min-height: 180px;
+  padding: 30px 24px;
+  border-radius: 28px;
+  text-align: left;
+  transform: translateY(0);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.card::before,
+.story-step::before,
+.review-box::before {
+  position: absolute;
+  top: -80px;
+  right: -50px;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 159, 67, 0.25), transparent 68%);
+  content: "";
+  transition: transform 0.5s ease;
+}
+
+.card:hover,
+.story-step:hover {
+  border-color: rgba(255, 159, 67, 0.72);
+  box-shadow:
+    0 22px 55px rgba(50, 23, 13, 0.2),
+    0 0 30px var(--soft-shadow);
+  transform: translateY(-10px) rotateX(2deg);
+}
+
+.card:hover::before,
+.story-step:hover::before {
+  transform: scale(1.4);
+}
+
+.card strong {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin-bottom: 12px;
+  color: var(--dark-orange);
+  font-size: 26px;
+}
+
+.card span {
+  position: relative;
+  z-index: 1;
+  display: block;
+  color: var(--brown);
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.character-card strong {
+  font-size: 31px;
+}
+
+.character-role {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--muted-brown) !important;
+  font-size: 14px !important;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.quote {
+  position: relative;
+  max-width: 900px;
+  margin: 36px auto 0;
+  padding: 30px 34px 30px 40px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-left: 7px solid var(--orange);
+  border-radius: 0 26px 26px 0;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 247, 237, 0.58));
+  box-shadow: 0 16px 42px var(--shadow);
+  font-size: clamp(21px, 3vw, 38px);
+  font-style: italic;
+  line-height: 1.38;
+  backdrop-filter: blur(15px);
+  animation: quoteGlow 4s ease-in-out infinite alternate;
+}
+
+.quote::before {
+  position: absolute;
+  top: -42px;
+  left: 16px;
+  color: rgba(255, 159, 67, 0.2);
+  content: "“";
+  font-family: Georgia, serif;
+  font-size: 150px;
+  line-height: 1;
+}
+
+.timeline {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 34px;
+}
+
+.timeline span {
+  position: relative;
+  overflow: hidden;
+  padding: 14px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--orange), #ffbd69);
+  color: var(--brown);
+  font-weight: 900;
+  box-shadow: 0 9px 22px rgba(231, 111, 36, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.timeline span::after {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 70%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  content: "";
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+}
+
+.timeline span:hover {
+  box-shadow: 0 14px 30px rgba(231, 111, 36, 0.32);
+  transform: translateY(-5px) scale(1.04);
+}
+
+.timeline span:hover::after {
+  left: 130%;
+}
+
+.story-map {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 980px;
+  margin: 34px auto 0;
+}
+
+.story-step {
+  padding: 24px;
+  border-radius: 24px;
+  text-align: left;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.story-step span {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--orange);
+  color: var(--brown);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.story-step p {
+  font-size: 18px;
+}
+
+.review-box {
+  max-width: 900px;
+  margin: 32px auto 0;
+  padding: 38px;
+  border-radius: 32px;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 20px 0;
+  font-size: clamp(44px, 7vw, 82px);
+  filter: drop-shadow(0 8px 16px rgba(245, 183, 0, 0.18));
+}
+
+.star {
+  display: inline-block;
+  color: rgba(121, 85, 72, 0.25);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.star.filled {
+  color: #f5b700;
+  animation: starPop 0.55s both;
+}
+
+.star:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.star:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+.star:nth-child(4) {
+  animation-delay: 0.24s;
+}
+
+.star:nth-child(5) {
+  animation-delay: 0.32s;
+}
+
+.rating-number {
+  margin-bottom: 18px;
+  color: var(--dark-orange);
+  font-size: 21px;
+  font-weight: 900;
+}
+
+.review-quote {
+  margin-top: 24px;
+  color: var(--brown);
+  font-size: clamp(20px, 2.5vw, 30px);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.progress {
+  position: fixed;
+  z-index: 30;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 5px;
+  background: linear-gradient(90deg, var(--blue), var(--orange), var(--red));
+  box-shadow: 0 0 16px rgba(231, 111, 36, 0.55);
+  transition: width 0.45s ease;
+}
+
+.presentation-timer {
+  position: fixed;
+  z-index: 90;
+  top: 18px;
+  right: 22px;
+  min-width: 92px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--brown);
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-align: center;
+  box-shadow:
+    0 8px 22px rgba(50, 23, 13, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition:
+    opacity 0.4s ease,
+    visibility 0.4s ease,
+    transform 0.4s ease,
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+.presentation-timer.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.presentation-timer.warning {
+  background: rgba(255, 209, 102, 0.92);
+  color: var(--brown);
+}
+
+.presentation-timer.finished {
+  background: var(--red);
+  color: var(--white);
+  animation: timerPulse 1s ease-in-out infinite;
+}
+
+.start-screen {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(163, 20, 47, 0.33), transparent 30%),
+    linear-gradient(135deg, #180108, #410510 50%, #170207);
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.start-screen::before,
+.start-screen::after {
+  position: absolute;
+  width: 550px;
+  height: 550px;
+  border: 1px solid rgba(255, 209, 102, 0.17);
+  border-radius: 50%;
+  content: "";
+  animation: ringPulse 7s ease-in-out infinite;
+}
+
+.start-screen::before {
+  transform: scale(0.7);
+}
+
+.start-screen::after {
+  transform: scale(1.1);
+  animation-delay: -2s;
+}
+
+.start-screen.hidden {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.start-content {
+  position: relative;
+  z-index: 5;
+  padding: 30px;
+  text-align: center;
+  color: var(--white);
+  transition: opacity 0.5s ease, transform 0.7s ease;
+}
+
+.start-content::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 260px;
+  height: 260px;
+  border: 1px solid rgba(255, 209, 102, 0.25);
+  border-radius: 50%;
+  content: "";
+  transform: translate(-50%, -50%);
+  animation: ringSpin 14s linear infinite;
+}
+
+.start-content h1 {
+  position: relative;
+  margin-bottom: 17px;
+  color: var(--white);
+  font-size: clamp(45px, 8vw, 100px);
+  letter-spacing: -4px;
+  text-shadow: 0 0 35px rgba(255, 159, 67, 0.28);
+  animation: titleFloat 4s ease-in-out infinite;
+}
+
+.start-content p {
+  position: relative;
+  margin-bottom: 30px;
+  color: #ffdada;
+  font-size: clamp(17px, 2.5vw, 28px);
+}
+
+.start-button {
+  position: relative;
+  z-index: 2;
+  padding: 17px 32px;
+  border: 1px solid rgba(255, 209, 102, 0.45);
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--red), #dd2948);
+  color: var(--white);
+  font-size: 19px;
+  font-weight: 900;
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(163, 20, 47, 0.4);
+}
+
+.start-button:hover {
+  background: linear-gradient(135deg, #d62045, #ff4663);
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.48),
+    0 0 42px rgba(255, 70, 99, 0.42);
+}
+
+.curtain {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  width: 51%;
+  height: 100%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #3d040c 0%,
+      #700914 8%,
+      #b71d35 16%,
+      #650711 25%,
+      #a3142f 33%,
+      #47040c 43%
+    );
+  box-shadow:
+    inset 0 0 70px rgba(0, 0, 0, 0.75),
+    inset 0 0 20px rgba(255, 136, 136, 0.16);
+  transition: transform 2.15s cubic-bezier(0.7, 0, 0.2, 1);
+}
+
+.curtain::before {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 8%,
+      rgba(255, 255, 255, 0.1) 10%,
+      transparent 13% 20%
+    );
+  content: "";
+  opacity: 0.6;
+}
+
+.curtain.left {
+  left: 0;
+  transform-origin: left center;
+}
+
+.curtain.right {
+  right: 0;
+  transform-origin: right center;
+}
+
+.start-screen.opening .curtain.left {
+  transform: translateX(-101%) skewY(1deg);
+}
+
+.start-screen.opening .curtain.right {
+  transform: translateX(101%) skewY(-1deg);
+}
+
+.start-screen.opening .start-content {
+  opacity: 0;
+  transform: scale(0.86);
+}
+
+.particles {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  bottom: -20px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 209, 102, 0.62);
+  box-shadow: 0 0 14px rgba(255, 209, 102, 0.8);
+  animation: particleRise linear infinite;
+}
+
+.particle:nth-child(1) {
+  left: 12%;
+  animation-duration: 9s;
+  animation-delay: -2s;
+}
+
+.particle:nth-child(2) {
+  left: 28%;
+  animation-duration: 12s;
+  animation-delay: -7s;
+}
+
+.particle:nth-child(3) {
+  left: 45%;
+  animation-duration: 10s;
+  animation-delay: -4s;
+}
+
+.particle:nth-child(4) {
+  left: 67%;
+  animation-duration: 13s;
+  animation-delay: -9s;
+}
+
+.particle:nth-child(5) {
+  left: 84%;
+  animation-duration: 8s;
+  animation-delay: -1s;
+}
+
+@keyframes contentEnter {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes orbFloat {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  to {
+    transform: translate3d(-50px, 35px, 0) scale(1.12);
+  }
+}
+
+@keyframes lineDrift {
+  from {
+    opacity: 0;
+    transform: translateX(-20vw) rotate(-35deg);
+  }
+
+  25% {
+    opacity: 0.8;
+  }
+
+  75% {
+    opacity: 0.8;
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(120vw) rotate(-35deg);
+  }
+}
+
+@keyframes quoteGlow {
+  from {
+    box-shadow: 0 16px 42px var(--shadow);
+  }
+
+  to {
+    box-shadow:
+      0 18px 48px var(--shadow),
+      0 0 26px rgba(255, 159, 67, 0.11);
+  }
+}
+
+@keyframes starPop {
+  0% {
+    transform: scale(0.3) rotate(-25deg);
+    opacity: 0;
+  }
+
+  70% {
+    transform: scale(1.22) rotate(8deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.05) rotate(0);
+  }
+}
+
+@keyframes titleFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes ringPulse {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.9);
+  }
+
+  50% {
+    opacity: 0.55;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes ringSpin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes particleRise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  85% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-110vh) translateX(70px) scale(1.4);
+  }
+}
+
+@keyframes graphicSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes graphicPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.32;
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 0.62;
+  }
+}
+
+@keyframes dotFloat {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes timerPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 8px 22px rgba(50, 23, 13, 0.18);
+  }
+
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 24px rgba(163, 20, 47, 0.55);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 760px) {
+  body {
+    overflow: auto;
+  }
+
+  .slideshow {
+    min-height: 100vh;
+    height: auto;
+  }
+
+  .slide {
+    position: relative;
+    min-height: 100vh;
+    padding: 65px 18px 80px;
+  }
+
+  .slide::before {
+    inset: 3%;
+    border-radius: 25px;
+  }
+
+  .content {
+    max-height: none;
+    overflow: visible;
+    padding: 28px 12px;
+  }
+
+  h1 {
+    letter-spacing: -3px;
+  }
+
+  h2 {
+    letter-spacing: -2px;
+  }
+
+  .card-grid,
+  .card-grid.two-columns,
+  .story-map {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .card {
+    min-height: auto;
+    padding: 24px 20px;
+  }
+
+  .quote {
+    padding: 25px 22px 25px 30px;
+  }
+
+  .slide-number {
+    top: 20px;
+    left: 22px;
+  }
+
+  .slide-graphic {
+    transform: scale(0.7);
+  }
+
+  .presentation-timer {
+    top: 12px;
+    right: 14px;
+    min-width: 82px;
+    padding: 7px 10px;
+    font-size: 16px;
+  }
+}
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      min-height: 100vh;
-      overflow: hidden;
-      color: var(--brown);
-      font-family: Inter, Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(circle at 20% 10%, rgba(255, 209, 102, 0.24), transparent 28%),
-        radial-gradient(circle at 85% 85%, rgba(17, 105, 142, 0.18), transparent 30%),
-        var(--cream);
-    }
-
-    button {
-      border: none;
-      cursor: pointer;
-      font: inherit;
-    }
-
-    .slideshow {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-      isolation: isolate;
-    }
-
-    .slideshow::before,
-    .slideshow::after {
-      position: absolute;
-      z-index: -1;
-      width: 420px;
-      height: 420px;
-      border-radius: 50%;
-      content: "";
-      filter: blur(8px);
-      opacity: 0.38;
-      pointer-events: none;
-      animation: orbFloat 12s ease-in-out infinite alternate;
-    }
-
-    .slideshow::before {
-      top: -140px;
-      right: -100px;
-      background: radial-gradient(circle, rgba(255, 159, 67, 0.55), transparent 68%);
-    }
-
-    .slideshow::after {
-      bottom: -160px;
-      left: -120px;
-      background: radial-gradient(circle, rgba(17, 105, 142, 0.38), transparent 68%);
-      animation-delay: -4s;
-    }
-
-    .ambient-lines {
-      position: fixed;
-      z-index: -1;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-    }
-
-    .ambient-lines span {
-      position: absolute;
-      display: block;
-      width: 260px;
-      height: 1px;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 159, 67, 0.5),
-        transparent
-      );
-      transform: rotate(-35deg);
-      animation: lineDrift 11s linear infinite;
-    }
-
-    .ambient-lines span:nth-child(1) {
-      top: 18%;
-      left: -20%;
-      animation-delay: -2s;
-    }
-
-    .ambient-lines span:nth-child(2) {
-      top: 48%;
-      left: 65%;
-      animation-delay: -6s;
-    }
-
-    .ambient-lines span:nth-child(3) {
-      top: 78%;
-      left: 8%;
-      animation-delay: -9s;
-    }
-
-    .slide {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 6vw;
-      visibility: hidden;
-      opacity: 0;
-      transform: translateX(90px) scale(0.94) rotateY(-4deg);
-      transform-origin: center;
-      transition:
-        opacity 0.75s ease,
-        transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-        visibility 0.75s ease;
-      perspective: 1200px;
-      background:
-        radial-gradient(circle at 86% 12%, rgba(255, 159, 67, 0.28), transparent 23%),
-        radial-gradient(circle at 8% 92%, rgba(255, 209, 102, 0.26), transparent 25%);
-    }
-
-    .slide::before {
-      position: absolute;
-      inset: 5%;
-      border: 1px solid rgba(231, 111, 36, 0.1);
-      border-radius: 42px;
-      content: "";
-      pointer-events: none;
-    }
-
-    .slide.active {
-      z-index: 2;
-      visibility: visible;
-      opacity: 1;
-      transform: translateX(0) scale(1) rotateY(0);
-    }
-
-    .slide.previous {
-      transform: translateX(-90px) scale(0.94) rotateY(4deg);
-    }
-
-    .slide.active .content {
-      animation: contentEnter 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-
-    .content {
-      position: relative;
-      z-index: 1;
-      width: min(1120px, 94vw);
-      max-height: 88vh;
-      overflow-y: auto;
-      padding: clamp(24px, 4vw, 56px);
-      text-align: center;
-      scrollbar-width: thin;
-      scrollbar-color: var(--orange) transparent;
-    }
-
-    .content::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .content::-webkit-scrollbar-thumb {
-      border-radius: 999px;
-      background: var(--orange);
-    }
-
-    .slide-number {
-      position: absolute;
-      top: 32px;
-      left: 38px;
-      z-index: 3;
-      color: var(--dark-orange);
-      font-size: 13px;
-      font-weight: 900;
-      letter-spacing: 3px;
-      text-shadow: 0 0 20px rgba(231, 111, 36, 0.2);
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-      color: var(--dark-orange);
-      font-size: clamp(12px, 1.4vw, 17px);
-      font-weight: 900;
-      letter-spacing: 5px;
-      text-transform: uppercase;
-    }
-
-    .eyebrow::before,
-    .eyebrow::after {
-      width: 34px;
-      height: 2px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, transparent, var(--orange));
-      content: "";
-    }
-
-    .eyebrow::after {
-      background: linear-gradient(90deg, var(--orange), transparent);
-    }
-
-    h1,
-    h2,
-    h3 {
-      text-wrap: balance;
-    }
-
-    h1 {
-      margin-bottom: 22px;
-      color: var(--brown);
-      font-size: clamp(52px, 10vw, 132px);
-      font-weight: 950;
-      letter-spacing: -6px;
-      line-height: 0.88;
-      text-shadow:
-        0 8px 0 rgba(231, 111, 36, 0.08),
-        0 16px 35px rgba(50, 23, 13, 0.12);
-    }
-
-    h2 {
-      margin-bottom: 28px;
-      color: var(--brown);
-      font-size: clamp(38px, 5.6vw, 78px);
-      font-weight: 900;
-      letter-spacing: -3px;
-      line-height: 0.95;
-    }
-
-    h3 {
-      margin-bottom: 14px;
-      color: var(--dark-orange);
-      font-size: clamp(24px, 3vw, 38px);
-    }
-
-    p {
-      max-width: 900px;
-      margin: 0 auto;
-      font-size: clamp(18px, 2.1vw, 28px);
-      line-height: 1.55;
-    }
-
-    .editable {
-      color: var(--dark-orange);
-    }
-
-    .subtitle {
-      color: var(--dark-orange);
-      font-size: clamp(21px, 3vw, 36px);
-      font-weight: 900;
-      letter-spacing: 1px;
-    }
-
-    .slide-graphic {
-      position: absolute;
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.7;
-    }
-
-    .graphic-orbit {
-      top: 10%;
-      right: 8%;
-      width: 150px;
-      height: 150px;
-      border: 2px solid rgba(255, 159, 67, 0.32);
-      border-radius: 50%;
-      animation: graphicSpin 18s linear infinite;
-    }
-
-    .graphic-orbit::before,
-    .graphic-orbit::after {
-      position: absolute;
-      border: 1px solid rgba(17, 105, 142, 0.3);
-      border-radius: 50%;
-      content: "";
-    }
-
-    .graphic-orbit::before {
-      inset: 20px -18px;
-      transform: rotate(55deg);
-    }
-
-    .graphic-orbit::after {
-      inset: -18px 20px;
-      transform: rotate(-55deg);
-    }
-
-    .graphic-wave {
-      right: 4%;
-      bottom: 10%;
-      width: 240px;
-      height: 90px;
-      overflow: hidden;
-    }
-
-    .graphic-wave::before,
-    .graphic-wave::after {
-      position: absolute;
-      left: -15%;
-      width: 130%;
-      height: 70px;
-      border: 3px solid rgba(17, 105, 142, 0.3);
-      border-color: rgba(17, 105, 142, 0.3) transparent transparent;
-      border-radius: 50%;
-      content: "";
-      transform: rotate(-8deg);
-    }
-
-    .graphic-wave::before {
-      top: 22px;
-    }
-
-    .graphic-wave::after {
-      top: 44px;
-      left: 5%;
-      border-color: rgba(255, 159, 67, 0.34) transparent transparent;
-      transform: rotate(6deg);
-    }
-
-    .graphic-star {
-      top: 12%;
-      left: 8%;
-      width: 82px;
-      height: 82px;
-      background: var(--gold);
-      clip-path: polygon(
-        50% 0%,
-        61% 37%,
-        100% 50%,
-        61% 63%,
-        50% 100%,
-        39% 63%,
-        0% 50%,
-        39% 37%
-      );
-      opacity: 0.38;
-      animation: graphicPulse 4s ease-in-out infinite;
-    }
-
-    .graphic-dots {
-      right: 10%;
-      bottom: 12%;
-      display: grid;
-      grid-template-columns: repeat(4, 10px);
-      gap: 10px;
-    }
-
-    .graphic-dots span {
-      display: block;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--orange);
-      box-shadow: 0 0 14px rgba(255, 159, 67, 0.6);
-      animation: dotFloat 2.8s ease-in-out infinite alternate;
-    }
-
-    .graphic-dots span:nth-child(2) {
-      animation-delay: -0.4s;
-      background: var(--blue);
-    }
-
-    .graphic-dots span:nth-child(3) {
-      animation-delay: -0.8s;
-      background: var(--gold);
-    }
-
-    .graphic-dots span:nth-child(4) {
-      animation-delay: -1.2s;
-      background: var(--red);
-    }
-
-    .graphic-book {
-      bottom: 10%;
-      left: 8%;
-      width: 100px;
-      height: 72px;
-      border: 4px solid rgba(163, 20, 47, 0.42);
-      border-radius: 8px 12px 12px 8px;
-      transform: rotate(-12deg);
-      box-shadow: inset 45px 0 rgba(255, 209, 102, 0.2);
-    }
-
-    .graphic-book::before {
-      position: absolute;
-      top: 0;
-      left: 48%;
-      width: 4px;
-      height: 100%;
-      background: rgba(163, 20, 47, 0.42);
-      content: "";
-    }
-
-    .graphic-book::after {
-      position: absolute;
-      top: 17px;
-      left: 15px;
-      width: 20px;
-      height: 3px;
-      background: rgba(163, 20, 47, 0.3);
-      box-shadow: 0 13px rgba(163, 20, 47, 0.3);
-      content: "";
-    }
-
-    .graphic-lighthouse {
-      top: 10%;
-      right: 9%;
-      width: 52px;
-      height: 105px;
-      border: 4px solid rgba(17, 105, 142, 0.38);
-      border-top: none;
-      clip-path: polygon(28% 15%, 72% 15%, 100% 100%, 0% 100%);
-    }
-
-    .graphic-lighthouse::before {
-      position: absolute;
-      top: -17px;
-      left: 11px;
-      width: 22px;
-      height: 20px;
-      border: 3px solid rgba(255, 159, 67, 0.5);
-      border-radius: 6px 6px 0 0;
-      content: "";
-    }
-
-    .graphic-lighthouse::after {
-      position: absolute;
-      top: 1px;
-      left: 50%;
-      width: 145px;
-      height: 2px;
-      background: linear-gradient(90deg, rgba(255, 159, 67, 0.65), transparent);
-      content: "";
-      transform: rotate(-17deg);
-      transform-origin: left center;
-    }
-
-    .graphic-compass {
-      right: 9%;
-      bottom: 9%;
-      width: 104px;
-      height: 104px;
-      border: 3px solid rgba(17, 105, 142, 0.35);
-      border-radius: 50%;
-      transform: rotate(20deg);
-    }
-
-    .graphic-compass::before,
-    .graphic-compass::after {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 4px;
-      height: 88px;
-      background: rgba(163, 20, 47, 0.42);
-      content: "";
-      transform: translate(-50%, -50%) rotate(45deg);
-    }
-
-    .graphic-compass::after {
-      background: rgba(17, 105, 142, 0.42);
-      transform: translate(-50%, -50%) rotate(-45deg);
-    }
-
-    .graphic-wave-circle {
-      top: 11%;
-      left: 8%;
-      width: 112px;
-      height: 112px;
-      border: 12px double rgba(17, 105, 142, 0.28);
-      border-radius: 50%;
-      box-shadow:
-        0 0 0 13px rgba(255, 159, 67, 0.12),
-        0 0 0 25px rgba(255, 209, 102, 0.1);
-      animation: graphicSpin 20s linear infinite reverse;
-    }
-
-    .graphic-warning {
-      bottom: 10%;
-      left: 9%;
-      width: 0;
-      height: 0;
-      border-right: 52px solid transparent;
-      border-bottom: 92px solid rgba(163, 20, 47, 0.3);
-      border-left: 52px solid transparent;
-      filter: drop-shadow(0 8px 14px rgba(163, 20, 47, 0.16));
-      transform: rotate(8deg);
-    }
-
-    .graphic-warning::before {
-      position: absolute;
-      top: 30px;
-      left: -3px;
-      width: 6px;
-      height: 25px;
-      border-radius: 5px;
-      background: rgba(255, 255, 255, 0.7);
-      content: "";
-    }
-
-    .graphic-warning::after {
-      position: absolute;
-      bottom: 23px;
-      left: -3px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.7);
-      content: "";
-    }
-
-    .graphic-lock {
-      top: 10%;
-      right: 9%;
-      width: 75px;
-      height: 62px;
-      border: 7px solid rgba(163, 20, 47, 0.3);
-      border-radius: 12px;
-    }
-
-    .graphic-lock::before {
-      position: absolute;
-      top: -48px;
-      left: 13px;
-      width: 35px;
-      height: 45px;
-      border: 7px solid rgba(163, 20, 47, 0.3);
-      border-bottom: 0;
-      border-radius: 25px 25px 0 0;
-      content: "";
-    }
-
-    .graphic-lock::after {
-      position: absolute;
-      top: 17px;
-      left: 28px;
-      width: 8px;
-      height: 22px;
-      border-radius: 5px;
-      background: rgba(255, 159, 67, 0.72);
-      content: "";
-    }
-
-    .graphic-spiral {
-      right: 8%;
-      bottom: 9%;
-      width: 110px;
-      height: 110px;
-      border: 4px solid rgba(255, 159, 67, 0.35);
-      border-radius: 50%;
-      box-shadow:
-        inset 0 0 0 12px transparent,
-        inset 0 0 0 16px rgba(17, 105, 142, 0.2),
-        inset 0 0 0 30px transparent,
-        inset 0 0 0 34px rgba(255, 159, 67, 0.22);
-      animation: graphicSpin 13s linear infinite;
-    }
-
-    .graphic-arrow {
-      top: 11%;
-      left: 8%;
-      width: 125px;
-      height: 4px;
-      border-radius: 999px;
-      background: rgba(17, 105, 142, 0.38);
-      transform: rotate(-25deg);
-    }
-
-    .graphic-arrow::after {
-      position: absolute;
-      top: -9px;
-      right: -2px;
-      width: 22px;
-      height: 22px;
-      border-top: 4px solid rgba(17, 105, 142, 0.38);
-      border-right: 4px solid rgba(17, 105, 142, 0.38);
-      content: "";
-      transform: rotate(45deg);
-    }
-
-    .graphic-crown {
-      bottom: 10%;
-      left: 8%;
-      width: 105px;
-      height: 68px;
-      border: 5px solid rgba(255, 159, 67, 0.4);
-      border-top: 0;
-      clip-path: polygon(0 0, 25% 45%, 50% 5%, 75% 45%, 100% 0, 86% 100%, 14% 100%);
-      animation: graphicPulse 4s ease-in-out infinite;
-    }
-
-    .graphic-water {
-      top: 11%;
-      right: 8%;
-      width: 150px;
-      height: 82px;
-      border-radius: 50%;
-      background:
-        repeating-linear-gradient(
-          0deg,
-          transparent 0 12px,
-          rgba(17, 105, 142, 0.25) 13px 16px
-        );
-      transform: rotate(-7deg);
-    }
-
-    .graphic-sun {
-      top: 10%;
-      left: 9%;
-      width: 82px;
-      height: 82px;
-      border-radius: 50%;
-      background: radial-gradient(circle, var(--gold), rgba(255, 159, 67, 0.18) 65%, transparent 68%);
-      animation: graphicPulse 4s ease-in-out infinite;
-    }
-
-    .graphic-rays {
-      right: 8%;
-      bottom: 10%;
-      width: 115px;
-      height: 115px;
-      border: 3px dashed rgba(255, 159, 67, 0.38);
-      border-radius: 50%;
-      animation: graphicSpin 16s linear infinite;
-    }
-
-    .graphic-rays::before,
-    .graphic-rays::after {
-      position: absolute;
-      inset: 12px;
-      border: 3px solid rgba(17, 105, 142, 0.25);
-      border-radius: 50%;
-      content: "";
-    }
-
-    .graphic-rays::after {
-      inset: 34px;
-      background: var(--gold);
-      border: none;
-      opacity: 0.45;
-    }
-
-    .graphic-ticket {
-      bottom: 10%;
-      left: 8%;
-      width: 125px;
-      height: 65px;
-      border: 2px dashed rgba(163, 20, 47, 0.38);
-      border-radius: 10px;
-      transform: rotate(-8deg);
-    }
-
-    .graphic-ticket::before {
-      position: absolute;
-      top: 20px;
-      left: 18px;
-      width: 70px;
-      height: 4px;
-      background: rgba(163, 20, 47, 0.3);
-      box-shadow: 0 13px rgba(163, 20, 47, 0.22);
-      content: "";
-    }
-
-    .graphic-film {
-      top: 10%;
-      right: 8%;
-      width: 135px;
-      height: 72px;
-      border: 4px solid rgba(17, 105, 142, 0.32);
-      border-radius: 9px;
-      transform: rotate(8deg);
-    }
-
-    .graphic-film::before,
-    .graphic-film::after {
-      position: absolute;
-      top: 12px;
-      width: 25px;
-      height: 40px;
-      border: 3px solid rgba(255, 159, 67, 0.45);
-      content: "";
-    }
-
-    .graphic-film::before {
-      left: 14px;
-    }
-
-    .graphic-film::after {
-      right: 14px;
-    }
-
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-      margin-top: 36px;
-    }
-
-    .card-grid.two-columns {
-      grid-template-columns: repeat(2, 1fr);
-      max-width: 900px;
-      margin-right: auto;
-      margin-left: auto;
-    }
-
-    .card,
-    .review-box,
-    .story-step {
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.78);
-      background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.84), rgba(255, 247, 237, 0.55)),
-        var(--paper);
-      box-shadow:
-        0 18px 50px var(--shadow),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-    }
-
-    .card {
-      min-height: 180px;
-      padding: 30px 24px;
-      border-radius: 28px;
-      text-align: left;
-      transform: translateY(0);
-      transition:
-        transform 0.35s ease,
-        box-shadow 0.35s ease,
-        border-color 0.35s ease;
-    }
-
-    .card::before,
-    .story-step::before,
-    .review-box::before {
-      position: absolute;
-      top: -80px;
-      right: -50px;
-      width: 170px;
-      height: 170px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 159, 67, 0.25), transparent 68%);
-      content: "";
-      transition: transform 0.5s ease;
-    }
-
-    .card:hover,
-    .story-step:hover {
-      border-color: rgba(255, 159, 67, 0.72);
-      box-shadow:
-        0 22px 55px rgba(50, 23, 13, 0.2),
-        0 0 30px var(--soft-shadow);
-      transform: translateY(-10px) rotateX(2deg);
-    }
-
-    .card:hover::before,
-    .story-step:hover::before {
-      transform: scale(1.4);
-    }
-
-    .card strong {
-      position: relative;
-      z-index: 1;
-      display: block;
-      margin-bottom: 12px;
-      color: var(--dark-orange);
-      font-size: 26px;
-    }
-
-    .card span {
-      position: relative;
-      z-index: 1;
-      display: block;
-      color: var(--brown);
-      font-size: 18px;
-      line-height: 1.55;
-    }
-
-    .character-card strong {
-      font-size: 31px;
-    }
-
-    .character-role {
-      display: block;
-      margin-bottom: 12px;
-      color: var(--muted-brown) !important;
-      font-size: 14px !important;
-      font-weight: 900;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    .quote {
-      position: relative;
-      max-width: 900px;
-      margin: 36px auto 0;
-      padding: 30px 34px 30px 40px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      border-left: 7px solid var(--orange);
-      border-radius: 0 26px 26px 0;
-      background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 247, 237, 0.58));
-      box-shadow: 0 16px 42px var(--shadow);
-      font-size: clamp(21px, 3vw, 38px);
-      font-style: italic;
-      line-height: 1.38;
-      backdrop-filter: blur(15px);
-      animation: quoteGlow 4s ease-in-out infinite alternate;
-    }
-
-    .quote::before {
-      position: absolute;
-      top: -42px;
-      left: 16px;
-      color: rgba(255, 159, 67, 0.2);
-      content: "“";
-      font-family: Georgia, serif;
-      font-size: 150px;
-      line-height: 1;
-    }
-
-    .timeline {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 14px;
-      margin-top: 34px;
-    }
-
-    .timeline span {
-      position: relative;
-      overflow: hidden;
-      padding: 14px 22px;
-      border: 1px solid rgba(255, 255, 255, 0.65);
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--orange), #ffbd69);
-      color: var(--brown);
-      font-weight: 900;
-      box-shadow: 0 9px 22px rgba(231, 111, 36, 0.2);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .timeline span::after {
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 70%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-      content: "";
-      transform: skewX(-20deg);
-      transition: left 0.6s ease;
-    }
-
-    .timeline span:hover {
-      box-shadow: 0 14px 30px rgba(231, 111, 36, 0.32);
-      transform: translateY(-5px) scale(1.04);
-    }
-
-    .timeline span:hover::after {
-      left: 130%;
-    }
-
-    .story-map {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      max-width: 980px;
-      margin: 34px auto 0;
-    }
-
-    .story-step {
-      padding: 24px;
-      border-radius: 24px;
-      text-align: left;
-      transition: transform 0.35s ease, box-shadow 0.35s ease;
-    }
-
-    .story-step span {
-      display: inline-block;
-      margin-bottom: 12px;
-      padding: 7px 14px;
-      border-radius: 999px;
-      background: var(--orange);
-      color: var(--brown);
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .story-step p {
-      font-size: 18px;
-    }
-
-    .review-box {
-      max-width: 900px;
-      margin: 32px auto 0;
-      padding: 38px;
-      border-radius: 32px;
-    }
-
-    .stars {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin: 20px 0;
-      font-size: clamp(44px, 7vw, 82px);
-      filter: drop-shadow(0 8px 16px rgba(245, 183, 0, 0.18));
-    }
-
-    .star {
-      display: inline-block;
-      color: rgba(121, 85, 72, 0.25);
-      transition: color 0.3s ease, transform 0.3s ease;
-    }
-
-    .star.filled {
-      color: #f5b700;
-      animation: starPop 0.55s both;
-    }
-
-    .star:nth-child(2) {
-      animation-delay: 0.08s;
-    }
-
-    .star:nth-child(3) {
-      animation-delay: 0.16s;
-    }
-
-    .star:nth-child(4) {
-      animation-delay: 0.24s;
-    }
-
-    .star:nth-child(5) {
-      animation-delay: 0.32s;
-    }
-
-    .rating-number {
-      margin-bottom: 18px;
-      color: var(--dark-orange);
-      font-size: 21px;
-      font-weight: 900;
-    }
-
-    .review-quote {
-      margin-top: 24px;
-      color: var(--brown);
-      font-size: clamp(20px, 2.5vw, 30px);
-      font-style: italic;
-      line-height: 1.4;
-    }
-
-    .progress {
-      position: fixed;
-      z-index: 30;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 5px;
-      background: linear-gradient(90deg, var(--blue), var(--orange), var(--red));
-      box-shadow: 0 0 16px rgba(231, 111, 36, 0.55);
-      transition: width 0.45s ease;
-    }
-
-    /* Five-minute presentation timer */
-
-    .presentation-timer {
-      position: fixed;
-      z-index: 90;
-      top: 18px;
-      right: 22px;
-      min-width: 92px;
-      padding: 8px 12px;
-      border: 1px solid rgba(255, 255, 255, 0.65);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.72);
-      color: var(--brown);
-      font-size: 18px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      text-align: center;
-      box-shadow:
-        0 8px 22px rgba(50, 23, 13, 0.18),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-8px);
-      transition:
-        opacity 0.4s ease,
-        visibility 0.4s ease,
-        transform 0.4s ease,
-        background 0.3s ease,
-        color 0.3s ease;
-    }
-
-    .presentation-timer.visible {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-
-    .presentation-timer.warning {
-      background: rgba(255, 209, 102, 0.92);
-      color: var(--brown);
-    }
-
-    .presentation-timer.finished {
-      background: var(--red);
-      color: var(--white);
-      animation: timerPulse 1s ease-in-out infinite;
-    }
-
-    /* Start screen */
-
-    .start-screen {
-      position: fixed;
-      z-index: 100;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at 50% 48%, rgba(163, 20, 47, 0.33), transparent 30%),
-        linear-gradient(135deg, #180108, #410510 50%, #170207);
-      transition: opacity 0.8s ease, visibility 0.8s ease;
-    }
-
-    .start-screen::before,
-    .start-screen::after {
-      position: absolute;
-      width: 550px;
-      height: 550px;
-      border: 1px solid rgba(255, 209, 102, 0.17);
-      border-radius: 50%;
-      content: "";
-      animation: ringPulse 7s ease-in-out infinite;
-    }
-
-    .start-screen::before {
-      transform: scale(0.7);
-    }
-
-    .start-screen::after {
-      transform: scale(1.1);
-      animation-delay: -2s;
-    }
-
-    .start-screen.hidden {
-      visibility: hidden;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .start-content {
-      position: relative;
-      z-index: 5;
-      padding: 30px;
-      text-align: center;
-      color: var(--white);
-      transition: opacity 0.5s ease, transform 0.7s ease;
-    }
-
-    .start-content::before {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 260px;
-      height: 260px;
-      border: 1px solid rgba(255, 209, 102, 0.25);
-      border-radius: 50%;
-      content: "";
-      transform: translate(-50%, -50%);
-      animation: ringSpin 14s linear infinite;
-    }
-
-    .start-content h1 {
-      position: relative;
-      margin-bottom: 17px;
-      color: var(--white);
-      font-size: clamp(45px, 8vw, 100px);
-      letter-spacing: -4px;
-      text-shadow: 0 0 35px rgba(255, 159, 67, 0.28);
-      animation: titleFloat 4s ease-in-out infinite;
-    }
-
-    .start-content p {
-      position: relative;
-      margin-bottom: 30px;
-      color: #ffdada;
-      font-size: clamp(17px, 2.5vw, 28px);
-    }
-
-    .start-button {
-      position: relative;
-      z-index: 2;
-      padding: 17px 32px;
-      border: 1px solid rgba(255, 209, 102, 0.45);
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--red), #dd2948);
-      color: var(--white);
-      font-size: 19px;
-      font-weight: 900;
-      box-shadow:
-        0 12px 30px rgba(0, 0, 0, 0.4),
-        0 0 30px rgba(163, 20, 47, 0.4);
-    }
-
-    .start-button:hover {
-      background: linear-gradient(135deg, #d62045, #ff4663);
-      box-shadow:
-        0 15px 35px rgba(0, 0, 0, 0.48),
-        0 0 42px rgba(255, 70, 99, 0.42);
-    }
-
-    /* Curtains */
-
-    .curtain {
-      position: absolute;
-      z-index: 3;
-      top: 0;
-      width: 51%;
-      height: 100%;
-      background:
-        repeating-linear-gradient(
-          90deg,
-          #3d040c 0%,
-          #700914 8%,
-          #b71d35 16%,
-          #650711 25%,
-          #a3142f 33%,
-          #47040c 43%
-        );
-      box-shadow:
-        inset 0 0 70px rgba(0, 0, 0, 0.75),
-        inset 0 0 20px rgba(255, 136, 136, 0.16);
-      transition: transform 2.15s cubic-bezier(0.7, 0, 0.2, 1);
-    }
-
-    .curtain::before {
-      position: absolute;
-      inset: 0;
-      background:
-        repeating-linear-gradient(
-          90deg,
-          transparent 0 8%,
-          rgba(255, 255, 255, 0.1) 10%,
-          transparent 13% 20%
-        );
-      content: "";
-      opacity: 0.6;
-    }
-
-    .curtain.left {
-      left: 0;
-      transform-origin: left center;
-    }
-
-    .curtain.right {
-      right: 0;
-      transform-origin: right center;
-    }
-
-    .start-screen.opening .curtain.left {
-      transform: translateX(-101%) skewY(1deg);
-    }
-
-    .start-screen.opening .curtain.right {
-      transform: translateX(101%) skewY(-1deg);
-    }
-
-    .start-screen.opening .start-content {
-      opacity: 0;
-      transform: scale(0.86);
-    }
-
-    /* Particle field */
-
-    .particles {
-      position: absolute;
-      z-index: 1;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-    }
-
-    .particle {
-      position: absolute;
-      bottom: -20px;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: rgba(255, 209, 102, 0.62);
-      box-shadow: 0 0 14px rgba(255, 209, 102, 0.8);
-      animation: particleRise linear infinite;
-    }
-
-    .particle:nth-child(1) {
-      left: 12%;
-      animation-duration: 9s;
-      animation-delay: -2s;
-    }
-
-    .particle:nth-child(2) {
-      left: 28%;
-      animation-duration: 12s;
-      animation-delay: -7s;
-    }
-
-    .particle:nth-child(3) {
-      left: 45%;
-      animation-duration: 10s;
-      animation-delay: -4s;
-    }
-
-    .particle:nth-child(4) {
-      left: 67%;
-      animation-duration: 13s;
-      animation-delay: -9s;
-    }
-
-    .particle:nth-child(5) {
-      left: 84%;
-      animation-duration: 8s;
-      animation-delay: -1s;
-    }
-
-    @keyframes contentEnter {
-      from {
-        opacity: 0;
-        transform: translateY(30px) scale(0.98);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    @keyframes orbFloat {
-      from {
-        transform: translate3d(0, 0, 0) scale(1);
-      }
-
-      to {
-        transform: translate3d(-50px, 35px, 0) scale(1.12);
-      }
-    }
-
-    @keyframes lineDrift {
-      from {
-        opacity: 0;
-        transform: translateX(-20vw) rotate(-35deg);
-      }
-
-      25% {
-        opacity: 0.8;
-      }
-
-      75% {
-        opacity: 0.8;
-      }
-
-      to {
-        opacity: 0;
-        transform: translateX(120vw) rotate(-35deg);
-      }
-    }
-
-    @keyframes quoteGlow {
-      from {
-        box-shadow: 0 16px 42px var(--shadow);
-      }
-
-      to {
-        box-shadow:
-          0 18px 48px var(--shadow),
-          0 0 26px rgba(255, 159, 67, 0.11);
-      }
-    }
-
-    @keyframes starPop {
-      0% {
-        transform: scale(0.3) rotate(-25deg);
-        opacity: 0;
-      }
-
-      70% {
-        transform: scale(1.22) rotate(8deg);
-        opacity: 1;
-      }
-
-      100% {
-        transform: scale(1.05) rotate(0);
-      }
-    }
-
-    @keyframes titleFloat {
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-10px);
-      }
-    }
-
-    @keyframes ringPulse {
-      0%,
-      100% {
-        opacity: 0.2;
-        transform: scale(0.9);
-      }
-
-      50% {
-        opacity: 0.55;
-        transform: scale(1.08);
-      }
-    }
-
-    @keyframes ringSpin {
-      to {
-        transform: translate(-50%, -50%) rotate(360deg);
-      }
-    }
-
-    @keyframes particleRise {
-      0% {
-        opacity: 0;
-        transform: translateY(0) scale(0.5);
-      }
-
-      15% {
-        opacity: 1;
-      }
-
-      85% {
-        opacity: 0.8;
-      }
-
-      100% {
-        opacity: 0;
-        transform: translateY(-110vh) translateX(70px) scale(1.4);
-      }
-    }
-
-    @keyframes graphicSpin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    @keyframes graphicPulse {
-      0%,
-      100% {
-        transform: scale(1);
-        opacity: 0.32;
-      }
-
-      50% {
-        transform: scale(1.1);
-        opacity: 0.62;
-      }
-    }
-
-    @keyframes dotFloat {
-      from {
-        transform: translateY(0);
-      }
-
-      to {
-        transform: translateY(-12px);
-      }
-    }
-
-    @keyframes timerPulse {
-      0%,
-      100% {
-        transform: scale(1);
-        box-shadow: 0 8px 22px rgba(50, 23, 13, 0.18);
-      }
-
-      50% {
-        transform: scale(1.08);
-        box-shadow: 0 0 24px rgba(163, 20, 47, 0.55);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
-
-    @media (max-width: 760px) {
-      body {
-        overflow: auto;
-      }
-
-      .slideshow {
-        min-height: 100vh;
-        height: auto;
-      }
-
-      .slide {
-        position: relative;
-        min-height: 100vh;
-        padding: 65px 18px 80px;
-      }
-
-      .slide::before {
-        inset: 3%;
-        border-radius: 25px;
-      }
-
-      .content {
-        max-height: none;
-        overflow: visible;
-        padding: 28px 12px;
-      }
-
-      h1 {
-        letter-spacing: -3px;
-      }
-
-      h2 {
-        letter-spacing: -2px;
-      }
-
-      .card-grid,
-      .card-grid.two-columns,
-      .story-map {
-        grid-template-columns: 1fr;
-        gap: 15px;
-      }
-
-      .card {
-        min-height: auto;
-        padding: 24px 20px;
-      }
-
-      .quote {
-        padding: 25px 22px 25px 30px;
-      }
-
-      .slide-number {
-        top: 20px;
-        left: 22px;
-      }
-
-      .slide-graphic {
-        transform: scale(0.7);
-      }
-
-      .presentation-timer {
-        top: 12px;
-        right: 14px;
-        min-width: 82px;
-        padding: 7px 10px;
-        font-size: 16px;
-      }
-    }
   </style>
 </head>
 <body>
@@ -1505,407 +1502,492 @@
       <span class="particle"></span>
       <span class="particle"></span>
     </div>
+<div class="curtain left"></div>
+<div class="curtain right"></div>
 
-    <div class="curtain left"></div>
-    <div class="curtain right"></div>
+<div class="start-content">
+  <h1>Deep Water</h1>
+  <p>Book Presentation</p>
 
-    <div class="start-content">
-      <h1>Deep Water</h1>
-      <p>Book Presentation</p>
+  <button class="start-button" id="startButton">
+    Begin Presentation
+  </button>
+</div>
 
-      <button class="start-button" id="startButton">
-        Begin Presentation
-      </button>
-    </div>
   </div>
-
   <div class="slideshow">
     <div class="ambient-lines">
       <span></span>
       <span></span>
       <span></span>
     </div>
+<div class="progress" id="progress"></div>
 
-    <div class="progress" id="progress"></div>
+<div
+  class="presentation-timer"
+  id="presentationTimer"
+  aria-live="polite"
+  aria-label="Presentation timer"
+>
+  5:00
+</div>
 
-    <div
-      class="presentation-timer"
-      id="presentationTimer"
-      aria-live="polite"
-      aria-label="Presentation timer"
-    >
-      5:00
+<!-- Slide 1 -->
+<section class="slide active">
+  <span class="slide-number">01 / 17</span>
+  <div class="slide-graphic graphic-orbit"></div>
+  <div class="slide-graphic graphic-wave"></div>
+
+  <div class="content">
+    <div class="eyebrow">Book Presentation</div>
+    <h1 class="editable">Deep Water</h1>
+    <p class="subtitle editable">Presented by: Colton Reinhart</p>
+  </div>
+</section>
+
+<!-- Slide 2 -->
+<section class="slide">
+  <span class="slide-number">02 / 17</span>
+  <div class="slide-graphic graphic-star"></div>
+  <div class="slide-graphic graphic-book"></div>
+
+  <div class="content">
+    <div class="eyebrow">Author Introduction</div>
+    <h2 class="editable">Maren Stoffels</h2>
+
+    <div class="quote editable">
+      The author of Deep Water.
     </div>
+  </div>
+</section>
 
-    <!-- Slide 1 -->
-    <section class="slide active">
-      <span class="slide-number">01 / 14</span>
-      <div class="slide-graphic graphic-orbit"></div>
-      <div class="slide-graphic graphic-wave"></div>
+<!-- Slide 3 -->
+<section class="slide">
+  <span class="slide-number">03 / 17</span>
+  <div class="slide-graphic graphic-dots">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="slide-graphic graphic-wave-circle"></div>
 
-      <div class="content">
-        <div class="eyebrow">Book Presentation</div>
-        <h1 class="editable">Deep Water</h1>
-        <p class="subtitle editable">Presented by: Colton Reinhart</p>
-      </div>
-    </section>
+  <div class="content">
+    <div class="eyebrow">My Reading Choice</div>
+    <h2 class="editable">Why I Read This Book</h2>
 
-    <!-- Slide 2 -->
-    <section class="slide">
-      <span class="slide-number">02 / 14</span>
-      <div class="slide-graphic graphic-star"></div>
-      <div class="slide-graphic graphic-book"></div>
+    <div class="quote editable">
+      I chose to read this book because it stood out among all of the other books, and I prefer horror, so after I read the back of the book, I decided to try it out.
+    </div>
+  </div>
+</section>
 
-      <div class="content">
-        <div class="eyebrow">Author Introduction</div>
-        <h2 class="editable">Maren Stoffels</h2>
+<!-- Slide 4 -->
+<section class="slide">
+  <span class="slide-number">04 / 17</span>
+  <div class="slide-graphic graphic-lighthouse"></div>
+  <div class="slide-graphic graphic-compass"></div>
 
-        <div class="quote editable">
-          The author of Deep Water.
-        </div>
-      </div>
-    </section>
+  <div class="content">
+    <div class="eyebrow">Main Characters</div>
+    <h2>Protagonist and Antagonist</h2>
 
-    <!-- Slide 3 -->
-    <section class="slide">
-      <span class="slide-number">03 / 14</span>
-      <div class="slide-graphic graphic-dots">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      <div class="slide-graphic graphic-wave-circle"></div>
-
-      <div class="content">
-        <div class="eyebrow">My Reading Choice</div>
-        <h2 class="editable">Why I Read This Book</h2>
-
-        <div class="quote editable">
-          I chose to read this book because it stood out among all of the other books, and I prefer horror, so after I read the back of the book, I decided to try it out.
-        </div>
-      </div>
-    </section>
-
-    <!-- Slide 4 -->
-    <section class="slide">
-      <span class="slide-number">04 / 14</span>
-      <div class="slide-graphic graphic-lighthouse"></div>
-      <div class="slide-graphic graphic-compass"></div>
-
-      <div class="content">
-        <div class="eyebrow">Main Characters</div>
-        <h2>Protagonist and Antagonist</h2>
-
-        <div class="card-grid two-columns">
-          <div class="card character-card">
-            <strong class="editable">[PROTAGONIST]</strong>
-            <span class="character-role editable">Protagonist</span>
-            <span class="editable">
-              The Protagonist of Deep Water is Vesper who is attempting by the end of the book to tell the media about No Exit and is trying to surive No Exit.
-            </span>
-          </div>
-
-          <div class="card character-card">
-            <strong class="editable">[ANTAGONIST]</strong>
-            <span class="character-role editable">Antagonist</span>
-            <span class="editable">
-              The Antagonist of Deep Water is Jumper, who is trying to make everyone have a worse time while on the ship and is not remorseful in any way.
-            </span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Slide 5 -->
-    <section class="slide">
-      <span class="slide-number">05 / 14</span>
-      <div class="slide-graphic graphic-wave"></div>
-      <div class="slide-graphic graphic-dots">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+    <div class="card-grid two-columns">
+      <div class="card character-card">
+        <strong class="editable">[PROTAGONIST]</strong>
+        <span class="character-role editable">Protagonist</span>
+        <span class="editable">
+          The Protagonist of Deep Water is Vesper who is attempting by the end of the book to tell the media about No Exit and is trying to survive No Exit.
+        </span>
       </div>
 
-      <div class="content">
-        <div class="eyebrow">Supporting Cast</div>
-        <h2>Important Side Characters</h2>
-
-        <div class="card-grid">
-          <div class="card character-card">
-            <strong class="editable">[Gwen]</strong>
-            <span class="character-role editable">Side Character</span>
-            <span class="editable">
-              Gwen is an important character because she is blind but seems to be the most reasonable-minded of the people in No Exit until the very end.
-            </span>
-          </div>
-
-          <div class="card character-card">
-            <strong class="editable">[Jonah]</strong>
-            <span class="character-role editable">Side Character</span>
-            <span class="editable">
-              Jonah is an important character because he is alongside Vesper throughout the entire story, attempting to protect Vesper.
-            </span>
-          </div>
-        </div>
+      <div class="card character-card">
+        <strong class="editable">[ANTAGONIST]</strong>
+        <span class="character-role editable">Antagonist</span>
+        <span class="editable">
+          The Antagonist of Deep Water is Jumper, who is trying to make everyone have a worse time while on the ship and is not remorseful in any way.
+        </span>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <!-- Slide 6 -->
-    <section class="slide">
-      <span class="slide-number">06 / 14</span>
-      <div class="slide-graphic graphic-water"></div>
-      <div class="slide-graphic graphic-lighthouse"></div>
-
-      <div class="content">
-        <div class="eyebrow">Where and When</div>
-        <h2>Setting</h2>
-
-        <div class="card-grid two-columns">
-          <div class="card">
-            <strong>Location</strong>
-            <span class="editable">
-              Deep Water takes place on a luxury cruise ship.
-            </span>
-          </div>
-
-          <div class="card">
-            <strong>Time Period</strong>
-            <span class="editable">
-              We are not told when No Exit takes place.
-            </span>
-          </div>
-        </div>
-
-        <div class="quote editable">
-          The setting really affects the No Exit theme, symbolizing that help is nowhere near them.
-        </div>
-      </div>
-    </section>
-
-    <!-- Slide 7 -->
-    <section class="slide">
-      <span class="slide-number">07 / 14</span>
-      <div class="slide-graphic graphic-sun"></div>
-      <div class="slide-graphic graphic-rays"></div>
-
-      <div class="content">
-        <div class="eyebrow">Big Idea</div>
-        <h2>Theme</h2>
-
-        <div class="timeline">
-          <span class="editable">Helping your freinds is important</span>
-          <span class="editable">
-            Sometimes you have to make the hard decisions in life
-          </span>
-        </div>
-
-        <div class="quote editable">
-          It is that sometimes you have to make the hard decisions in life.
-        </div>
-      </div>
-    </section>
-
-    <!-- Slide 8 -->
-    <section class="slide">
-      <span class="slide-number">08 / 14</span>
-      <div class="slide-graphic graphic-warning"></div>
-      <div class="slide-graphic graphic-lock"></div>
-
-      <div class="content">
-        <div class="eyebrow">Story Problem</div>
-        <h2>Main Conflict</h2>
-
-        <div class="quote editable">
-          No Exit is the main conflict in the story.
-        </div>
-
-        <div class="card-grid two-columns">
-          <div class="card">
-            <strong>Internal Conflict</strong>
-            <span class="editable">
-              Whether he will survive, will he come out the same?
-            </span>
-          </div>
-
-          <div class="card">
-            <strong>External Conflict</strong>
-            <span class="editable">
-              Will No exit kill him before he can escape?
-            </span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Slide 9 -->
-    <section class="slide">
-      <span class="slide-number">09 / 14</span>
-      <div class="slide-graphic graphic-compass"></div>
-      <div class="slide-graphic graphic-arrow"></div>
-
-      <div class="content">
-        <div class="eyebrow">Plot Structure</div>
-        <h2>Exposition</h2>
-
-        <div class="story-map">
-          <div class="story-step">
-            <span>Characters</span>
-            <p class="editable">
-              Vesper is introduced at the very beginning of the story.
-            </p>
-          </div>
-
-          <div class="story-step">
-            <span>Setting</span>
-            <p class="editable">
-              The Story begins on the cruise ship No Exit.
-            </p>
-          </div>
-
-          <div class="story-step">
-            <span>Situation</span>
-            <p class="editable">
-              They are enjoying the cruise ship.
-            </p>
-          </div>
-
-          <div class="story-step">
-            <span>Important Information</span>
-            <p class="editable">
-              The reader needs to know that Gwen is blind.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Slide 10 -->
-    <section class="slide">
-      <span class="slide-number">10 / 14</span>
-      <div class="slide-graphic graphic-ticket"></div>
-      <div class="slide-graphic graphic-film"></div>
-
-      <div class="content">
-        <div class="eyebrow">Plot Structure</div>
-        <h2>Rising Action</h2>
-
-        <div class="quote editable">
-          The rising action for Deep Water is Vesper realizing what the so-called luxury cruise ship really is.
-        </div>
-
-        <div class="timeline">
-          <span class="editable">Boarding</span>
-          <span class="editable">Meeting Jonah</span>
-          <span class="editable">Orination</span>
-          <span class="editable">Going to his room</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Slide 11 -->
-    <section class="slide">
-      <span class="slide-number">11 / 14</span>
-      <div class="slide-graphic graphic-warning"></div>
-      <div class="slide-graphic graphic-water"></div>
-
-      <div class="content">
-        <div class="eyebrow">Plot Structure</div>
-        <h2>Climax</h2>
-
-        <div class="quote editable">
-          The climax of Deep Water is when No Exit kills someone by drowning them.
-        </div>
-
-        <p class="editable" style="margin-top: 30px;">
-          This affects the story by showing how far No Exit will go to reform the bullies on board.
-        </p>
-      </div>
-    </section>
-
-    <!-- Slide 12 -->
-    <section class="slide">
-      <span class="slide-number">12 / 14</span>
-      <div class="slide-graphic graphic-book"></div>
-      <div class="slide-graphic graphic-spiral"></div>
-
-      <div class="content">
-        <div class="eyebrow">Plot Structure</div>
-        <h2>Falling Action</h2>
-
-        <div class="quote editable">
-          The falling action is just about Vesper finding Gwen's journal.
-        </div>
-
-        <p class="editable" style="margin-top: 30px;">
-          This helps add to the end, showing how sad Gwen was to leave Vesper and Jonah.
-        </p>
-      </div>
-    </section>
-
-    <!-- Slide 13 -->
-    <section class="slide">
-      <span class="slide-number">13 / 14</span>
-      <div class="slide-graphic graphic-lock"></div>
-      <div class="slide-graphic graphic-crown"></div>
-
-      <div class="content">
-        <div class="eyebrow">Plot Structure</div>
-        <h2>Resolution</h2>
-
-        <div class="quote editable">
-          ---Not going to spoil it---
-        </div>
-
-        <p class="editable" style="margin-top: 30px;">
-          ---Not going to spoil it---
-        </p>
-      </div>
-    </section>
-
-    <!-- Slide 14 -->
-    <section class="slide">
-      <span class="slide-number">14 / 14</span>
-      <div class="slide-graphic graphic-film"></div>
-      <div class="slide-graphic graphic-star"></div>
-
-      <div class="content">
-        <div class="eyebrow">Final Rating</div>
-        <h2>Book Review</h2>
-
-        <div class="review-box">
-          <h3 class="editable">Deep Water</h3>
-
-          <div
-            class="stars"
-            id="ratingStars"
-            data-rating="4"
-            aria-label="Book rating"
-          >
-            <span class="star">★</span>
-            <span class="star">★</span>
-            <span class="star">★</span>
-            <span class="star">★</span>
-            <span class="star">★</span>
-          </div>
-
-          <div class="rating-number">
-            Rating: <span id="ratingNumber">0</span> / 5
-          </div>
-
-          <p class="editable">
-            Overall, one of my favorite books that I have read.
-          </p>
-
-          <div class="review-quote editable">
-            “Not everyone made it back alive”
-          </div>
-        </div>
-      </div>
-    </section>
+<!-- Slide 5 -->
+<section class="slide">
+  <span class="slide-number">05 / 17</span>
+  <div class="slide-graphic graphic-wave"></div>
+  <div class="slide-graphic graphic-dots">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
 
+  <div class="content">
+    <div class="eyebrow">Supporting Cast</div>
+    <h2>Important Side Characters</h2>
+
+    <div class="card-grid">
+      <div class="card character-card">
+        <strong class="editable">[Gwen]</strong>
+        <span class="character-role editable">Side Character</span>
+        <span class="editable">
+          Gwen is an important character because she is blind but seems to be the most reasonable-minded of the people in No Exit until the very end.
+        </span>
+      </div>
+
+      <div class="card character-card">
+        <strong class="editable">[Jonah]</strong>
+        <span class="character-role editable">Side Character</span>
+        <span class="editable">
+          Jonah is an important character because he is alongside Vesper throughout the entire story, attempting to protect Vesper.
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 6 -->
+<section class="slide">
+  <span class="slide-number">06 / 17</span>
+  <div class="slide-graphic graphic-water"></div>
+  <div class="slide-graphic graphic-lighthouse"></div>
+
+  <div class="content">
+    <div class="eyebrow">Where and When</div>
+    <h2>Setting</h2>
+
+    <div class="card-grid two-columns">
+      <div class="card">
+        <strong>Location</strong>
+        <span class="editable">
+          Deep Water takes place on a luxury cruise ship.
+        </span>
+      </div>
+
+      <div class="card">
+        <strong>Time Period</strong>
+        <span class="editable">
+          We are not told when No Exit takes place.
+        </span>
+      </div>
+    </div>
+
+    <div class="quote editable">
+      The setting really affects the No Exit theme, symbolizing that help is nowhere near them.
+    </div>
+  </div>
+</section>
+
+<!-- Slide 7 -->
+<section class="slide">
+  <span class="slide-number">07 / 17</span>
+  <div class="slide-graphic graphic-sun"></div>
+  <div class="slide-graphic graphic-rays"></div>
+
+  <div class="content">
+    <div class="eyebrow">Big Idea</div>
+    <h2>Theme</h2>
+
+    <div class="timeline">
+      <span class="editable">Helping your friends is important</span>
+      <span class="editable">
+        Sometimes you have to make the hard decisions in life
+      </span>
+    </div>
+
+    <div class="quote editable">
+      It is that sometimes you have to make the hard decisions in life.
+    </div>
+  </div>
+</section>
+
+<!-- Slide 8 -->
+<section class="slide">
+  <span class="slide-number">08 / 17</span>
+  <div class="slide-graphic graphic-warning"></div>
+  <div class="slide-graphic graphic-lock"></div>
+
+  <div class="content">
+    <div class="eyebrow">Story Problem</div>
+    <h2>Main Conflict</h2>
+
+    <div class="quote editable">
+      No Exit is the main conflict in the story.
+    </div>
+
+    <div class="card-grid two-columns">
+      <div class="card">
+        <strong>Internal Conflict</strong>
+        <span class="editable">
+          Whether he will survive, will he come out the same?
+        </span>
+      </div>
+
+      <div class="card">
+        <strong>External Conflict</strong>
+        <span class="editable">
+          Will No Exit kill him before he can escape?
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 9 -->
+<section class="slide">
+  <span class="slide-number">09 / 17</span>
+  <div class="slide-graphic graphic-compass"></div>
+  <div class="slide-graphic graphic-arrow"></div>
+
+  <div class="content">
+    <div class="eyebrow">Plot Structure</div>
+    <h2>Exposition</h2>
+
+    <div class="story-map">
+      <div class="story-step">
+        <span>Characters</span>
+        <p class="editable">
+          Vesper is introduced at the very beginning of the story.
+        </p>
+      </div>
+
+      <div class="story-step">
+        <span>Setting</span>
+        <p class="editable">
+          The story begins on the cruise ship No Exit.
+        </p>
+      </div>
+
+      <div class="story-step">
+        <span>Situation</span>
+        <p class="editable">
+          They are enjoying the cruise ship.
+        </p>
+      </div>
+
+      <div class="story-step">
+        <span>Important Information</span>
+        <p class="editable">
+          The reader needs to know that Gwen is blind.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 10 -->
+<section class="slide">
+  <span class="slide-number">10 / 17</span>
+  <div class="slide-graphic graphic-ticket"></div>
+  <div class="slide-graphic graphic-film"></div>
+
+  <div class="content">
+    <div class="eyebrow">Plot Structure</div>
+    <h2>Rising Action</h2>
+
+    <div class="quote editable">
+      The rising action for Deep Water is Vesper realizing what the so-called luxury cruise ship really is.
+    </div>
+
+    <div class="timeline">
+      <span class="editable">Boarding</span>
+      <span class="editable">Meeting Jonah</span>
+      <span class="editable">Orientation</span>
+      <span class="editable">Going to his room</span>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 11 -->
+<section class="slide">
+  <span class="slide-number">11 / 17</span>
+  <div class="slide-graphic graphic-warning"></div>
+  <div class="slide-graphic graphic-water"></div>
+
+  <div class="content">
+    <div class="eyebrow">Plot Structure</div>
+    <h2>Climax</h2>
+
+    <div class="quote editable">
+      The climax of Deep Water is when No Exit kills someone by drowning them.
+    </div>
+
+    <p class="editable" style="margin-top: 30px;">
+      This affects the story by showing how far No Exit will go to reform the bullies on board.
+    </p>
+  </div>
+</section>
+
+<!-- Slide 12 -->
+<section class="slide">
+  <span class="slide-number">12 / 17</span>
+  <div class="slide-graphic graphic-book"></div>
+  <div class="slide-graphic graphic-spiral"></div>
+
+  <div class="content">
+    <div class="eyebrow">Plot Structure</div>
+    <h2>Falling Action</h2>
+
+    <div class="quote editable">
+      The falling action is just about Vesper finding Gwen's journal.
+    </div>
+
+    <p class="editable" style="margin-top: 30px;">
+      This helps add to the end, showing how sad Gwen was to leave Vesper and Jonah.
+    </p>
+  </div>
+</section>
+
+<!-- Slide 13 -->
+<section class="slide">
+  <span class="slide-number">13 / 17</span>
+  <div class="slide-graphic graphic-lock"></div>
+  <div class="slide-graphic graphic-crown"></div>
+
+  <div class="content">
+    <div class="eyebrow">Plot Structure</div>
+    <h2>Resolution</h2>
+
+    <div class="quote editable">
+      ---Not going to spoil it---
+    </div>
+
+    <p class="editable" style="margin-top: 30px;">
+      ---Not going to spoil it---
+    </p>
+  </div>
+</section>
+
+<!-- Slide 14 -->
+<section class="slide">
+  <span class="slide-number">14 / 17</span>
+  <div class="slide-graphic graphic-wave-circle"></div>
+  <div class="slide-graphic graphic-water"></div>
+
+  <div class="content">
+    <div class="eyebrow">Symbols and Meaning</div>
+    <h2>What Does the Water Represent?</h2>
+
+    <div class="card-grid two-columns">
+      <div class="card">
+        <strong>Symbol</strong>
+        <span class="editable">
+          The water represents that no one could help them.
+        </span>
+      </div>
+
+      <div class="card">
+        <strong>Meaning</strong>
+        <span class="editable">
+This means that they were stuck at sea
+        </span>
+      </div>
+    </div>
+
+    <div class="quote editable">
+      The title adds a bit of mystery, making the readers wonder.
+    </div>
+  </div>
+</section>
+
+<!-- Slide 15 -->
+<section class="slide">
+  <span class="slide-number">15 / 17</span>
+  <div class="slide-graphic graphic-warning"></div>
+  <div class="slide-graphic graphic-orbit"></div>
+
+  <div class="content">
+    <div class="eyebrow">Mood and Suspense</div>
+    <h2>How the Author Creates Tension</h2>
+
+    <div class="timeline">
+      <span class="editable">[Dark setting]</span>
+      <span class="editable">[Unknown danger]</span>
+      <span class="editable">[Secrets]</span>
+      <span class="editable">[Unexpected events]</span>
+    </div>
+
+    <div class="quote editable">
+   When Vesper realises what No Exit it shows that unexpected events are coming.
+    </div>
+  </div>
+</section>
+
+<!-- Slide 16 -->
+<section class="slide">
+  <span class="slide-number">16 / 17</span>
+  <div class="slide-graphic graphic-film"></div>
+  <div class="slide-graphic graphic-star"></div>
+
+  <div class="content">
+    <div class="eyebrow">Before the Review</div>
+    <h2>Would I Recommend This Book?</h2>
+
+    <div class="card-grid two-columns">
+      <div class="card">
+        <strong>Best For</strong>
+        <span class="editable">
+          This book would be good for readers who enjoy Horror
+        </span>
+      </div>
+
+      <div class="card">
+        <strong>Recommendation</strong>
+        <span class="editable">
+          I would recommend this book because it gets into the action early.
+        </span>
+      </div>
+    </div>
+
+    <div class="quote editable">
+      My favorite part of the book was when Vesper read Gwen's journal.
+    </div>
+  </div>
+</section>
+
+<!-- Slide 17: Book Review must remain last -->
+<section class="slide">
+  <span class="slide-number">17 / 17</span>
+  <div class="slide-graphic graphic-film"></div>
+  <div class="slide-graphic graphic-star"></div>
+
+  <div class="content">
+    <div class="eyebrow">Final Rating</div>
+    <h2>Book Review</h2>
+
+    <div class="review-box">
+      <h3 class="editable">Deep Water</h3>
+
+      <div
+        class="stars"
+        id="ratingStars"
+        data-rating="4"
+        aria-label="Book rating"
+      >
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+      </div>
+
+      <div class="rating-number">
+        Rating: <span id="ratingNumber">0</span> / 5
+      </div>
+
+      <p class="editable">
+        Overall, one of my favorite books that I have read.
+      </p>
+
+      <div class="review-quote editable">
+        “Not everyone made it back alive”
+      </div>
+    </div>
+  </div>
+</section>
+
+  </div>
   <script>
     const startScreen = document.getElementById("startScreen");
     const startButton = document.getElementById("startButton");
