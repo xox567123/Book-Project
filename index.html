@@ -4,11 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Deep Water — Book Presentation</title>
-
   <style>
     :root {
       --cream: #fff8ef;
-      --paper: rgba(255, 255, 255, 0.78);
+      --paper: rgba(255, 255, 255, 0.72);
       --orange: #ff9f43;
       --gold: #ffd166;
       --dark-orange: #e76f24;
@@ -28,11 +27,6 @@
       padding: 0;
     }
 
-    html,
-    body {
-      min-height: 100%;
-    }
-
     body {
       min-height: 100vh;
       overflow: hidden;
@@ -44,16 +38,10 @@
         var(--cream);
     }
 
-    button,
-    input,
-    textarea,
-    select {
-      font: inherit;
-    }
-
     button {
-      border: 0;
+      border: none;
       cursor: pointer;
+      font: inherit;
     }
 
     .slideshow {
@@ -130,45 +118,6 @@
       top: 78%;
       left: 8%;
       animation-delay: -9s;
-    }
-
-    .progress {
-      position: fixed;
-      z-index: 60;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 5px;
-      background: linear-gradient(90deg, var(--blue), var(--orange), var(--red));
-      box-shadow: 0 0 16px rgba(231, 111, 36, 0.55);
-      transition: width 0.45s ease;
-    }
-
-    .top-controls {
-      position: fixed;
-      z-index: 70;
-      top: 18px;
-      right: 22px;
-      display: flex;
-      gap: 10px;
-    }
-
-    .control-button {
-      padding: 11px 16px;
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.78);
-      color: var(--brown);
-      font-size: 14px;
-      font-weight: 900;
-      box-shadow: 0 8px 24px rgba(50, 23, 13, 0.14);
-      backdrop-filter: blur(14px);
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
-
-    .control-button:hover {
-      background: var(--gold);
-      transform: translateY(-2px);
     }
 
     .slide {
@@ -249,56 +198,6 @@
       text-shadow: 0 0 20px rgba(231, 111, 36, 0.2);
     }
 
-    .spongebob-mini {
-      position: absolute;
-      top: 17px;
-      left: 125px;
-      z-index: 4;
-      display: none;
-      width: 54px;
-      height: 54px;
-      border: 3px solid #8d5d1a;
-      border-radius: 13px;
-      background:
-        radial-gradient(circle at 20% 28%, #8fd34d 0 4px, transparent 5px),
-        radial-gradient(circle at 70% 22%, #76bf39 0 5px, transparent 6px),
-        radial-gradient(circle at 42% 70%, #7fca3d 0 6px, transparent 7px),
-        #f4d84d;
-      box-shadow:
-        inset 0 0 0 3px rgba(255, 255, 255, 0.25),
-        0 7px 16px rgba(50, 23, 13, 0.2);
-      transform: rotate(-4deg);
-      animation: spongeBobFloat 3s ease-in-out infinite;
-    }
-
-    .spongebob-mini::before {
-      position: absolute;
-      top: 17px;
-      left: 7px;
-      width: 10px;
-      height: 10px;
-      border: 2px solid #32170d;
-      border-radius: 50%;
-      background: #ffffff;
-      box-shadow: 25px 0 0 -2px #ffffff, 25px 0 0 0 #32170d;
-      content: "";
-    }
-
-    .spongebob-mini::after {
-      position: absolute;
-      right: 11px;
-      bottom: 9px;
-      width: 28px;
-      height: 12px;
-      border-bottom: 3px solid #32170d;
-      border-radius: 50%;
-      content: "";
-    }
-
-    .slide:nth-of-type(3) .spongebob-mini {
-      display: block;
-    }
-
     .eyebrow {
       display: inline-flex;
       align-items: center;
@@ -374,6 +273,8 @@
       font-weight: 900;
       letter-spacing: 1px;
     }
+
+    /* Decorative graphics on every slide */
 
     .slide-graphic {
       position: absolute;
@@ -1078,153 +979,16 @@
       line-height: 1.4;
     }
 
-    /* Editor */
-
-    .edit-panel {
+    .progress {
       position: fixed;
-      z-index: 200;
-      top: 70px;
-      right: 20px;
-      display: none;
-      width: min(440px, calc(100vw - 40px));
-      max-height: calc(100vh - 90px);
-      overflow-y: auto;
-      padding: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.85);
-      border-radius: 24px;
-      background: rgba(50, 23, 13, 0.96);
-      color: var(--white);
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
-    }
-
-    .edit-panel.open {
-      display: block;
-    }
-
-    .edit-panel h2 {
-      margin-bottom: 8px;
-      color: var(--gold);
-      font-size: 28px;
-      letter-spacing: -1px;
-    }
-
-    .edit-panel p {
-      margin: 0 0 16px;
-      color: #ffe9cf;
-      font-size: 14px;
-      line-height: 1.4;
-    }
-
-    .editor-section {
-      margin-top: 18px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(255, 255, 255, 0.18);
-    }
-
-    .editor-section h3 {
-      margin-bottom: 10px;
-      color: var(--gold);
-      font-size: 17px;
-    }
-
-    .field-label {
-      display: block;
-      margin: 10px 0 6px;
-      color: #ffd9a6;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.5px;
-    }
-
-    .edit-panel input,
-    .edit-panel textarea,
-    .edit-panel select {
-      width: 100%;
-      padding: 10px 12px;
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      border-radius: 10px;
-      outline: none;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-    }
-
-    .edit-panel textarea {
-      min-height: 90px;
-      resize: vertical;
-    }
-
-    .edit-panel option {
-      color: #111;
-    }
-
-    .editor-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .editor-button {
-      padding: 10px 13px;
-      border-radius: 10px;
-      background: var(--orange);
-      color: var(--brown);
-      font-size: 13px;
-      font-weight: 900;
-    }
-
-    .editor-button.secondary {
-      background: rgba(255, 255, 255, 0.14);
-      color: white;
-    }
-
-    .editor-button.danger {
-      background: #d72e50;
-      color: white;
-    }
-
-    .element-list {
-      display: grid;
-      gap: 7px;
-      max-height: 180px;
-      overflow-y: auto;
-      padding-right: 4px;
-    }
-
-    .element-option {
-      width: 100%;
-      padding: 9px 10px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 9px;
-      background: rgba(255, 255, 255, 0.08);
-      color: white;
-      text-align: left;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .element-option.selected {
-      border-color: var(--gold);
-      background: rgba(255, 209, 102, 0.18);
-    }
-
-    .selected-editable {
-      outline: 3px dashed var(--red);
-      outline-offset: 7px;
-    }
-
-    .editor-hint {
-      margin-top: 12px;
-      color: #ffd9a6;
-      font-size: 12px;
-      line-height: 1.4;
-    }
-
-    .font-preview {
-      margin-top: 10px;
-      color: var(--gold);
-      font-size: 18px;
+      z-index: 30;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--blue), var(--orange), var(--red));
+      box-shadow: 0 0 16px rgba(231, 111, 36, 0.55);
+      transition: width 0.45s ease;
     }
 
     /* Start screen */
@@ -1330,6 +1094,8 @@
         0 0 42px rgba(255, 70, 99, 0.42);
     }
 
+    /* Curtains */
+
     .curtain {
       position: absolute;
       z-index: 3;
@@ -1389,6 +1155,8 @@
       transform: scale(0.86);
     }
 
+    /* Particle field */
+
     .particles {
       position: absolute;
       z-index: 1;
@@ -1436,95 +1204,6 @@
       left: 84%;
       animation-duration: 8s;
       animation-delay: -1s;
-    }
-
-    /* Responsive */
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
-
-    @media (max-width: 760px) {
-      body {
-        overflow: auto;
-      }
-
-      .slideshow {
-        min-height: 100vh;
-        height: auto;
-      }
-
-      .slide {
-        position: relative;
-        min-height: 100vh;
-        padding: 65px 18px 80px;
-      }
-
-      .slide::before {
-        inset: 3%;
-        border-radius: 25px;
-      }
-
-      .content {
-        max-height: none;
-        overflow: visible;
-        padding: 28px 12px;
-      }
-
-      h1 {
-        letter-spacing: -3px;
-      }
-
-      h2 {
-        letter-spacing: -2px;
-      }
-
-      .card-grid,
-      .card-grid.two-columns,
-      .story-map {
-        grid-template-columns: 1fr;
-        gap: 15px;
-      }
-
-      .card {
-        min-height: auto;
-        padding: 24px 20px;
-      }
-
-      .quote {
-        padding: 25px 22px 25px 30px;
-      }
-
-      .slide-number {
-        top: 20px;
-        left: 22px;
-      }
-
-      .spongebob-mini {
-        top: 12px;
-        left: 110px;
-        transform: scale(0.82) rotate(-4deg);
-      }
-
-      .slide-graphic {
-        transform: scale(0.7);
-      }
-
-      .top-controls {
-        top: 12px;
-        right: 12px;
-      }
-
-      .control-button {
-        padding: 9px 12px;
-        font-size: 12px;
-      }
     }
 
     @keyframes contentEnter {
@@ -1676,19 +1355,78 @@
       }
     }
 
-    @keyframes spongeBobFloat {
-      0%,
-      100% {
-        transform: rotate(-4deg) translateY(0);
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    @media (max-width: 760px) {
+      body {
+        overflow: auto;
       }
 
-      50% {
-        transform: rotate(4deg) translateY(-5px);
+      .slideshow {
+        min-height: 100vh;
+        height: auto;
+      }
+
+      .slide {
+        position: relative;
+        min-height: 100vh;
+        padding: 65px 18px 80px;
+      }
+
+      .slide::before {
+        inset: 3%;
+        border-radius: 25px;
+      }
+
+      .content {
+        max-height: none;
+        overflow: visible;
+        padding: 28px 12px;
+      }
+
+      h1 {
+        letter-spacing: -3px;
+      }
+
+      h2 {
+        letter-spacing: -2px;
+      }
+
+      .card-grid,
+      .card-grid.two-columns,
+      .story-map {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .card {
+        min-height: auto;
+        padding: 24px 20px;
+      }
+
+      .quote {
+        padding: 25px 22px 25px 30px;
+      }
+
+      .slide-number {
+        top: 20px;
+        left: 22px;
+      }
+
+      .slide-graphic {
+        transform: scale(0.7);
       }
     }
   </style>
 </head>
-
 <body>
   <div class="start-screen" id="startScreen">
     <div class="particles">
@@ -1698,735 +1436,421 @@
       <span class="particle"></span>
       <span class="particle"></span>
     </div>
+<div class="curtain left"></div>
+<div class="curtain right"></div>
 
-    <div class="curtain left"></div>
-    <div class="curtain right"></div>
+<div class="start-content">
+  <h1>Deep Water</h1>
+  <p>Book Presentation</p>
 
-    <div class="start-content">
-      <h1>Deep Water</h1>
-      <p>Book Presentation</p>
+  <button class="start-button" id="startButton">
+    Begin Presentation
+  </button>
+</div>
 
-      <button class="start-button" id="startButton">
-        Begin Presentation
-      </button>
-    </div>
   </div>
-
-  <div class="top-controls">
-    <button class="control-button" id="editModeButton">
-      Edit Mode
-    </button>
-  </div>
-
-  <div class="edit-panel" id="editPanel">
-    <h2>Slideshow Editor</h2>
-    <p>
-      Edit text, fonts, colors, slides, and presentation settings. Changes are
-      saved in this browser automatically.
-    </p>
-
-    <div class="editor-section">
-      <h3>Text Editing</h3>
-
-      <label class="field-label" for="slideSelect">Slide</label>
-      <select id="slideSelect"></select>
-
-      <label class="field-label" for="elementSelect">
-        Text element
-      </label>
-      <select id="elementSelect"></select>
-
-      <label class="field-label" for="elementText">
-        Text
-      </label>
-      <textarea id="elementText"></textarea>
-
-      <div class="editor-buttons">
-        <button class="editor-button" id="applyTextButton">
-          Apply Text
-        </button>
-        <button class="editor-button secondary" id="addTextButton">
-          Add Text
-        </button>
-      </div>
-    </div>
-
-    <div class="editor-section">
-      <h3>Font and Colors</h3>
-
-      <label class="field-label" for="fontSelect">
-        Font
-      </label>
-      <select id="fontSelect">
-        <option value="Inter, Arial, Helvetica, sans-serif">Inter / Arial</option>
-        <option value="Arial, Helvetica, sans-serif">Arial</option>
-        <option value="Georgia, serif">Georgia</option>
-        <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
-        <option value="'Courier New', monospace">Courier New</option>
-        <option value="Verdana, sans-serif">Verdana</option>
-      </select>
-
-      <label class="field-label" for="accentColor">
-        Accent color
-      </label>
-      <input id="accentColor" type="color" value="#ff9f43" />
-
-      <label class="field-label" for="backgroundColor">
-        Background color
-      </label>
-      <input id="backgroundColor" type="color" value="#fff8ef" />
-
-      <div class="font-preview" id="fontPreview">
-        Preview text
-      </div>
-
-      <div class="editor-buttons">
-        <button class="editor-button" id="applyStyleButton">
-          Apply Style
-        </button>
-        <button class="editor-button secondary" id="resetStyleButton">
-          Reset Style
-        </button>
-      </div>
-    </div>
-
-    <div class="editor-section">
-      <h3>Slide Management</h3>
-
-      <label class="field-label" for="newSlideTitle">
-        New slide title
-      </label>
-      <input
-        id="newSlideTitle"
-        type="text"
-        placeholder="New Slide"
-      />
-
-      <label class="field-label" for="newSlideText">
-        New slide text
-      </label>
-      <textarea
-        id="newSlideText"
-        placeholder="Write something for the new slide..."
-      ></textarea>
-
-      <div class="editor-buttons">
-        <button class="editor-button" id="addSlideButton">
-          Add Slide
-        </button>
-        <button class="editor-button danger" id="deleteSlideButton">
-          Delete Current Slide
-        </button>
-      </div>
-    </div>
-
-    <div class="editor-section">
-      <h3>Extra Content</h3>
-
-      <label class="field-label" for="extraText">
-        Add text to current slide
-      </label>
-      <textarea
-        id="extraText"
-        placeholder="Extra text, notes, or a caption..."
-      ></textarea>
-
-      <div class="editor-buttons">
-        <button class="editor-button" id="addExtraTextButton">
-          Add Extra Text
-        </button>
-        <button class="editor-button secondary" id="clearExtraTextButton">
-          Clear Field
-        </button>
-      </div>
-    </div>
-
-    <div class="editor-section">
-      <div class="editor-buttons">
-        <button class="editor-button secondary" id="closeEditorButton">
-          Close Editor
-        </button>
-        <button class="editor-button danger" id="resetPresentationButton">
-          Reset Presentation
-        </button>
-      </div>
-    </div>
-
-    <div class="editor-hint">
-      You can also click any text on the current slide while Edit Mode is open,
-      then change it in the editor.
-    </div>
-  </div>
-
-  <main class="slideshow" id="slideshow">
+  <div class="slideshow">
     <div class="ambient-lines">
       <span></span>
       <span></span>
       <span></span>
     </div>
+<div class="progress" id="progress"></div>
 
-    <div class="progress" id="progress"></div>
+<!-- Slide 1 -->
+<section class="slide active">
+  <span class="slide-number">01 / 14</span>
+  <div class="slide-graphic graphic-orbit"></div>
+  <div class="slide-graphic graphic-wave"></div>
 
-    <!-- Slide 1 -->
-    <section class="slide active">
-      <span class="slide-number"></span>
-      <div class="spongebob-mini"></div>
-      <div class="slide-graphic graphic-orbit"></div>
-      <div class="slide-graphic graphic-wave"></div>
+  <div class="content">
+    <div class="eyebrow">Book Presentation</div>
+    <h1 class="editable">Deep Water</h1>
+    <p class="subtitle editable">Presented by: Colton Reinhart</p>
+  </div>
+</section>
 
-      <div class="content">
-        <div class="eyebrow">Book Presentation</div>
-        <h1 class="editable">Deep Water</h1>
-        <p class="subtitle editable">Presented by: Colton Reinhart</p>
-      </div>
-    </section>
+<!-- Slide 2 -->
+<section class="slide">
+  <span class="slide-number">02 / 14</span>
+  <div class="slide-graphic graphic-star"></div>
+  <div class="slide-graphic graphic-book"></div>
 
-    <!-- Slide 2 -->
-    <section class="slide">
-      <span class="slide-number"></span>
-      <div class="spongebob-mini"></div>
-      <div class="slide-graphic graphic-star"></div>
-      <div class="slide-graphic graphic-book"></div>
+  <div class="content">
+    <div class="eyebrow">Author Introduction</div>
+    <h2 class="editable">Maren Stoffels</h2>
 
-      <div class="content">
-        <div class="eyebrow">Author Introduction</div>
-        <h2 class="editable">Maren Stoffels</h2>
+    <div class="quote editable">
+      The author of Deep Water.
+    </div>
+  </div>
+</section>
 
-        <div class="quote editable">
-          The author of Deep Water.
-        </div>
-      </div>
-    </section>
+<!-- Slide 3 -->
+<section class="slide">
+  <span class="slide-number">03 / 14</span>
+  <div class="slide-graphic graphic-dots">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="slide-graphic graphic-wave-circle"></div>
 
-    <!-- Slide 3 -->
-    <section class="slide">
-      <span class="slide-number"></span>
-      <div class="spongebob-mini"></div>
-      <div class="slide-graphic graphic-dots">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      <div class="slide-graphic graphic-wave-circle"></div>
+  <div class="content">
+    <div class="eyebrow">My Reading Choice</div>
+    <h2 class="editable">Why I Read This Book</h2>
 
-      <div class="content">
-        <div class="eyebrow">My Reading Choice</div>
-        <h2 class="editable">Why I Read This Book</h2>
+    <div class="quote editable">
+      I chose to read this book because it stood out among all of the other books, and I prefer horror, so after I read the back of the book, I decided to try it out.
+    </div>
+  </div>
+</section>
 
-        <div class="quote editable">
-          I chose to read this book because it stood out among all of the other
-          books, and I prefer horror, so after I read the back of the book, I
-          decided to try it out.
-        </div>
-      </div>
-    </section>
+<!-- Slide 4 -->
+<section class="slide">
+  <span class="slide-number">04 / 14</span>
+  <div class="slide-graphic graphic-lighthouse"></div>
+  <div class="slide-graphic graphic-compass"></div>
 
-    <!-- Slide 4 -->
-    <section class="slide">
-      <span class="slide-number"></span>
-      <div class="spongebob-mini"></div>
-      <div class="slide-graphic graphic-lighthouse"></div>
-      <div class="slide-graphic graphic-compass"></div>
+  <div class="content">
+    <div class="eyebrow">Main Characters</div>
+    <h2>Protagonist and Antagonist</h2>
 
-      <div class="content">
-        <div class="eyebrow">Main Characters</div>
-        <h2>Protagonist and Antagonist</h2>
-
-        <div class="card-grid two-columns">
-          <div class="card character-card">
-            <strong class="editable">[PROTAGONIST]</strong>
-            <span class="character-role editable">Protagonist</span>
-            <span class="editable">
-              The Protagonist of Deep Water is Vesper who is attempting by the
-              end of the book to tell the media about No Exit and is trying to
-              surive No Exit.
-            </span>
-          </div>
-
-          <div class="card character-card">
-            <strong class="editable">[ANTAGONIST]</strong>
-            <span class="character-role editable">Antagonist</span>
-            <span class="editable">
-              The Antagonist of Deep Water is Jumper, who is trying to make
-              everyone have a worse time while on the ship and is not remorseful
-              in any way.
-            </span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Slide 5 -->
-    <section class="slide">
-      <span class="slide-number"></span>
-      <div class="spongebob-mini"></div>
-      <div class="slide-graphic graphic-wave"></div>
-      <div class="slide-graphic graphic-dots">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+    <div class="card-grid two-columns">
+      <div class="card character-card">
+        <strong class="editable">[PROTAGONIST]</strong>
+        <span class="character-role editable">Protagonist</span>
+        <span class="editable">
+          The Protagonist of Deep Water is Vesper who is attempting by the end of the book to tell the media about No Exit and is trying to surive No Exit.
+        </span>
       </div>
 
-      <div class="content">
-        <div class="eyebrow">Supporting Cast</div>
-        <h2>Important Side Characters</h2>
-
-        <div class="card-grid">
-          <div class="card character-card">
-            <strong class="editable">[Gwen]</strong>
-            <span class="character-role editable">Side Character</span>
-            <span class="editable">
-              Gwen is an important character because she is blind but seems to
-              be the most reasonable-minded of the people in No Exit until the
-              very end.
-            </span>
-          </div>
-
-          <div class="card character-card">
-            <strong class="editable">[Jonah]</strong>
-            <span class="character-role editable">Side Character</span>
-            <span class="editable">
-              Jonah is an important character because he is alongside Vesper
-              throughout the entire story, attempting to protect Vesper.
-            </span>
-          </div>
-        </div>
+      <div class="card character-card">
+        <strong class="editable">[ANTAGONIST]</strong>
+        <span class="character-role editable">Antagonist</span>
+        <span class="editable">
+          The Antagonist of Deep Water is Jumper, who is trying to make everyone have a worse time while on the ship and is not remorseful in any way.
+        </span>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <!-- Slide 6 -->
-    <section class="slide">
-      <span class="slide-number"></span>
-      <div class="spongebob-mini"></div>
-      <div class="slide-graphic graphic-water"></div>
-      <div class="slide-graphic graphic-lighthouse"></div>
+<!-- Slide 5 -->
+<section class="slide">
+  <span class="slide-number">05 / 14</span>
+  <div class="slide-graphic graphic-wave"></div>
+  <div class="slide-graphic graphic-dots">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 
-      <div class="content">
-        <div class="eyebrow">Where and When</div>
-        <h2>Setting</h2>
+  <div class="content">
+    <div class="eyebrow">Supporting Cast</div>
+    <h2>Important Side Characters</h2>
 
-        <div class="card-grid two-columns">
-          <div class="card">
-            <strong>Location</strong>
-            <span class="editable">
-              Deep Water takes place on a luxury cruise ship.
-            </span>
-          </div>
-
-          <div class="card">
-            <strong>Time Period</strong>
-            <span class="editable">
-              We are not told when No Exit takes place.
-            </span>
-          </div>
-        </div>
-
-        <div class="quote editable">
-          The setting really affects the No Exit theme, symbolizing that help is
-          nowhere near them.
-        </div>
+    <div class="card-grid">
+      <div class="card character-card">
+        <strong class="editable">[Gwen]</strong>
+        <span class="character-role editable">Side Character</span>
+        <span class="editable">
+          Gwen is an important character because she is blind but seems to be the most reasonable-minded of the people in No Exit until the very end.
+        </span>
       </div>
-    </section>
 
-    <!-- Slide 7 -->
-    <section class="slide">
-      <span class="slide-number"></span>
-      <div class="spongebob-mini"></div>
-      <div class="slide-graphic graphic-sun"></div>
-      <div class="slide-graphic graphic-rays"></div>
-
-      <div class="content">
-        <div class="eyebrow">Big Idea</div>
-        <h2>Theme</h2>
-
-        <div class="timeline">
-          <span class="editable">Helping your freinds is important</span>
-          <span class="editable">
-            Sometimes you have to make the hard decisions in life
-          </span>
-        </div>
-
-        <div class="quote editable">
-          It is that sometimes you have to make the hard decisions in life.
-        </div>
+      <div class="card character-card">
+        <strong class="editable">[Jonah]</strong>
+        <span class="character-role editable">Side Character</span>
+        <span class="editable">
+          Jonah is an important character because he is alongside Vesper throughout the entire story, attempting to protect Vesper.
+        </span>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <!-- Slide 8 -->
-    <section class="slide">
-      <span class="slide-number"></span>
-      <div class="spongebob-mini"></div>
-      <div class="slide-graphic graphic-warning"></div>
-      <div class="slide-graphic graphic-lock"></div>
+<!-- Slide 6 -->
+<section class="slide">
+  <span class="slide-number">06 / 14</span>
+  <div class="slide-graphic graphic-water"></div>
+  <div class="slide-graphic graphic-lighthouse"></div>
 
-      <div class="content">
-        <div class="eyebrow">Story Problem</div>
-        <h2>Main Conflict</h2>
+  <div class="content">
+    <div class="eyebrow">Where and When</div>
+    <h2>Setting</h2>
 
-        <div class="quote editable">
-          No Exit is the main conflict in the story.
-        </div>
-
-        <div class="card-grid two-columns">
-          <div class="card">
-            <strong>Internal Conflict</strong>
-            <span class="editable">
-              Whether he will survive, will he come out the same?
-            </span>
-          </div>
-
-          <div class="card">
-            <strong>External Conflict</strong>
-            <span class="editable">
-              Will No exit kill him before he can escape?
-            </span>
-          </div>
-        </div>
+    <div class="card-grid two-columns">
+      <div class="card">
+        <strong>Location</strong>
+        <span class="editable">
+          Deep Water takes place on a luxury cruise ship.
+        </span>
       </div>
-    </section>
 
-    <!-- Slide 9 -->
-    <section class="slide">
-      <span class="slide-number"></span>
-      <div class="spongebob-mini"></div>
-      <div class="slide-graphic graphic-compass"></div>
-      <div class="slide-graphic graphic-arrow"></div>
-
-      <div class="content">
-        <div class="eyebrow">Plot Structure</div>
-        <h2>Exposition</h2>
-
-        <div class="story-map">
-          <div class="story-step">
-            <span>Characters</span>
-            <p class="editable">
-              Vesper is introduced at the very beginning of the story.
-            </p>
-          </div>
-
-          <div class="story-step">
-            <span>Setting</span>
-            <p class="editable">
-              The Story begins on the cruise ship No Exit.
-            </p>
-          </div>
-
-          <div class="story-step">
-            <span>Situation</span>
-            <p class="editable">
-              They are enjoying the cruise ship.
-            </p>
-          </div>
-
-          <div class="story-step">
-            <span>Important Information</span>
-            <p class="editable">
-              The reader needs to know that gwen is blind.
-            </p>
-          </div>
-        </div>
+      <div class="card">
+        <strong>Time Period</strong>
+        <span class="editable">
+          We are not told when No Exit takes place.
+        </span>
       </div>
-    </section>
+    </div>
 
-    <!-- Slide 10 -->
-    <section class="slide">
-      <span class="slide-number"></span>
-      <div class="spongebob-mini"></div>
-      <div class="slide-graphic graphic-ticket"></div>
-      <div class="slide-graphic graphic-film"></div>
+    <div class="quote editable">
+      The setting really affects the No Exit theme, symbolizing that help is nowhere near them.
+    </div>
+  </div>
+</section>
 
-      <div class="content">
-        <div class="eyebrow">Plot Structure</div>
-        <h2>Rising Action</h2>
+<!-- Slide 7 -->
+<section class="slide">
+  <span class="slide-number">07 / 14</span>
+  <div class="slide-graphic graphic-sun"></div>
+  <div class="slide-graphic graphic-rays"></div>
 
-        <div class="quote editable">
-          The rising action for Deep Water is Vesper realising what the
-          so-called luxury cruise ship really is.
-        </div>
+  <div class="content">
+    <div class="eyebrow">Big Idea</div>
+    <h2>Theme</h2>
 
-        <div class="timeline">
-          <span class="editable">Boarding</span>
-          <span class="editable">Meeting Jonah</span>
-          <span class="editable">Orination</span>
-          <span class="editable">Going to his room</span>
-        </div>
+    <div class="timeline">
+      <span class="editable">Helping your freinds is important</span>
+      <span class="editable">
+        Sometimes you have to make the hard decisions in life
+      </span>
+    </div>
+
+    <div class="quote editable">
+      It is that sometimes you have to make the hard decisions in life.
+    </div>
+  </div>
+</section>
+
+<!-- Slide 8 -->
+<section class="slide">
+  <span class="slide-number">08 / 14</span>
+  <div class="slide-graphic graphic-warning"></div>
+  <div class="slide-graphic graphic-lock"></div>
+
+  <div class="content">
+    <div class="eyebrow">Story Problem</div>
+    <h2>Main Conflict</h2>
+
+    <div class="quote editable">
+      No Exit is the main conflict in the story.
+    </div>
+
+    <div class="card-grid two-columns">
+      <div class="card">
+        <strong>Internal Conflict</strong>
+        <span class="editable">
+          Whether he will survive, will he come out the same?
+        </span>
       </div>
-    </section>
 
-    <!-- Slide 11 -->
-    <section class="slide">
-      <span class="slide-number"></span>
-      <div class="spongebob-mini"></div>
-      <div class="slide-graphic graphic-warning"></div>
-      <div class="slide-graphic graphic-water"></div>
+      <div class="card">
+        <strong>External Conflict</strong>
+        <span class="editable">
+          Will No exit kill him before he can escape?
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
 
-      <div class="content">
-        <div class="eyebrow">Plot Structure</div>
-        <h2>Climax</h2>
+<!-- Slide 9 -->
+<section class="slide">
+  <span class="slide-number">09 / 14</span>
+  <div class="slide-graphic graphic-compass"></div>
+  <div class="slide-graphic graphic-arrow"></div>
 
-        <div class="quote editable">
-          The climax of Deep Water is when No Exit kills someone by drowning
-          them.
-        </div>
+  <div class="content">
+    <div class="eyebrow">Plot Structure</div>
+    <h2>Exposition</h2>
 
-        <p class="editable" style="margin-top: 30px;">
-          This affects the story by showing how far No Exit will go to reform
-          the bullies on board.
+    <div class="story-map">
+      <div class="story-step">
+        <span>Characters</span>
+        <p class="editable">
+          Vesper is introduced at the very beginning of the story.
         </p>
       </div>
-    </section>
 
-    <!-- Slide 12 -->
-    <section class="slide">
-      <span class="slide-number"></span>
-      <div class="spongebob-mini"></div>
-      <div class="slide-graphic graphic-book"></div>
-      <div class="slide-graphic graphic-spiral"></div>
-
-      <div class="content">
-        <div class="eyebrow">Plot Structure</div>
-        <h2>Falling Action</h2>
-
-        <div class="quote editable">
-          The falling action is just about Vesper finding Gwen's journal.
-        </div>
-
-        <p class="editable" style="margin-top: 30px;">
-          This helps add to the end, showing how sad Gwen was to leave Vesper
-          and Jonah.
+      <div class="story-step">
+        <span>Setting</span>
+        <p class="editable">
+          The Story begins on the cruise ship No Exit.
         </p>
       </div>
-    </section>
 
-    <!-- Slide 13 -->
-    <section class="slide">
-      <span class="slide-number"></span>
-      <div class="spongebob-mini"></div>
-      <div class="slide-graphic graphic-lock"></div>
-      <div class="slide-graphic graphic-crown"></div>
-
-      <div class="content">
-        <div class="eyebrow">Plot Structure</div>
-        <h2>Resolution</h2>
-
-        <div class="quote editable">---Not going to spoil it---</div>
-
-        <p class="editable" style="margin-top: 30px;">
-          ---Not going to spoil it---
+      <div class="story-step">
+        <span>Situation</span>
+        <p class="editable">
+          They are enjoying the cruise ship.
         </p>
       </div>
-    </section>
 
-    <!-- Slide 14 -->
-    <section class="slide">
-      <span class="slide-number"></span>
-      <div class="spongebob-mini"></div>
-      <div class="slide-graphic graphic-film"></div>
-      <div class="slide-graphic graphic-star"></div>
-
-      <div class="content">
-        <div class="eyebrow">Final Rating</div>
-        <h2>Book Review</h2>
-
-        <div class="review-box">
-          <h3 class="editable">Deep Water</h3>
-
-          <div
-            class="stars"
-            id="ratingStars"
-            data-rating="4"
-            aria-label="Book rating"
-          >
-            <span class="star">★</span>
-            <span class="star">★</span>
-            <span class="star">★</span>
-            <span class="star">★</span>
-            <span class="star">★</span>
-          </div>
-
-          <div class="rating-number">
-            Rating: <span id="ratingNumber">0</span> / 5
-          </div>
-
-          <p class="editable">
-            Overall, one of my favorite books that I have read.
-          </p>
-
-          <div class="review-quote editable">
-            “Not everyone made it back alive”
-          </div>
-        </div>
+      <div class="story-step">
+        <span>Important Information</span>
+        <p class="editable">
+          The reader needs to know that gwen is blind.
+        </p>
       </div>
-    </section>
-  </main>
+    </div>
+  </div>
+</section>
 
+<!-- Slide 10 -->
+<section class="slide">
+  <span class="slide-number">10 / 14</span>
+  <div class="slide-graphic graphic-ticket"></div>
+  <div class="slide-graphic graphic-film"></div>
+
+  <div class="content">
+    <div class="eyebrow">Plot Structure</div>
+    <h2>Rising Action</h2>
+
+    <div class="quote editable">
+      The rising action for Deep Water is Vesper realising what the so-called luxury cruise ship really is.
+    </div>
+
+    <div class="timeline">
+      <span class="editable">Boarding</span>
+      <span class="editable">Meeting Jonah</span>
+      <span class="editable">Orination</span>
+      <span class="editable">Going to his room</span>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 11 -->
+<section class="slide">
+  <span class="slide-number">11 / 14</span>
+  <div class="slide-graphic graphic-warning"></div>
+  <div class="slide-graphic graphic-water"></div>
+
+  <div class="content">
+    <div class="eyebrow">Plot Structure</div>
+    <h2>Climax</h2>
+
+    <div class="quote editable">
+      The climax of Deep Water is when No Exit kills someone by drowning them.
+    </div>
+
+    <p class="editable" style="margin-top: 30px;">
+      This affects the story by showing how far No Exit will go to reform the bullies on board.
+    </p>
+  </div>
+</section>
+
+<!-- Slide 12 -->
+<section class="slide">
+  <span class="slide-number">12 / 14</span>
+  <div class="slide-graphic graphic-book"></div>
+  <div class="slide-graphic graphic-spiral"></div>
+
+  <div class="content">
+    <div class="eyebrow">Plot Structure</div>
+    <h2>Falling Action</h2>
+
+    <div class="quote editable">
+      The falling action is just about Vesper finding Gwen's journal.
+    </div>
+
+    <p class="editable" style="margin-top: 30px;">
+      This helps add to the end, showing how sad Gwen was to leave Vesper and Jonah.
+    </p>
+  </div>
+</section>
+
+<!-- Slide 13 -->
+<section class="slide">
+  <span class="slide-number">13 / 14</span>
+  <div class="slide-graphic graphic-lock"></div>
+  <div class="slide-graphic graphic-crown"></div>
+
+  <div class="content">
+    <div class="eyebrow">Plot Structure</div>
+    <h2>Resolution</h2>
+
+    <div class="quote editable">
+      ---Not going to spoil it---
+    </div>
+
+    <p class="editable" style="margin-top: 30px;">
+      ---Not going to spoil it---
+    </p>
+  </div>
+</section>
+
+<!-- Slide 14 -->
+<section class="slide">
+  <span class="slide-number">14 / 14</span>
+  <div class="slide-graphic graphic-film"></div>
+  <div class="slide-graphic graphic-star"></div>
+
+  <div class="content">
+    <div class="eyebrow">Final Rating</div>
+    <h2>Book Review</h2>
+
+    <div class="review-box">
+      <h3 class="editable">Deep Water</h3>
+
+      <div
+        class="stars"
+        id="ratingStars"
+        data-rating="4"
+        aria-label="Book rating"
+      >
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+      </div>
+
+      <div class="rating-number">
+        Rating: <span id="ratingNumber">0</span> / 5
+      </div>
+
+      <p class="editable">
+        Overall, one of my favorite books that I have read.
+      </p>
+
+      <div class="review-quote editable">
+        “Not everyone made it back alive”
+      </div>
+    </div>
+  </div>
+</section>
+
+  </div>
   <script>
     const startScreen = document.getElementById("startScreen");
     const startButton = document.getElementById("startButton");
-    const slideshow = document.getElementById("slideshow");
+
+    const slides = document.querySelectorAll(".slide");
     const progress = document.getElementById("progress");
 
-    const editModeButton = document.getElementById("editModeButton");
-    const editPanel = document.getElementById("editPanel");
-    const closeEditorButton = document.getElementById("closeEditorButton");
+    const ratingStars = document.getElementById("ratingStars");
+    const ratingNumber = document.getElementById("ratingNumber");
+    const stars = document.querySelectorAll(".star");
 
-    const slideSelect = document.getElementById("slideSelect");
-    const elementSelect = document.getElementById("elementSelect");
-    const elementText = document.getElementById("elementText");
-    const applyTextButton = document.getElementById("applyTextButton");
-    const addTextButton = document.getElementById("addTextButton");
-
-    const fontSelect = document.getElementById("fontSelect");
-    const accentColor = document.getElementById("accentColor");
-    const backgroundColor = document.getElementById("backgroundColor");
-    const fontPreview = document.getElementById("fontPreview");
-    const applyStyleButton = document.getElementById("applyStyleButton");
-    const resetStyleButton = document.getElementById("resetStyleButton");
-
-    const newSlideTitle = document.getElementById("newSlideTitle");
-    const newSlideText = document.getElementById("newSlideText");
-    const addSlideButton = document.getElementById("addSlideButton");
-    const deleteSlideButton = document.getElementById("deleteSlideButton");
-
-    const extraText = document.getElementById("extraText");
-    const addExtraTextButton = document.getElementById("addExtraTextButton");
-    const clearExtraTextButton = document.getElementById("clearExtraTextButton");
-    const resetPresentationButton = document.getElementById("resetPresentationButton");
-
-    let slides = [];
     let currentSlide = 0;
     let autoPlay = null;
     let presentationStarted = false;
     let touchStartX = 0;
-    let editMode = false;
-    let selectedElement = null;
 
-    const defaultStyle = {
-      fontFamily: "Inter, Arial, Helvetica, sans-serif",
-      accent: "#ff9f43",
-      background: "#fff8ef"
-    };
+    const rating = Number(ratingStars.dataset.rating);
 
-    function getSlides() {
-      return Array.from(document.querySelectorAll(".slide"));
-    }
+    stars.forEach((star, index) => {
+      star.classList.toggle("filled", index < rating);
+    });
 
-    function refreshSlides() {
-      slides = getSlides();
-      updateSlideNumbers();
-      populateSlideSelect();
-      showSlide(currentSlide, false);
-    }
+    ratingNumber.textContent = rating;
 
-    function updateSlideNumbers() {
-      slides.forEach((slide, index) => {
-        const number = slide.querySelector(".slide-number");
-
-        if (number) {
-          number.textContent =
-            `${String(index + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
-        }
-      });
-    }
-
-    function populateSlideSelect() {
-      const oldValue = slideSelect.value;
-
-      slideSelect.innerHTML = "";
-
-      slides.forEach((slide, index) => {
-        const title =
-          slide.querySelector("h1, h2, h3")?.textContent.trim() ||
-          `Slide ${index + 1}`;
-
-        const option = document.createElement("option");
-        option.value = index;
-        option.textContent = `${index + 1}. ${title}`;
-        slideSelect.appendChild(option);
-      });
-
-      slideSelect.value = String(
-        Math.min(Number(oldValue) || currentSlide, slides.length - 1)
-      );
-
-      populateElementSelect();
-    }
-
-    function getEditableElements(slide) {
-      return Array.from(slide.querySelectorAll(".editable"));
-    }
-
-    function populateElementSelect() {
-      const slideIndex = Number(slideSelect.value) || 0;
-      const slide = slides[slideIndex];
-
-      elementSelect.innerHTML = "";
-
-      if (!slide) {
-        return;
-      }
-
-      const elements = getEditableElements(slide);
-
-      elements.forEach((element, index) => {
-        const option = document.createElement("option");
-        option.value = index;
-        option.textContent =
-          `${element.tagName.toLowerCase()} — ${element.textContent.trim().slice(0, 45)}`;
-        elementSelect.appendChild(option);
-      });
-
-      if (elements.length) {
-        elementSelect.value = "0";
-        loadSelectedElement();
-      } else {
-        elementText.value = "";
-      }
-    }
-
-    function loadSelectedElement() {
-      const slideIndex = Number(slideSelect.value) || 0;
-      const elementIndex = Number(elementSelect.value) || 0;
-      const slide = slides[slideIndex];
-      const elements = slide ? getEditableElements(slide) : [];
-
-      selectedElement = elements[elementIndex] || null;
-
-      document
-        .querySelectorAll(".selected-editable")
-        .forEach((element) => element.classList.remove("selected-editable"));
-
-      if (selectedElement) {
-        selectedElement.classList.add("selected-editable");
-        elementText.value = selectedElement.textContent.trim();
-      } else {
-        elementText.value = "";
-      }
-    }
-
-    function updateRating() {
-      const ratingStars = document.getElementById("ratingStars");
-      const ratingNumber = document.getElementById("ratingNumber");
-
-      if (!ratingStars || !ratingNumber) return;
-
-      const rating = Number(ratingStars.dataset.rating) || 0;
-      const stars = ratingStars.querySelectorAll(".star");
-
-      stars.forEach((star, index) => {
-        star.classList.toggle("filled", index < rating);
-      });
-
-      ratingNumber.textContent = rating;
-    }
-
-    function showSlide(index, restart = true) {
-      slides = getSlides();
-
-      if (!slides.length) return;
-
+    function showSlide(index) {
       if (index < 0) {
         index = slides.length - 1;
       }
@@ -2444,19 +1868,11 @@
       });
 
       slides[index].classList.add("active");
-      currentSlide = index;
 
       progress.style.width =
         `${((index + 1) / slides.length) * 100}%`;
 
-      if (slideSelect) {
-        slideSelect.value = String(index);
-        populateElementSelect();
-      }
-
-      if (restart) {
-        restartAutoPlay();
-      }
+      currentSlide = index;
     }
 
     function nextSlide() {
@@ -2469,15 +1885,11 @@
 
     function startAutoPlay() {
       clearInterval(autoPlay);
-      autoPlay = setInterval(() => {
-        if (!editMode) {
-          nextSlide();
-        }
-      }, 15000);
+      autoPlay = setInterval(nextSlide, 15000);
     }
 
     function restartAutoPlay() {
-      if (presentationStarted && !editMode) {
+      if (presentationStarted) {
         startAutoPlay();
       }
     }
@@ -2495,285 +1907,36 @@
       }, 2150);
     }
 
-    function savePresentation() {
-      const state = {
-        html: slideshow.innerHTML,
-        style: {
-          fontFamily: document.body.style.fontFamily || defaultStyle.fontFamily,
-          accent: getComputedStyle(document.documentElement)
-            .getPropertyValue("--orange")
-            .trim() || defaultStyle.accent,
-          background: getComputedStyle(document.documentElement)
-            .getPropertyValue("--cream")
-            .trim() || defaultStyle.background
-        }
-      };
-
-      localStorage.setItem("deepWaterPresentation", JSON.stringify(state));
-    }
-
-    function loadPresentation() {
-      const saved = localStorage.getItem("deepWaterPresentation");
-
-      if (!saved) return;
-
-      try {
-        const state = JSON.parse(saved);
-
-        if (state.html) {
-          slideshow.innerHTML = state.html;
-        }
-
-        if (state.style) {
-          document.body.style.fontFamily =
-            state.style.fontFamily || defaultStyle.fontFamily;
-
-          document.documentElement.style.setProperty(
-            "--orange",
-            state.style.accent || defaultStyle.accent
-          );
-
-          document.documentElement.style.setProperty(
-            "--cream",
-            state.style.background || defaultStyle.background
-          );
-        }
-      } catch (error) {
-        console.warn("Saved presentation could not be loaded.", error);
-      }
-    }
-
-    function applyText() {
-      if (!selectedElement) return;
-
-      selectedElement.textContent = elementText.value;
-      populateElementSelect();
-      savePresentation();
-    }
-
-    function addTextToSlide(text) {
-      if (!text.trim()) return;
-
-      const slide = slides[currentSlide];
-      const content = slide.querySelector(".content");
-
-      if (!content) return;
-
-      const paragraph = document.createElement("p");
-      paragraph.className = "editable";
-      paragraph.style.marginTop = "24px";
-      paragraph.textContent = text.trim();
-
-      content.appendChild(paragraph);
-      refreshSlides();
-      slideSelect.value = String(currentSlide);
-      populateElementSelect();
-      savePresentation();
-    }
-
-    function addNewSlide() {
-      const title = newSlideTitle.value.trim() || "New Slide";
-      const text = newSlideText.value.trim() || "Add your slide text here.";
-
-      const slide = document.createElement("section");
-      slide.className = "slide";
-      slide.innerHTML = `
-        <span class="slide-number"></span>
-        <div class="spongebob-mini"></div>
-        <div class="slide-graphic graphic-orbit"></div>
-        <div class="content">
-          <div class="eyebrow">New Section</div>
-          <h2 class="editable"></h2>
-          <div class="quote editable"></div>
-        </div>
-      `;
-
-      slide.querySelector("h2").textContent = title;
-      slide.querySelector(".quote").textContent = text;
-
-      slideshow.appendChild(slide);
-
-      currentSlide = slides.length;
-      refreshSlides();
-      showSlide(currentSlide, false);
-
-      newSlideTitle.value = "";
-      newSlideText.value = "";
-
-      savePresentation();
-    }
-
-    function deleteCurrentSlide() {
-      if (slides.length <= 1) {
-        alert("You must keep at least one slide.");
-        return;
-      }
-
-      slides[currentSlide].remove();
-      currentSlide = Math.max(0, currentSlide - 1);
-
-      refreshSlides();
-      showSlide(currentSlide, false);
-      savePresentation();
-    }
-
-    function applyStyle() {
-      const selectedFont = fontSelect.value;
-      const selectedAccent = accentColor.value;
-      const selectedBackground = backgroundColor.value;
-
-      document.body.style.fontFamily = selectedFont;
-
-      document.documentElement.style.setProperty(
-        "--orange",
-        selectedAccent
-      );
-
-      document.documentElement.style.setProperty(
-        "--cream",
-        selectedBackground
-      );
-
-      fontPreview.style.fontFamily = selectedFont;
-      savePresentation();
-    }
-
-    function resetStyle() {
-      document.body.style.fontFamily = defaultStyle.fontFamily;
-      document.documentElement.style.setProperty(
-        "--orange",
-        defaultStyle.accent
-      );
-      document.documentElement.style.setProperty(
-        "--cream",
-        defaultStyle.background
-      );
-
-      fontSelect.value = defaultStyle.fontFamily;
-      accentColor.value = defaultStyle.accent;
-      backgroundColor.value = defaultStyle.background;
-      fontPreview.style.fontFamily = defaultStyle.fontFamily;
-      savePresentation();
-    }
-
-    function toggleEditMode() {
-      editMode = !editMode;
-      editPanel.classList.toggle("open", editMode);
-      editModeButton.textContent = editMode ? "Close Edit Mode" : "Edit Mode";
-
-      if (editMode) {
-        clearInterval(autoPlay);
-        populateSlideSelect();
-      } else {
-        document
-          .querySelectorAll(".selected-editable")
-          .forEach((element) => element.classList.remove("selected-editable"));
-
-        selectedElement = null;
-        restartAutoPlay();
-      }
-    }
-
-    editModeButton.addEventListener("click", toggleEditMode);
-    closeEditorButton.addEventListener("click", toggleEditMode);
-
     startButton.addEventListener("click", startPresentation);
 
-    slideSelect.addEventListener("change", () => {
-      currentSlide = Number(slideSelect.value);
-      showSlide(currentSlide, false);
-    });
-
-    elementSelect.addEventListener("change", loadSelectedElement);
-
-    applyTextButton.addEventListener("click", applyText);
-
-    addTextButton.addEventListener("click", () => {
-      addTextToSlide(elementText.value);
-      elementText.value = "";
-    });
-
-    fontSelect.addEventListener("change", () => {
-      fontPreview.style.fontFamily = fontSelect.value;
-    });
-
-    applyStyleButton.addEventListener("click", applyStyle);
-    resetStyleButton.addEventListener("click", resetStyle);
-
-    addSlideButton.addEventListener("click", addNewSlide);
-    deleteSlideButton.addEventListener("click", deleteCurrentSlide);
-
-    addExtraTextButton.addEventListener("click", () => {
-      addTextToSlide(extraText.value);
-      extraText.value = "";
-    });
-
-    clearExtraTextButton.addEventListener("click", () => {
-      extraText.value = "";
-    });
-
-    resetPresentationButton.addEventListener("click", () => {
-      const confirmed = confirm(
-        "Reset the slideshow and remove all saved edits?"
-      );
-
-      if (!confirmed) return;
-
-      localStorage.removeItem("deepWaterPresentation");
-      window.location.reload();
-    });
-
-    slideshow.addEventListener("click", (event) => {
-      if (!editMode) return;
-
-      const target = event.target.closest(".editable");
-
-      if (!target) return;
-
-      const slide = target.closest(".slide");
-      const slideIndex = slides.indexOf(slide);
-      const elements = getEditableElements(slide);
-      const elementIndex = elements.indexOf(target);
-
-      if (slideIndex < 0 || elementIndex < 0) return;
-
-      slideSelect.value = String(slideIndex);
-      populateElementSelect();
-      elementSelect.value = String(elementIndex);
-      loadSelectedElement();
-
-      event.stopPropagation();
-    });
-
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && editMode) {
-        toggleEditMode();
-        return;
-      }
-
-      if (event.key === "Enter" && !presentationStarted && !editMode) {
+      if (event.key === "Enter" && !presentationStarted) {
         startPresentation();
         return;
       }
 
-      if (!presentationStarted || editMode) return;
+      if (!presentationStarted) return;
 
       if (event.key === "ArrowRight" || event.key === " ") {
         event.preventDefault();
         nextSlide();
+        restartAutoPlay();
       }
 
       if (event.key === "ArrowLeft") {
         event.preventDefault();
         previousSlide();
+        restartAutoPlay();
       }
 
       if (event.key === "Home") {
         showSlide(0);
+        restartAutoPlay();
       }
 
       if (event.key === "End") {
         showSlide(slides.length - 1);
+        restartAutoPlay();
       }
     });
 
@@ -2782,7 +1945,7 @@
     });
 
     document.addEventListener("touchend", (event) => {
-      if (!presentationStarted || editMode) return;
+      if (!presentationStarted) return;
 
       const touchEndX = event.changedTouches[0].screenX;
       const distance = touchStartX - touchEndX;
@@ -2793,15 +1956,12 @@
         } else {
           previousSlide();
         }
+
+        restartAutoPlay();
       }
     });
 
-    loadPresentation();
-    refreshSlides();
-    updateRating();
-    showSlide(0, false);
-
-    fontPreview.style.fontFamily = fontSelect.value;
+    showSlide(0);
   </script>
 </body>
 </html>
