@@ -3,18 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Book Presentation</title>
+  <title>Deep Water — Book Presentation</title>
+
   <style>
     :root {
-      --cream: #fff7ed;
-      --orange: #f4a261;
-      --dark-orange: #d66a2c;
-      --brown: #432818;
+      --cream: #fff8ef;
+      --paper: rgba(255, 255, 255, 0.72);
+      --orange: #ff9f43;
+      --gold: #ffd166;
+      --dark-orange: #e76f24;
+      --brown: #32170d;
+      --muted-brown: #795548;
       --white: #ffffff;
-      --gray: #806f63;
-      --shadow: rgba(67, 40, 24, 0.14);
-      --red: #8f1020;
-      --dark-red: #4d0710;
+      --red: #a3142f;
+      --dark-red: #26030a;
+      --wine: #4d0710;
+      --blue: #11698e;
+      --shadow: rgba(50, 23, 13, 0.18);
+      --soft-shadow: rgba(255, 159, 67, 0.28);
     }
 
     * {
@@ -23,12 +29,25 @@
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       min-height: 100vh;
       overflow: hidden;
-      font-family: Arial, Helvetica, sans-serif;
       color: var(--brown);
-      background: var(--cream);
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255, 209, 102, 0.24), transparent 28%),
+        radial-gradient(circle at 85% 85%, rgba(17, 105, 142, 0.18), transparent 30%),
+        var(--cream);
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      font: inherit;
     }
 
     .slideshow {
@@ -36,6 +55,70 @@
       width: 100vw;
       height: 100vh;
       overflow: hidden;
+      isolation: isolate;
+    }
+
+    .slideshow::before,
+    .slideshow::after {
+      position: absolute;
+      z-index: -1;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      content: "";
+      filter: blur(8px);
+      opacity: 0.38;
+      pointer-events: none;
+      animation: orbFloat 12s ease-in-out infinite alternate;
+    }
+
+    .slideshow::before {
+      top: -140px;
+      right: -100px;
+      background: radial-gradient(circle, rgba(255, 159, 67, 0.55), transparent 68%);
+    }
+
+    .slideshow::after {
+      bottom: -160px;
+      left: -120px;
+      background: radial-gradient(circle, rgba(17, 105, 142, 0.38), transparent 68%);
+      animation-delay: -4s;
+    }
+
+    .ambient-lines {
+      position: fixed;
+      z-index: -1;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .ambient-lines span {
+      position: absolute;
+      display: block;
+      width: 260px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 159, 67, 0.5), transparent);
+      transform: rotate(-35deg);
+      animation: lineDrift 11s linear infinite;
+    }
+
+    .ambient-lines span:nth-child(1) {
+      top: 18%;
+      left: -20%;
+      animation-delay: -2s;
+    }
+
+    .ambient-lines span:nth-child(2) {
+      top: 48%;
+      left: 65%;
+      animation-delay: -6s;
+    }
+
+    .ambient-lines span:nth-child(3) {
+      top: 78%;
+      left: 8%;
+      animation-delay: -9s;
     }
 
     .slide {
@@ -47,166 +130,281 @@
       padding: 6vw;
       visibility: hidden;
       opacity: 0;
-      transform: translateX(70px) scale(0.98);
+      transform: translateX(90px) scale(0.94) rotateY(-4deg);
+      transform-origin: center;
       transition:
-        opacity 0.7s ease,
-        transform 0.7s ease,
-        visibility 0.7s ease;
+        opacity 0.75s ease,
+        transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0.75s ease;
+      perspective: 1200px;
       background:
-        radial-gradient(
-          circle at 85% 12%,
-          rgba(244, 162, 97, 0.35),
-          transparent 24%
-        ),
-        radial-gradient(
-          circle at 10% 90%,
-          rgba(255, 216, 168, 0.7),
-          transparent 28%
-        ),
-        var(--cream);
+        radial-gradient(circle at 86% 12%, rgba(255, 159, 67, 0.28), transparent 23%),
+        radial-gradient(circle at 8% 92%, rgba(255, 209, 102, 0.26), transparent 25%);
+    }
+
+    .slide::before {
+      position: absolute;
+      inset: 5%;
+      border: 1px solid rgba(231, 111, 36, 0.1);
+      border-radius: 42px;
+      content: "";
+      pointer-events: none;
     }
 
     .slide.active {
       z-index: 2;
       visibility: visible;
       opacity: 1;
-      transform: translateX(0) scale(1);
+      transform: translateX(0) scale(1) rotateY(0);
     }
 
     .slide.previous {
-      transform: translateX(-70px) scale(0.98);
+      transform: translateX(-90px) scale(0.94) rotateY(4deg);
+    }
+
+    .slide.active .content {
+      animation: contentEnter 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
     .content {
-      width: min(1100px, 94vw);
+      position: relative;
+      z-index: 1;
+      width: min(1120px, 94vw);
       max-height: 88vh;
       overflow-y: auto;
+      padding: clamp(24px, 4vw, 56px);
       text-align: center;
-      animation: contentIn 0.8s ease both;
+      scrollbar-width: thin;
+      scrollbar-color: var(--orange) transparent;
+    }
+
+    .content::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .content::-webkit-scrollbar-thumb {
+      border-radius: 999px;
+      background: var(--orange);
     }
 
     .slide-number {
       position: absolute;
-      top: 28px;
-      left: 34px;
+      top: 32px;
+      left: 38px;
+      z-index: 3;
       color: var(--dark-orange);
-      font-size: 14px;
-      font-weight: bold;
-      letter-spacing: 2px;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-shadow: 0 0 20px rgba(231, 111, 36, 0.2);
     }
 
     .eyebrow {
-      margin-bottom: 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
       color: var(--dark-orange);
-      font-size: clamp(12px, 1.4vw, 18px);
-      font-weight: bold;
-      letter-spacing: 4px;
+      font-size: clamp(12px, 1.4vw, 17px);
+      font-weight: 900;
+      letter-spacing: 5px;
       text-transform: uppercase;
     }
 
+    .eyebrow::before,
+    .eyebrow::after {
+      width: 34px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent, var(--orange));
+      content: "";
+    }
+
+    .eyebrow::after {
+      background: linear-gradient(90deg, var(--orange), transparent);
+    }
+
+    h1,
+    h2,
+    h3 {
+      text-wrap: balance;
+    }
+
     h1 {
-      margin-bottom: 24px;
+      margin-bottom: 22px;
       color: var(--brown);
-      font-size: clamp(48px, 9vw, 112px);
-      line-height: 0.95;
+      font-size: clamp(52px, 10vw, 132px);
+      font-weight: 950;
+      letter-spacing: -6px;
+      line-height: 0.88;
+      text-shadow:
+        0 8px 0 rgba(231, 111, 36, 0.08),
+        0 16px 35px rgba(50, 23, 13, 0.12);
     }
 
     h2 {
-      margin-bottom: 24px;
+      margin-bottom: 28px;
       color: var(--brown);
-      font-size: clamp(34px, 5vw, 70px);
-      line-height: 1.05;
+      font-size: clamp(38px, 5.6vw, 78px);
+      font-weight: 900;
+      letter-spacing: -3px;
+      line-height: 0.95;
     }
 
     h3 {
-      margin-bottom: 10px;
+      margin-bottom: 14px;
       color: var(--dark-orange);
-      font-size: clamp(22px, 2.5vw, 32px);
+      font-size: clamp(24px, 3vw, 38px);
     }
 
     p {
-      max-width: 850px;
+      max-width: 900px;
       margin: 0 auto;
-      font-size: clamp(18px, 2.2vw, 28px);
-      line-height: 1.5;
-    }
-
-    .subtitle {
-      color: var(--dark-orange);
-      font-size: clamp(20px, 2.8vw, 34px);
-      font-weight: bold;
+      font-size: clamp(18px, 2.1vw, 28px);
+      line-height: 1.55;
     }
 
     .editable {
       color: var(--dark-orange);
     }
 
+    .subtitle {
+      color: var(--dark-orange);
+      font-size: clamp(21px, 3vw, 36px);
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
     .card-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 22px;
-      margin-top: 34px;
+      margin-top: 36px;
     }
 
     .card-grid.two-columns {
       grid-template-columns: repeat(2, 1fr);
-      max-width: 850px;
+      max-width: 900px;
       margin-right: auto;
       margin-left: auto;
     }
 
+    .card,
+    .review-box,
+    .story-step {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.78);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.84), rgba(255, 247, 237, 0.55)),
+        var(--paper);
+      box-shadow:
+        0 18px 50px var(--shadow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
     .card {
-      min-height: 170px;
-      padding: 28px 22px;
-      border: 2px solid rgba(214, 106, 44, 0.22);
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.82);
-      box-shadow: 0 14px 34px var(--shadow);
+      min-height: 180px;
+      padding: 30px 24px;
+      border-radius: 28px;
+      text-align: left;
+      transform: translateY(0);
+      transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
+    }
+
+    .card::before,
+    .story-step::before,
+    .review-box::before {
+      position: absolute;
+      top: -80px;
+      right: -50px;
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 159, 67, 0.25), transparent 68%);
+      content: "";
+      transition: transform 0.5s ease;
+    }
+
+    .card:hover,
+    .story-step:hover {
+      border-color: rgba(255, 159, 67, 0.72);
+      box-shadow:
+        0 22px 55px rgba(50, 23, 13, 0.2),
+        0 0 30px var(--soft-shadow);
+      transform: translateY(-10px) rotateX(2deg);
+    }
+
+    .card:hover::before,
+    .story-step:hover::before {
+      transform: scale(1.4);
     }
 
     .card strong {
+      position: relative;
+      z-index: 1;
       display: block;
       margin-bottom: 12px;
       color: var(--dark-orange);
-      font-size: 25px;
+      font-size: 26px;
     }
 
     .card span {
+      position: relative;
+      z-index: 1;
       display: block;
       color: var(--brown);
       font-size: 18px;
-      line-height: 1.45;
-    }
-
-    .character-card {
-      text-align: left;
+      line-height: 1.55;
     }
 
     .character-card strong {
-      font-size: 30px;
+      font-size: 31px;
     }
 
     .character-role {
       display: block;
       margin-bottom: 12px;
-      color: var(--gray);
-      font-size: 16px;
-      font-weight: bold;
-      letter-spacing: 1px;
+      color: var(--muted-brown) !important;
+      font-size: 14px !important;
+      font-weight: 900;
+      letter-spacing: 2px;
       text-transform: uppercase;
     }
 
     .quote {
-      max-width: 850px;
-      margin: 34px auto 0;
-      padding: 26px 30px;
+      position: relative;
+      max-width: 900px;
+      margin: 36px auto 0;
+      padding: 30px 34px 30px 40px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.7);
       border-left: 7px solid var(--orange);
-      border-radius: 0 18px 18px 0;
-      background: rgba(255, 255, 255, 0.7);
-      box-shadow: 0 10px 25px var(--shadow);
-      font-size: clamp(22px, 3vw, 38px);
+      border-radius: 0 26px 26px 0;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 247, 237, 0.58));
+      box-shadow: 0 16px 42px var(--shadow);
+      font-size: clamp(21px, 3vw, 38px);
       font-style: italic;
-      line-height: 1.35;
+      line-height: 1.38;
+      backdrop-filter: blur(15px);
+      animation: quoteGlow 4s ease-in-out infinite alternate;
+    }
+
+    .quote::before {
+      position: absolute;
+      top: -42px;
+      left: 16px;
+      color: rgba(255, 159, 67, 0.2);
+      content: "“";
+      font-family: Georgia, serif;
+      font-size: 150px;
+      line-height: 1;
     }
 
     .timeline {
@@ -214,41 +412,67 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 14px;
-      margin-top: 32px;
+      margin-top: 34px;
     }
 
     .timeline span {
-      padding: 13px 20px;
+      position: relative;
+      overflow: hidden;
+      padding: 14px 22px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
       border-radius: 999px;
-      background: var(--orange);
+      background: linear-gradient(135deg, var(--orange), #ffbd69);
       color: var(--brown);
-      font-weight: bold;
+      font-weight: 900;
+      box-shadow: 0 9px 22px rgba(231, 111, 36, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .timeline span::after {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 70%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+      content: "";
+      transform: skewX(-20deg);
+      transition: left 0.6s ease;
+    }
+
+    .timeline span:hover {
+      box-shadow: 0 14px 30px rgba(231, 111, 36, 0.32);
+      transform: translateY(-5px) scale(1.04);
+    }
+
+    .timeline span:hover::after {
+      left: 130%;
     }
 
     .story-map {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
-      max-width: 950px;
-      margin: 30px auto 0;
+      gap: 20px;
+      max-width: 980px;
+      margin: 34px auto 0;
     }
 
     .story-step {
-      padding: 22px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.82);
-      box-shadow: 0 12px 28px var(--shadow);
+      padding: 24px;
+      border-radius: 24px;
       text-align: left;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
     }
 
     .story-step span {
       display: inline-block;
-      margin-bottom: 10px;
-      padding: 6px 12px;
+      margin-bottom: 12px;
+      padding: 7px 14px;
       border-radius: 999px;
       background: var(--orange);
-      font-size: 13px;
-      font-weight: bold;
+      color: var(--brown);
+      font-size: 12px;
+      font-weight: 900;
       letter-spacing: 1px;
       text-transform: uppercase;
     }
@@ -258,13 +482,10 @@
     }
 
     .review-box {
-      max-width: 850px;
-      margin: 30px auto 0;
-      padding: 34px;
-      border: 2px solid rgba(214, 106, 44, 0.22);
-      border-radius: 28px;
-      background: rgba(255, 255, 255, 0.82);
-      box-shadow: 0 14px 34px var(--shadow);
+      max-width: 900px;
+      margin: 32px auto 0;
+      padding: 38px;
+      border-radius: 32px;
     }
 
     .stars {
@@ -272,24 +493,42 @@
       justify-content: center;
       gap: 8px;
       margin: 20px 0;
-      font-size: clamp(42px, 7vw, 76px);
+      font-size: clamp(44px, 7vw, 82px);
+      filter: drop-shadow(0 8px 16px rgba(245, 183, 0, 0.18));
     }
 
     .star {
-      color: #d9cfc8;
+      display: inline-block;
+      color: rgba(121, 85, 72, 0.25);
       transition: color 0.3s ease, transform 0.3s ease;
     }
 
     .star.filled {
       color: #f5b700;
-      transform: scale(1.08);
+      animation: starPop 0.55s both;
+    }
+
+    .star:nth-child(2) {
+      animation-delay: 0.08s;
+    }
+
+    .star:nth-child(3) {
+      animation-delay: 0.16s;
+    }
+
+    .star:nth-child(4) {
+      animation-delay: 0.24s;
+    }
+
+    .star:nth-child(5) {
+      animation-delay: 0.32s;
     }
 
     .rating-number {
       margin-bottom: 18px;
       color: var(--dark-orange);
-      font-size: 20px;
-      font-weight: bold;
+      font-size: 21px;
+      font-weight: 900;
     }
 
     .review-quote {
@@ -302,64 +541,91 @@
 
     .controls {
       position: fixed;
-      z-index: 10;
-      bottom: 24px;
+      z-index: 20;
+      bottom: 22px;
       left: 50%;
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 13px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.54);
+      box-shadow: 0 14px 35px rgba(50, 23, 13, 0.16);
+      backdrop-filter: blur(20px);
       transform: translateX(-50%);
     }
 
     button {
-      border: none;
-      cursor: pointer;
+      color: var(--white);
+      background: var(--brown);
+      transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+
+    .controls button {
+      min-width: 116px;
       padding: 12px 18px;
       border-radius: 999px;
-      background: var(--brown);
-      color: var(--white);
-      font-size: 15px;
-      transition: transform 0.2s ease, background 0.2s ease;
+      font-size: 14px;
+      font-weight: 800;
     }
 
     button:hover {
       background: var(--dark-orange);
-      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(231, 111, 36, 0.28);
+      transform: translateY(-3px);
+    }
+
+    button:active {
+      transform: translateY(0) scale(0.96);
     }
 
     .dots {
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 0 8px;
+      padding: 0 7px;
     }
 
     .dot {
-      width: 10px;
-      height: 10px;
+      width: 9px;
+      height: 9px;
       padding: 0;
       border-radius: 50%;
-      background: rgba(67, 40, 24, 0.28);
+      background: rgba(50, 23, 13, 0.24);
+      box-shadow: none;
+    }
+
+    .dot:hover {
+      background: var(--orange);
+      box-shadow: none;
+      transform: scale(1.2);
     }
 
     .dot.active {
-      width: 28px;
+      width: 30px;
       border-radius: 999px;
       background: var(--dark-orange);
+      box-shadow: 0 0 15px rgba(231, 111, 36, 0.45);
     }
 
     .progress {
       position: fixed;
-      z-index: 10;
+      z-index: 30;
       top: 0;
       left: 0;
       width: 0%;
       height: 5px;
-      background: var(--dark-orange);
-      transition: width 0.3s ease;
+      background: linear-gradient(90deg, var(--blue), var(--orange), var(--red));
+      box-shadow: 0 0 16px rgba(231, 111, 36, 0.55);
+      transition: width 0.45s ease;
     }
 
     /* Start screen */
+
     .start-screen {
       position: fixed;
       z-index: 100;
@@ -368,41 +634,101 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      background: #170207;
+      background:
+        radial-gradient(circle at 50% 48%, rgba(163, 20, 47, 0.33), transparent 30%),
+        linear-gradient(135deg, #180108, #410510 50%, #170207);
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    .start-screen::before,
+    .start-screen::after {
+      position: absolute;
+      width: 550px;
+      height: 550px;
+      border: 1px solid rgba(255, 209, 102, 0.17);
+      border-radius: 50%;
+      content: "";
+      animation: ringPulse 7s ease-in-out infinite;
+    }
+
+    .start-screen::before {
+      transform: scale(0.7);
+    }
+
+    .start-screen::after {
+      transform: scale(1.1);
+      animation-delay: -2s;
+    }
+
+    .start-screen.hidden {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
     }
 
     .start-content {
       position: relative;
-      z-index: 4;
+      z-index: 5;
+      padding: 30px;
       text-align: center;
       color: var(--white);
+      transition: opacity 0.5s ease, transform 0.7s ease;
+    }
+
+    .start-content::before {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 260px;
+      height: 260px;
+      border: 1px solid rgba(255, 209, 102, 0.25);
+      border-radius: 50%;
+      content: "";
+      transform: translate(-50%, -50%);
+      animation: ringSpin 14s linear infinite;
     }
 
     .start-content h1 {
-      margin-bottom: 14px;
+      position: relative;
+      margin-bottom: 17px;
       color: var(--white);
-      font-size: clamp(42px, 8vw, 92px);
+      font-size: clamp(45px, 8vw, 100px);
+      letter-spacing: -4px;
+      text-shadow: 0 0 35px rgba(255, 159, 67, 0.28);
+      animation: titleFloat 4s ease-in-out infinite;
     }
 
     .start-content p {
-      margin-bottom: 28px;
+      position: relative;
+      margin-bottom: 30px;
       color: #ffdada;
-      font-size: clamp(18px, 2.5vw, 28px);
+      font-size: clamp(17px, 2.5vw, 28px);
     }
 
     .start-button {
-      padding: 16px 30px;
-      background: var(--red);
-      font-size: 20px;
-      font-weight: bold;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      position: relative;
+      z-index: 2;
+      padding: 17px 32px;
+      border: 1px solid rgba(255, 209, 102, 0.45);
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--red), #dd2948);
+      color: var(--white);
+      font-size: 19px;
+      font-weight: 900;
+      box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(163, 20, 47, 0.4);
     }
 
     .start-button:hover {
-      background: #bd1b32;
+      background: linear-gradient(135deg, #d62045, #ff4663);
+      box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.48),
+        0 0 42px rgba(255, 70, 99, 0.42);
     }
 
-    /* Red theatre curtains */
+    /* Curtains */
+
     .curtain {
       position: absolute;
       z-index: 3;
@@ -412,13 +738,31 @@
       background:
         repeating-linear-gradient(
           90deg,
-          #4d0710 0,
-          #8f1020 9%,
-          #bd1b32 18%,
-          #700914 28%
+          #3d040c 0%,
+          #700914 8%,
+          #b71d35 16%,
+          #650711 25%,
+          #a3142f 33%,
+          #47040c 43%
         );
-      box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.55);
-      transition: transform 2s cubic-bezier(0.7, 0, 0.2, 1);
+      box-shadow:
+        inset 0 0 70px rgba(0, 0, 0, 0.75),
+        inset 0 0 20px rgba(255, 136, 136, 0.16);
+      transition: transform 2.15s cubic-bezier(0.7, 0, 0.2, 1);
+    }
+
+    .curtain::before {
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          transparent 0 8%,
+          rgba(255, 255, 255, 0.1) 10%,
+          transparent 13% 20%
+        );
+      content: "";
+      opacity: 0.6;
     }
 
     .curtain.left {
@@ -432,34 +776,194 @@
     }
 
     .start-screen.opening .curtain.left {
-      transform: translateX(-100%);
+      transform: translateX(-101%) skewY(1deg);
     }
 
     .start-screen.opening .curtain.right {
-      transform: translateX(100%);
+      transform: translateX(101%) skewY(-1deg);
     }
 
     .start-screen.opening .start-content {
       opacity: 0;
-      transition: opacity 0.5s ease;
+      transform: scale(0.86);
     }
 
-    .start-screen.hidden {
+    /* Particle field */
+
+    .particles {
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      overflow: hidden;
       pointer-events: none;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
     }
 
-    @keyframes contentIn {
+    .particle {
+      position: absolute;
+      bottom: -20px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255, 209, 102, 0.62);
+      box-shadow: 0 0 14px rgba(255, 209, 102, 0.8);
+      animation: particleRise linear infinite;
+    }
+
+    .particle:nth-child(1) {
+      left: 12%;
+      animation-duration: 9s;
+      animation-delay: -2s;
+    }
+
+    .particle:nth-child(2) {
+      left: 28%;
+      animation-duration: 12s;
+      animation-delay: -7s;
+    }
+
+    .particle:nth-child(3) {
+      left: 45%;
+      animation-duration: 10s;
+      animation-delay: -4s;
+    }
+
+    .particle:nth-child(4) {
+      left: 67%;
+      animation-duration: 13s;
+      animation-delay: -9s;
+    }
+
+    .particle:nth-child(5) {
+      left: 84%;
+      animation-duration: 8s;
+      animation-delay: -1s;
+    }
+
+    @keyframes contentEnter {
       from {
         opacity: 0;
-        transform: translateY(25px);
+        transform: translateY(30px) scale(0.98);
       }
 
       to {
         opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes orbFloat {
+      from {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+
+      to {
+        transform: translate3d(-50px, 35px, 0) scale(1.12);
+      }
+    }
+
+    @keyframes lineDrift {
+      from {
+        opacity: 0;
+        transform: translateX(-20vw) rotate(-35deg);
+      }
+
+      25% {
+        opacity: 0.8;
+      }
+
+      75% {
+        opacity: 0.8;
+      }
+
+      to {
+        opacity: 0;
+        transform: translateX(120vw) rotate(-35deg);
+      }
+    }
+
+    @keyframes quoteGlow {
+      from {
+        box-shadow: 0 16px 42px var(--shadow);
+      }
+
+      to {
+        box-shadow: 0 18px 48px var(--shadow), 0 0 26px rgba(255, 159, 67, 0.11);
+      }
+    }
+
+    @keyframes starPop {
+      0% {
+        transform: scale(0.3) rotate(-25deg);
+        opacity: 0;
+      }
+
+      70% {
+        transform: scale(1.22) rotate(8deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1.05) rotate(0);
+      }
+    }
+
+    @keyframes titleFloat {
+      0%,
+      100% {
         transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @keyframes ringPulse {
+      0%,
+      100% {
+        opacity: 0.2;
+        transform: scale(0.9);
+      }
+
+      50% {
+        opacity: 0.55;
+        transform: scale(1.08);
+      }
+    }
+
+    @keyframes ringSpin {
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    @keyframes particleRise {
+      0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.5);
+      }
+
+      15% {
+        opacity: 1;
+      }
+
+      85% {
+        opacity: 0.8;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-110vh) translateX(70px) scale(1.4);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
       }
     }
 
@@ -476,394 +980,452 @@
       .slide {
         position: relative;
         min-height: 100vh;
-        padding: 60px 24px 110px;
+        padding: 65px 18px 120px;
+      }
+
+      .slide::before {
+        inset: 3%;
+        border-radius: 25px;
       }
 
       .content {
         max-height: none;
         overflow: visible;
+        padding: 28px 12px;
+      }
+
+      h1 {
+        letter-spacing: -3px;
+      }
+
+      h2 {
+        letter-spacing: -2px;
       }
 
       .card-grid,
       .card-grid.two-columns,
       .story-map {
         grid-template-columns: 1fr;
-        gap: 14px;
+        gap: 15px;
       }
 
       .card {
         min-height: auto;
-        padding: 22px;
+        padding: 24px 20px;
+      }
+
+      .quote {
+        padding: 25px 22px 25px 30px;
       }
 
       .controls {
-        bottom: 14px;
+        bottom: 12px;
+        width: calc(100% - 22px);
+        justify-content: center;
+        gap: 7px;
       }
 
-      button {
-        padding: 10px 13px;
-        font-size: 13px;
+      .controls button {
+        min-width: 0;
+        padding: 11px 13px;
+        font-size: 12px;
+      }
+
+      .dots {
+        gap: 5px;
+      }
+
+      .dot {
+        width: 7px;
+        height: 7px;
+      }
+
+      .dot.active {
+        width: 22px;
+      }
+
+      .slide-number {
+        top: 20px;
+        left: 22px;
       }
     }
   </style>
 </head>
+
 <body>
   <div class="start-screen" id="startScreen">
+    <div class="particles">
+      <span class="particle"></span>
+      <span class="particle"></span>
+      <span class="particle"></span>
+      <span class="particle"></span>
+      <span class="particle"></span>
+    </div>
+
     <div class="curtain left"></div>
     <div class="curtain right"></div>
-<div class="start-content">
-  <h1>Book Presentation</h1>
-  <p>Press the button to start the presentation.</p>
-  <button class="start-button" id="startButton">
-    Start Presentation
-  </button>
-</div>
 
+    <div class="start-content">
+      <h1>Deep Water</h1>
+      <p>A cinematic book presentation by Colton Reinhart</p>
+      <button class="start-button" id="startButton">
+        Begin Presentation
+      </button>
+    </div>
   </div>
+
   <div class="slideshow">
+    <div class="ambient-lines">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
     <div class="progress" id="progress"></div>
-<!-- Slide 1 -->
-<section class="slide active">
-  <span class="slide-number">01 / 14</span>
 
-  <div class="content">
-    <div class="eyebrow">Book Presentation</div>
-    <h1 class="editable">Deep Water</h1>
-    <p class="subtitle editable">By: Colton Reinhart</p>
-  </div>
-</section>
+    <!-- Slide 1 -->
+    <section class="slide active">
+      <span class="slide-number">01 / 14</span>
 
-<!-- Slide 2 -->
-<section class="slide">
-  <span class="slide-number">02 / 14</span>
-
-  <div class="content">
-    <div class="eyebrow">Author Introduction</div>
-    <h2 class="editable">Maren Stoffels</h2>
-
-    <div class="quote editable">
-      The author of Deep Water.
-    </div>
-  </div>
-</section>
-
-<!-- Slide 3 -->
-<section class="slide">
-  <span class="slide-number">03 / 14</span>
-
-  <div class="content">
-    <div class="eyebrow">My Reading Choice</div>
-    <h2 class="editable">Why I Read This Book</h2>
-
-    <div class="quote editable">
-      I chose to read this book because it stood out among all of the other books, and I prefer horror, so after I read the back of the book, I decided to try it out.
-    </div>
-  </div>
-</section>
-
-<!-- Slide 4 -->
-<section class="slide">
-  <span class="slide-number">04 / 14</span>
-
-  <div class="content">
-    <div class="eyebrow">Main Characters</div>
-    <h2>Protagonist and Antagonist</h2>
-
-    <div class="card-grid two-columns">
-      <div class="card character-card">
-        <strong class="editable">[PROTAGONIST]</strong>
-        <span class="character-role editable">Protagonist</span>
-        <span class="editable">
-          The Protagonist of Deep Water is Vesper who is attempting by the end of the book to tell the media about No Exit and is trying to surive No Exit.
-        </span>
+      <div class="content">
+        <div class="eyebrow">Book Presentation</div>
+        <h1 class="editable">Deep Water</h1>
+        <p class="subtitle editable">By: Colton Reinhart</p>
       </div>
+    </section>
 
-      <div class="card character-card">
-        <strong class="editable">[ANTAGONIST]</strong>
-        <span class="character-role editable">Antagonist</span>
-        <span class="editable">
-          The Antagonist of Deep Water is Jumper, who is trying to make everyone have a worse time while on the ship and is not remorseful in any way.
-        </span>
+    <!-- Slide 2 -->
+    <section class="slide">
+      <span class="slide-number">02 / 14</span>
+
+      <div class="content">
+        <div class="eyebrow">Author Introduction</div>
+        <h2 class="editable">Maren Stoffels</h2>
+
+        <div class="quote editable">
+          The author of Deep Water.
+        </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- Slide 5 -->
-<section class="slide">
-  <span class="slide-number">05 / 14</span>
+    <!-- Slide 3 -->
+    <section class="slide">
+      <span class="slide-number">03 / 14</span>
 
-  <div class="content">
-    <div class="eyebrow">Supporting Cast</div>
-    <h2>Important Side Characters</h2>
+      <div class="content">
+        <div class="eyebrow">My Reading Choice</div>
+        <h2 class="editable">Why I Read This Book</h2>
 
-    <div class="card-grid">
-      <div class="card character-card">
-        <strong class="editable">[Gwen]</strong>
-        <span class="character-role editable">Side Character</span>
-        <span class="editable">
-          Gwen is an important character because she is blind but seems to be the most reasonable-minded of the people in No Exit until the very end.
-        </span>
+        <div class="quote editable">
+          I chose to read this book because it stood out among all of the other books, and I prefer horror, so after I read the back of the book, I decided to try it out.
+        </div>
       </div>
+    </section>
 
-      <div class="card character-card">
-        <strong class="editable">[Jonah]</strong>
-        <span class="character-role editable">Side Character</span>
-        <span class="editable">
-          Jonah is an important character because he is alongside Vesper throughout the entire story, attempting to protect Vesper.
-        </span>
+    <!-- Slide 4 -->
+    <section class="slide">
+      <span class="slide-number">04 / 14</span>
+
+      <div class="content">
+        <div class="eyebrow">Main Characters</div>
+        <h2>Protagonist and Antagonist</h2>
+
+        <div class="card-grid two-columns">
+          <div class="card character-card">
+            <strong class="editable">[PROTAGONIST]</strong>
+            <span class="character-role editable">Protagonist</span>
+            <span class="editable">
+              The Protagonist of Deep Water is Vesper who is attempting by the end of the book to tell the media about No Exit and is trying to surive No Exit.
+            </span>
+          </div>
+
+          <div class="card character-card">
+            <strong class="editable">[ANTAGONIST]</strong>
+            <span class="character-role editable">Antagonist</span>
+            <span class="editable">
+              The Antagonist of Deep Water is Jumper, who is trying to make everyone have a worse time while on the ship and is not remorseful in any way.
+            </span>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- Slide 6 -->
-<section class="slide">
-  <span class="slide-number">06 / 14</span>
+    <!-- Slide 5 -->
+    <section class="slide">
+      <span class="slide-number">05 / 14</span>
 
-  <div class="content">
-    <div class="eyebrow">Where and When</div>
-    <h2>Setting</h2>
+      <div class="content">
+        <div class="eyebrow">Supporting Cast</div>
+        <h2>Important Side Characters</h2>
 
-    <div class="card-grid two-columns">
-      <div class="card">
-        <strong>Location</strong>
-        <span class="editable">
-          Deep Water takes place on a luxury cruise ship.
-        </span>
+        <div class="card-grid">
+          <div class="card character-card">
+            <strong class="editable">[Gwen]</strong>
+            <span class="character-role editable">Side Character</span>
+            <span class="editable">
+              Gwen is an important character because she is blind but seems to be the most reasonable-minded of the people in No Exit until the very end.
+            </span>
+          </div>
+
+          <div class="card character-card">
+            <strong class="editable">[Jonah]</strong>
+            <span class="character-role editable">Side Character</span>
+            <span class="editable">
+              Jonah is an important character because he is alongside Vesper throughout the entire story, attempting to protect Vesper.
+            </span>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="card">
-        <strong>Time Period</strong>
-        <span class="editable">
-          We are not told when No Exit takes place.
-        </span>
+    <!-- Slide 6 -->
+    <section class="slide">
+      <span class="slide-number">06 / 14</span>
+
+      <div class="content">
+        <div class="eyebrow">Where and When</div>
+        <h2>Setting</h2>
+
+        <div class="card-grid two-columns">
+          <div class="card">
+            <strong>Location</strong>
+            <span class="editable">
+              Deep Water takes place on a luxury cruise ship.
+            </span>
+          </div>
+
+          <div class="card">
+            <strong>Time Period</strong>
+            <span class="editable">
+              We are not told when No Exit takes place.
+            </span>
+          </div>
+        </div>
+
+        <div class="quote editable">
+          The setting really affects the No Exit theme, symbolizing that help is nowhere near them.
+        </div>
       </div>
-    </div>
+    </section>
 
-    <div class="quote editable">
-      The setting really affects the No Exit theme, symbolizing that help is nowhere near them.
-    </div>
-  </div>
-</section>
+    <!-- Slide 7 -->
+    <section class="slide">
+      <span class="slide-number">07 / 14</span>
 
-<!-- Slide 7 -->
-<section class="slide">
-  <span class="slide-number">07 / 14</span>
+      <div class="content">
+        <div class="eyebrow">Big Idea</div>
+        <h2>Theme</h2>
 
-  <div class="content">
-    <div class="eyebrow">Big Idea</div>
-    <h2>Theme</h2>
+        <div class="timeline">
+          <span class="editable">Helping your freinds is important</span>
+          <span class="editable">
+            Sometimes you have to make the hard decisions in life
+          </span>
+        </div>
 
-    <div class="timeline">
-      <span class="editable">Helping your freinds is important</span>
-      <span class="editable">
-        Sometimes you have to make the hard decisions in life
-      </span>
-    </div>
-
-    <div class="quote editable">
-      It is that sometimes you have to make the hard decisions in life.
-    </div>
-  </div>
-</section>
-
-<!-- Slide 8 -->
-<section class="slide">
-  <span class="slide-number">08 / 14</span>
-
-  <div class="content">
-    <div class="eyebrow">Story Problem</div>
-    <h2>Main Conflict</h2>
-
-    <div class="quote editable">
-      No Exit is the main conflict in the story.
-    </div>
-
-    <div class="card-grid two-columns">
-      <div class="card">
-        <strong>Internal Conflict</strong>
-        <span class="editable">
-          Whether he will survive, will he come out the same?
-        </span>
+        <div class="quote editable">
+          It is that sometimes you have to make the hard decisions in life.
+        </div>
       </div>
+    </section>
 
-      <div class="card">
-        <strong>External Conflict</strong>
-        <span class="editable">
-          Will No exit kill him before he can escape?
-        </span>
+    <!-- Slide 8 -->
+    <section class="slide">
+      <span class="slide-number">08 / 14</span>
+
+      <div class="content">
+        <div class="eyebrow">Story Problem</div>
+        <h2>Main Conflict</h2>
+
+        <div class="quote editable">
+          No Exit is the main conflict in the story.
+        </div>
+
+        <div class="card-grid two-columns">
+          <div class="card">
+            <strong>Internal Conflict</strong>
+            <span class="editable">
+              Whether he will survive, will he come out the same?
+            </span>
+          </div>
+
+          <div class="card">
+            <strong>External Conflict</strong>
+            <span class="editable">
+              Will No exit kill him before he can escape?
+            </span>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- Slide 9 -->
-<section class="slide">
-  <span class="slide-number">09 / 14</span>
+    <!-- Slide 9 -->
+    <section class="slide">
+      <span class="slide-number">09 / 14</span>
 
-  <div class="content">
-    <div class="eyebrow">Plot Structure</div>
-    <h2>Exposition</h2>
+      <div class="content">
+        <div class="eyebrow">Plot Structure</div>
+        <h2>Exposition</h2>
 
-    <div class="story-map">
-      <div class="story-step">
-        <span>Characters</span>
-        <p class="editable">
-          Vesper is introduced at the very beginning of the story.
+        <div class="story-map">
+          <div class="story-step">
+            <span>Characters</span>
+            <p class="editable">
+              Vesper is introduced at the very beginning of the story.
+            </p>
+          </div>
+
+          <div class="story-step">
+            <span>Setting</span>
+            <p class="editable">
+              The Story begins on the cruise ship No Exit.
+            </p>
+          </div>
+
+          <div class="story-step">
+            <span>Situation</span>
+            <p class="editable">
+              They are enjoying the cruise ship.
+            </p>
+          </div>
+
+          <div class="story-step">
+            <span>Important Information</span>
+            <p class="editable">
+              The reader needs to know that gwen is blind.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 10 -->
+    <section class="slide">
+      <span class="slide-number">10 / 14</span>
+
+      <div class="content">
+        <div class="eyebrow">Plot Structure</div>
+        <h2>Rising Action</h2>
+
+        <div class="quote editable">
+          The rising action for Deep Water is Vesper realising what the so-called luxury cruise ship really is.
+        </div>
+
+        <div class="timeline">
+          <span class="editable">Boarding</span>
+          <span class="editable">Meeting Jonah</span>
+          <span class="editable">Orination</span>
+          <span class="editable">Going to his room</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 11 -->
+    <section class="slide">
+      <span class="slide-number">11 / 14</span>
+
+      <div class="content">
+        <div class="eyebrow">Plot Structure</div>
+        <h2>Climax</h2>
+
+        <div class="quote editable">
+          The climax of Deep Water is when No Exit kills someone by drowning them.
+        </div>
+
+        <p class="editable" style="margin-top: 30px;">
+          This affects the story by showing how far No Exit will go to reform the bullies on board.
         </p>
       </div>
+    </section>
 
-      <div class="story-step">
-        <span>Setting</span>
-        <p class="editable">
-          The Story begins on the cruise ship No Exit.
+    <!-- Slide 12 -->
+    <section class="slide">
+      <span class="slide-number">12 / 14</span>
+
+      <div class="content">
+        <div class="eyebrow">Plot Structure</div>
+        <h2>Falling Action</h2>
+
+        <div class="quote editable">
+          The falling action is just about Vesper finding Gwen's journal.
+        </div>
+
+        <p class="editable" style="margin-top: 30px;">
+          This helps add to the end, showing how sad Gwen was to leave Vesper and Jonah.
         </p>
       </div>
+    </section>
 
-      <div class="story-step">
-        <span>Situation</span>
-        <p class="editable">
-          They are enjoying the cruise ship.
+    <!-- Slide 13 -->
+    <section class="slide">
+      <span class="slide-number">13 / 14</span>
+
+      <div class="content">
+        <div class="eyebrow">Plot Structure</div>
+        <h2>Resolution</h2>
+
+        <div class="quote editable">
+          ---Not going to spoil it---
+        </div>
+
+        <p class="editable" style="margin-top: 30px;">
+          ---Not going to spoil it---
         </p>
       </div>
+    </section>
 
-      <div class="story-step">
-        <span>Important Information</span>
-        <p class="editable">
-          The reader needs to know that gwen is blind.
-        </p>
+    <!-- Slide 14 -->
+    <section class="slide">
+      <span class="slide-number">14 / 14</span>
+
+      <div class="content">
+        <div class="eyebrow">Final Rating</div>
+        <h2>Book Review</h2>
+
+        <div class="review-box">
+          <h3 class="editable">Deep Water</h3>
+
+          <div
+            class="stars"
+            id="ratingStars"
+            data-rating="4"
+            aria-label="Book rating"
+          >
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+          </div>
+
+          <div class="rating-number">
+            Rating: <span id="ratingNumber">0</span> / 5
+          </div>
+
+          <p class="editable">
+            Overall, one of my favorite books that I have read.
+          </p>
+
+          <div class="review-quote editable">
+            “Not everyone made it back alive”
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   </div>
-</section>
 
-<!-- Slide 10 -->
-<section class="slide">
-  <span class="slide-number">10 / 14</span>
-
-  <div class="content">
-    <div class="eyebrow">Plot Structure</div>
-    <h2>Rising Action</h2>
-
-    <div class="quote editable">
-      The rising action for Deep Water is Vesper realising what the so-called luxury cruise ship really is.
-    </div>
-
-    <div class="timeline">
-      <span class="editable">Boarding</span>
-      <span class="editable">Meeting Jonah</span>
-      <span class="editable">Orination</span>
-      <span class="editable">Going to his room</span>
-    </div>
-  </div>
-</section>
-
-<!-- Slide 11 -->
-<section class="slide">
-  <span class="slide-number">11 / 14</span>
-
-  <div class="content">
-    <div class="eyebrow">Plot Structure</div>
-    <h2>Climax</h2>
-
-    <div class="quote editable">
-      The climax of Deep Water is when No Exit kills someone by drowning them.
-    </div>
-
-    <p class="editable" style="margin-top: 30px;">
-      This affects the story by showing how far No Exit will go to reform the bullies on board.
-    </p>
-  </div>
-</section>
-
-<!-- Slide 12 -->
-<section class="slide">
-  <span class="slide-number">12 / 14</span>
-
-  <div class="content">
-    <div class="eyebrow">Plot Structure</div>
-    <h2>Falling Action</h2>
-
-    <div class="quote editable">
-      The falling action is just about Vesper finding Gwen's journal.
-    </div>
-
-    <p class="editable" style="margin-top: 30px;">
-      This helps add to the end, showing how sad Gwen was to leave Vesper and Jonah.
-    </p>
-  </div>
-</section>
-
-<!-- Slide 13 -->
-<section class="slide">
-  <span class="slide-number">13 / 14</span>
-
-  <div class="content">
-    <div class="eyebrow">Plot Structure</div>
-    <h2>Resolution</h2>
-
-    <div class="quote editable">
-      ---Not going to spoil it---
-    </div>
-
-    <p class="editable" style="margin-top: 30px;">
-      ---Not going to spoil it---
-    </p>
-  </div>
-</section>
-
-<!-- Slide 14: Book Review -->
-<section class="slide">
-  <span class="slide-number">14 / 14</span>
-
-  <div class="content">
-    <div class="eyebrow">Final Rating</div>
-    <h2>Book Review</h2>
-
-    <div class="review-box">
-      <h3 class="editable">Deep Water</h3>
-
-      <div
-        class="stars"
-        id="ratingStars"
-        data-rating="4"
-        aria-label="Book rating"
-      >
-        <span class="star">★</span>
-        <span class="star">★</span>
-        <span class="star">★</span>
-        <span class="star">★</span>
-        <span class="star">★</span>
-      </div>
-
-      <div class="rating-number">
-        Rating: <span id="ratingNumber">0</span> / 5
-      </div>
-
-      <p class="editable">
-        Overall, one of my favorite books that I have read.
-      </p>
-
-      <div class="review-quote editable">
-        “Not everyone made it back alive”
-      </div>
-    </div>
-  </div>
-</section>
-
-  </div>
   <div class="controls">
     <button id="previousButton" aria-label="Previous slide">
       ← Previous
     </button>
-<div class="dots" id="dots"></div>
 
-<button id="nextButton" aria-label="Next slide">
-  Next →
-</button>
+    <div class="dots" id="dots"></div>
 
+    <button id="nextButton" aria-label="Next slide">
+      Next →
+    </button>
   </div>
+
   <script>
     const startScreen = document.getElementById("startScreen");
     const startButton = document.getElementById("startButton");
@@ -881,6 +1443,7 @@
     let currentSlide = 0;
     let autoPlay = null;
     let presentationStarted = false;
+    let touchStartX = 0;
 
     const rating = Number(ratingStars.dataset.rating);
 
@@ -931,8 +1494,7 @@
         dot.classList.toggle("active", dotIndex === index);
       });
 
-      progress.style.width =
-        `${((index + 1) / slides.length) * 100}%`;
+      progress.style.width = `${((index + 1) / slides.length) * 100}%`;
 
       currentSlide = index;
     }
@@ -966,7 +1528,7 @@
         startScreen.classList.add("hidden");
         showSlide(0);
         startAutoPlay();
-      }, 2100);
+      }, 2150);
     }
 
     startButton.addEventListener("click", startPresentation);
@@ -1004,9 +1566,17 @@
         previousSlide();
         restartAutoPlay();
       }
-    });
 
-    let touchStartX = 0;
+      if (event.key === "Home") {
+        showSlide(0);
+        restartAutoPlay();
+      }
+
+      if (event.key === "End") {
+        showSlide(slides.length - 1);
+        restartAutoPlay();
+      }
+    });
 
     document.addEventListener("touchstart", (event) => {
       touchStartX = event.changedTouches[0].screenX;
