@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Book Presentation</title>
+  <title>Deep Water Book Presentation</title>
+
   <style>
     :root {
       --cream: #fff7ed;
@@ -257,6 +258,49 @@
       font-size: 18px;
     }
 
+    .review-box {
+      max-width: 850px;
+      margin: 30px auto 0;
+      padding: 34px;
+      border: 2px solid rgba(214, 106, 44, 0.22);
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: 0 14px 34px var(--shadow);
+    }
+
+    .stars {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 20px 0;
+      font-size: clamp(42px, 7vw, 76px);
+    }
+
+    .star {
+      color: #d9cfc8;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .star.filled {
+      color: #f5b700;
+      transform: scale(1.08);
+    }
+
+    .rating-number {
+      margin-bottom: 18px;
+      color: var(--dark-orange);
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .review-quote {
+      margin-top: 24px;
+      color: var(--brown);
+      font-size: clamp(20px, 2.5vw, 30px);
+      font-style: italic;
+      line-height: 1.4;
+    }
+
     .controls {
       position: fixed;
       z-index: 10;
@@ -377,439 +421,491 @@
     }
   </style>
 </head>
+
 <body>
   <div class="slideshow">
     <div class="progress" id="progress"></div>
-<section class="slide active">
-  <span class="slide-number">01 / 14</span>
-  <div class="content">
-    <div class="eyebrow">Book Presentation</div>
-    <h1 class="editable">Deep Water</h1>
-    <p class="subtitle editable">By: Colton Reinhart</p>
-  </div>
-</section>
 
-<section class="slide">
-  <span class="slide-number">02 / 14</span>
-  <div class="content">
-    <div class="eyebrow">Author Introduction</div>
-    <h2 class="editable">Maren Stoffels</h2>
-    <div class="quote editable">The author of Deep Water.</div>
-  </div>
-</section>
+    <!-- Slide 1: Book Title -->
+    <section class="slide active">
+      <span class="slide-number">01 / 15</span>
 
-<section class="slide">
-  <span class="slide-number">03 / 14</span>
-  <div class="content">
-    <div class="eyebrow">My Reading Choice</div>
-    <h2 class="editable">Why I Read This Book</h2>
-    <div class="quote editable">
-      I chose to read this book because it stood out among all of the other books, and I prefer horror, so after I read the back of the book, I decided to try it out.
-    </div>
-  </div>
-</section>
-
-<section class="slide">
-  <span class="slide-number">04 / 14</span>
-  <div class="content">
-    <div class="eyebrow">Main Characters</div>
-    <h2>Protagonist and Antagonist</h2>
-
-    <div class="card-grid two-columns">
-      <div class="card character-card">
-        <strong class="editable">Vesper</strong>
-        <span class="character-role editable">Protagonist</span>
-        <span class="editable">
-          The protagonist of Deep Water is Vesper. By the end of the book, Vesper is attempting to tell the media about No Exit and is trying to survive.
-        </span>
+      <div class="content">
+        <div class="eyebrow">Book Presentation</div>
+        <h1>Deep Water</h1>
+        <p class="subtitle">By: Colton Reinhart</p>
       </div>
+    </section>
 
-      <div class="card character-card">
-        <strong class="editable">Jumper</strong>
-        <span class="character-role editable">Antagonist</span>
-        <span class="editable">
-          The antagonist of Deep Water is Jumper, who is trying to make everyone have a worse time while on the ship and is not remorseful in any way.
-        </span>
+    <!-- Slide 2: Author Introduction -->
+    <section class="slide">
+      <span class="slide-number">02 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">Author Introduction</div>
+        <h2>Maren Stoffels</h2>
+
+        <div class="quote">
+          Maren Stoffels is the author of <em>Deep Water</em>.
+        </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<section class="slide">
-  <span class="slide-number">05 / 14</span>
-  <div class="content">
-    <div class="eyebrow">Supporting Cast</div>
-    <h2>Important Side Characters</h2>
+    <!-- Slide 3: Why I Read It -->
+    <section class="slide">
+      <span class="slide-number">03 / 15</span>
 
-    <div class="card-grid">
-      <div class="card character-card">
-        <strong class="editable">Gwen</strong>
-        <span class="character-role editable">Side Character</span>
-        <span class="editable">
-          Gwen is an important character because she is blind but seems to be the most reasonable-minded of the people in No Exit until the very end.
-        </span>
+      <div class="content">
+        <div class="eyebrow">My Reading Choice</div>
+        <h2>Why I Read This Book</h2>
+
+        <div class="quote">
+          I chose to read this book because it stood out among the other books. I prefer horror, and after reading the back cover, I decided to try it.
+        </div>
       </div>
+    </section>
 
-      <div class="card character-card">
-        <strong class="editable">Jonah</strong>
-        <span class="character-role editable">Side Character</span>
-        <span class="editable">
-          Jonah is an important character because he is alongside Vesper throughout the entire story, attempting to protect Vesper.
-        </span>
+    <!-- Slide 4: Protagonist and Antagonist -->
+    <section class="slide">
+      <span class="slide-number">04 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">Main Characters</div>
+        <h2>Protagonist and Antagonist</h2>
+
+        <div class="card-grid two-columns">
+          <div class="card character-card">
+            <strong>Vesper</strong>
+            <span class="character-role">Protagonist</span>
+            <span>
+              Vesper is the protagonist of <em>Deep Water</em>. By the end of the book, Vesper is trying to tell the media about No Exit and survive the ship.
+            </span>
+          </div>
+
+          <div class="card character-card">
+            <strong>Jumper</strong>
+            <span class="character-role">Antagonist</span>
+            <span>
+              Jumper is the antagonist of <em>Deep Water</em>. Jumper tries to make everyone have a worse time on the ship and does not seem remorseful.
+            </span>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<section class="slide">
-  <span class="slide-number">06 / 14</span>
-  <div class="content">
-    <div class="eyebrow">Where and When</div>
-    <h2>Setting</h2>
+    <!-- Slide 5: Important Side Characters -->
+    <section class="slide">
+      <span class="slide-number">05 / 15</span>
 
-    <div class="card-grid two-columns">
-      <div class="card">
-        <strong>Location</strong>
-        <span class="editable">
-          Deep Water takes place on a luxury cruise ship.
-        </span>
+      <div class="content">
+        <div class="eyebrow">Supporting Cast</div>
+        <h2>Important Side Characters</h2>
+
+        <div class="card-grid two-columns">
+          <div class="card character-card">
+            <strong>Gwen</strong>
+            <span class="character-role">Side Character</span>
+            <span>
+              Gwen is important because she is blind, yet she seems to be one of the most reasonable people on No Exit until the very end.
+            </span>
+          </div>
+
+          <div class="card character-card">
+            <strong>Jonah</strong>
+            <span class="character-role">Side Character</span>
+            <span>
+              Jonah is important because he stays alongside Vesper throughout the story and tries to protect Vesper.
+            </span>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="card">
-        <strong>Time Period</strong>
-        <span class="editable">
-          We are not told when No Exit takes place.
-        </span>
+    <!-- Slide 6: Setting -->
+    <section class="slide">
+      <span class="slide-number">06 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">Where and When</div>
+        <h2>Setting</h2>
+
+        <div class="card-grid two-columns">
+          <div class="card">
+            <strong>Location</strong>
+            <span>
+              <em>Deep Water</em> takes place on a luxury cruise ship called No Exit.
+            </span>
+          </div>
+
+          <div class="card">
+            <strong>Time Period</strong>
+            <span>
+              The book does not clearly tell us when the story takes place.
+            </span>
+          </div>
+        </div>
+
+        <div class="quote">
+          The setting affects the No Exit theme because the ship is far from help, making the characters feel trapped and isolated.
+        </div>
       </div>
-    </div>
+    </section>
 
-    <div class="quote editable">
-      The setting really affects the No Exit theme, symbolizing that help is nowhere near them.
-    </div>
-  </div>
-</section>
+    <!-- Slide 7: Theme -->
+    <section class="slide">
+      <span class="slide-number">07 / 15</span>
 
-<section class="slide">
-  <span class="slide-number">07 / 14</span>
-  <div class="content">
-    <div class="eyebrow">Big Idea</div>
-    <h2>Theme</h2>
+      <div class="content">
+        <div class="eyebrow">Big Idea</div>
+        <h2>Theme</h2>
 
-    <div class="timeline">
-      <span class="editable">Helping your friends is important</span>
-      <span class="editable">Sometimes you have to make hard decisions in life</span>
-    </div>
+        <div class="timeline">
+          <span>Helping your friends is important</span>
+          <span>Sometimes you must make difficult decisions</span>
+        </div>
 
-    <div class="quote editable">
-      Sometimes you have to make hard decisions in life.
-    </div>
-  </div>
-</section>
-
-<section class="slide">
-  <span class="slide-number">08 / 14</span>
-  <div class="content">
-    <div class="eyebrow">Story Problem</div>
-    <h2>Main Conflict</h2>
-
-    <div class="quote editable">
-      No Exit is the main conflict in the story.
-    </div>
-
-    <div class="card-grid two-columns">
-      <div class="card">
-        <strong>Internal Conflict</strong>
-        <span class="editable">
-          Vesper must decide whether survival will change who they are.
-        </span>
+        <div class="quote">
+          One important theme is that sometimes you have to make difficult decisions in life.
+        </div>
       </div>
+    </section>
 
-      <div class="card">
-        <strong>External Conflict</strong>
-        <span class="editable">
-          Vesper must escape No Exit before it kills them.
-        </span>
+    <!-- Slide 8: Main Conflict -->
+    <section class="slide">
+      <span class="slide-number">08 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">Story Problem</div>
+        <h2>Main Conflict</h2>
+
+        <div class="quote">
+          The main conflict is that Vesper and the other passengers must survive No Exit and escape the danger on the ship.
+        </div>
+
+        <div class="card-grid two-columns">
+          <div class="card">
+            <strong>Internal Conflict</strong>
+            <span>
+              Vesper must deal with the fear of surviving and wonder whether leaving the ship will change them.
+            </span>
+          </div>
+
+          <div class="card">
+            <strong>External Conflict</strong>
+            <span>
+              Vesper must escape No Exit before the ship's dangers kill them.
+            </span>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<section class="slide">
-  <span class="slide-number">09 / 14</span>
-  <div class="content">
-    <div class="eyebrow">Plot Structure</div>
-    <h2>Exposition</h2>
+    <!-- Slide 9: Exposition -->
+    <section class="slide">
+      <span class="slide-number">09 / 15</span>
 
-    <div class="story-map">
-      <div class="story-step">
-        <span>Characters</span>
-        <p class="editable">Vesper is introduced at the very beginning of the story.</p>
+      <div class="content">
+        <div class="eyebrow">Plot Structure</div>
+        <h2>Exposition</h2>
+
+        <div class="story-map">
+          <div class="story-step">
+            <span>Characters</span>
+            <p>Vesper is introduced at the beginning of the story.</p>
+          </div>
+
+          <div class="story-step">
+            <span>Setting</span>
+            <p>The story begins on the cruise ship No Exit.</p>
+          </div>
+
+          <div class="story-step">
+            <span>Situation</span>
+            <p>At first, the characters are enjoying the cruise ship.</p>
+          </div>
+
+          <div class="story-step">
+            <span>Important Information</span>
+            <p>The reader needs to know that Gwen is blind.</p>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="story-step">
-        <span>Setting</span>
-        <p class="editable">The story begins on the cruise ship No Exit.</p>
+    <!-- Slide 10: Rising Action -->
+    <section class="slide">
+      <span class="slide-number">10 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">Plot Structure</div>
+        <h2>Rising Action</h2>
+
+        <div class="quote">
+          The rising action begins when Vesper realizes what the so-called luxury cruise ship really is.
+        </div>
+
+        <div class="timeline">
+          <span>Vesper notices something is wrong</span>
+          <span>The passengers become trapped</span>
+          <span>The danger on the ship increases</span>
+          <span>Vesper searches for a way to survive</span>
+        </div>
       </div>
+    </section>
 
-      <div class="story-step">
-        <span>Situation</span>
-        <p class="editable">The characters are enjoying the cruise ship.</p>
+    <!-- Slide 11: Climax -->
+    <section class="slide">
+      <span class="slide-number">11 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">Plot Structure</div>
+        <h2>Climax</h2>
+
+        <div class="quote">
+          The climax of <em>Deep Water</em> occurs when No Exit kills someone by drowning them.
+        </div>
+
+        <p style="margin-top: 30px;">
+          This affects the story by showing how far No Exit will go to reform the bullies on board.
+        </p>
       </div>
+    </section>
 
-      <div class="story-step">
-        <span>Important Information</span>
-        <p class="editable">The reader needs to know that Gwen is blind.</p>
+    <!-- Slide 12: Falling Action -->
+    <section class="slide">
+      <span class="slide-number">12 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">Plot Structure</div>
+        <h2>Falling Action</h2>
+
+        <div class="quote">
+          The falling action focuses on Vesper finding Gwen's journal.
+        </div>
+
+        <p style="margin-top: 30px;">
+          This adds emotion to the ending and shows how sad Gwen was to leave Vesper and Jonah.
+        </p>
       </div>
-    </div>
+    </section>
+
+    <!-- Slide 13: Resolution -->
+    <section class="slide">
+      <span class="slide-number">13 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">Plot Structure</div>
+        <h2>Resolution</h2>
+
+        <div class="quote">
+          The resolution explains what happens after Vesper and the others face the dangers of No Exit.
+        </div>
+
+        <p style="margin-top: 30px;">
+          I will not spoil the ending, but the resolution shows how the characters are affected by everything they experienced.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 14: Final Thoughts -->
+    <section class="slide">
+      <span class="slide-number">14 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">Final Thoughts</div>
+        <h2>What I Learned</h2>
+
+        <div class="quote">
+          I learned that helping your friends matters, even when making the right decision is difficult. The book also showed me how people can change when they are placed in extreme situations.
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 15: Book Review -->
+    <section class="slide">
+      <span class="slide-number">15 / 15</span>
+
+      <div class="content">
+        <div class="eyebrow">Final Rating</div>
+        <h2>Book Review</h2>
+
+        <div class="review-box">
+          <p>
+            I would recommend <em>Deep Water</em> to readers who enjoy horror, suspense, and stories about survival.
+          </p>
+
+          <div
+            class="stars"
+            id="ratingStars"
+            data-rating="4"
+            aria-label="Rating: 4 out of 5 stars"
+          >
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+          </div>
+
+          <div class="rating-number" id="ratingNumber"></div>
+
+          <div class="review-quote">
+            “A suspenseful story about survival, friendship, and difficult choices.”
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
-</section>
 
-<section class="slide">
-  <span class="slide-number">10 / 14</span>
-  <div class="content">
-    <div class="eyebrow">Plot Structure</div>
-    <h2>Rising Action</h2>
-
-    <div class="quote editable">
-      The rising action for Deep Water is Vesper realizing what the so-called luxury cruise ship really is.
-    </div>
-
-    <div class="timeline">
-      <span class="editable">[Event 1]</span>
-      <span class="editable">[Event 2]</span>
-      <span class="editable">[Event 3]</span>
-      <span class="editable">[Event 4]</span>
-    </div>
-  </div>
-</section>
-
-<section class="slide">
-  <span class="slide-number">11 / 14</span>
-  <div class="content">
-    <div class="eyebrow">Plot Structure</div>
-    <h2>Climax</h2>
-
-    <div class="quote editable">
-      The climax of Deep Water is when No Exit kills someone by drowning them.
-    </div>
-
-    <p class="editable" style="margin-top: 30px;">
-      This affects the story by showing how far No Exit will go to reform the bullies on board.
-    </p>
-  </div>
-</section>
-
-<section class="slide">
-  <span class="slide-number">12 / 14</span>
-  <div class="content">
-    <div class="eyebrow">Plot Structure</div>
-    <h2>Falling Action</h2>
-
-    <div class="quote editable">
-      The falling action is about Vesper finding Gwen's journal.
-    </div>
-
-    <p class="editable" style="margin-top: 30px;">
-      This adds to the ending by showing how sad Gwen was to leave Vesper and Jonah.
-    </p>
-  </div>
-</section>
-
-<section class="slide">
-  <span class="slide-number">13 / 14</span>
-  <div class="content">
-    <div class="eyebrow">Plot Structure</div>
-    <h2>Resolution</h2>
-
-    <div class="quote editable">
-      I am not going to spoil the resolution.
-    </div>
-
-    <p class="editable" style="margin-top: 30px;">
-      The ending reveals what happens to Vesper and the other characters.
-    </p>
-  </div>
-</section>
-
-<section class="slide">
-  <span class="slide-number">14 / 14</span>
-  <div class="content">
-    <div class="eyebrow">Final Thoughts</div>
-    <h2 class="editable">What I Learned</h2>
-
-    <div class="quote editable">
-      The story taught me that helping your friends and making difficult decisions can be important, even when the situation is dangerous.
-    </div>
-  </div>
-</section>
-
-  </div>
   <div class="controls">
     <button id="previousButton" type="button" aria-label="Previous slide">
       ← Previous
     </button>
-<div class="dots" id="dots"></div>
 
-<button id="nextButton" type="button" aria-label="Next slide">
-  Next →
-</button>
+    <div class="dots" id="dots" aria-label="Slide navigation"></div>
 
+    <button id="nextButton" type="button" aria-label="Next slide">
+      Next →
+    </button>
   </div>
+
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const slides = Array.from(document.querySelectorAll(".slide"));
-      const dotsContainer = document.getElementById("dots");
-      const progress = document.getElementById("progress");
-      const previousButton = document.getElementById("previousButton");
-      const nextButton = document.getElementById("nextButton");
+    const slides = document.querySelectorAll(".slide");
+    const dotsContainer = document.getElementById("dots");
+    const progress = document.getElementById("progress");
+    const previousButton = document.getElementById("previousButton");
+    const nextButton = document.getElementById("nextButton");
 
-      let currentSlide = 0;
-      let autoPlay;
+    const ratingStars = document.getElementById("ratingStars");
+    const ratingNumber = document.getElementById("ratingNumber");
+    const stars = document.querySelectorAll(".star");
 
-      function createDots() {
-        slides.forEach((slide, index) => {
-          const dot = document.createElement("button");
+    let currentSlide = 0;
+    let autoPlay;
 
-          dot.type = "button";
-          dot.className = "dot";
-          dot.setAttribute("aria-label", `Go to slide ${index + 1}`);
+    const rating = Math.max(
+      0,
+      Math.min(5, Number(ratingStars.dataset.rating) || 0)
+    );
 
-          dot.addEventListener("click", () => {
-            showSlide(index);
-            restartAutoPlay();
-          });
+    stars.forEach((star, index) => {
+      star.classList.toggle("filled", index < rating);
+    });
 
-          dotsContainer.appendChild(dot);
-        });
+    ratingNumber.textContent = `${rating} out of 5 stars`;
+
+    slides.forEach((_, index) => {
+      const dot = document.createElement("button");
+
+      dot.type = "button";
+      dot.className = "dot";
+      dot.setAttribute("aria-label", `Go to slide ${index + 1}`);
+
+      dot.addEventListener("click", () => {
+        showSlide(index);
+        restartAutoPlay();
+      });
+
+      dotsContainer.appendChild(dot);
+    });
+
+    const dots = document.querySelectorAll(".dot");
+
+    function showSlide(index) {
+      if (index < 0) {
+        index = slides.length - 1;
       }
 
-      function showSlide(index) {
-        if (index < 0) {
-          index = slides.length - 1;
+      if (index >= slides.length) {
+        index = 0;
+      }
+
+      slides.forEach((slide, slideIndex) => {
+        slide.classList.remove("active", "previous");
+
+        if (slideIndex < index) {
+          slide.classList.add("previous");
         }
+      });
 
-        if (index >= slides.length) {
-          index = 0;
-        }
+      slides[index].classList.add("active");
 
-        slides.forEach((slide, slideIndex) => {
-          slide.classList.remove("active", "previous");
+      dots.forEach((dot, dotIndex) => {
+        dot.classList.toggle("active", dotIndex === index);
+        dot.setAttribute(
+          "aria-current",
+          dotIndex === index ? "true" : "false"
+        );
+      });
 
-          if (slideIndex < index) {
-            slide.classList.add("previous");
-          }
-        });
+      progress.style.width = `${((index + 1) / slides.length) * 100}%`;
+      currentSlide = index;
+    }
 
-        slides[index].classList.add("active");
+    function nextSlide() {
+      showSlide(currentSlide + 1);
+    }
 
-        document.querySelectorAll(".dot").forEach((dot, dotIndex) => {
-          dot.classList.toggle("active", dotIndex === index);
-        });
+    function previousSlide() {
+      showSlide(currentSlide - 1);
+    }
 
-        progress.style.width = `${((index + 1) / slides.length) * 100}%`;
-        currentSlide = index;
-      }
+    function startAutoPlay() {
+      autoPlay = setInterval(nextSlide, 15000);
+    }
 
-      function nextSlide() {
-        showSlide(currentSlide + 1);
-      }
+    function restartAutoPlay() {
+      clearInterval(autoPlay);
+      startAutoPlay();
+    }
 
-      function previousSlide() {
-        showSlide(currentSlide - 1);
-      }
+    nextButton.addEventListener("click", () => {
+      nextSlide();
+      restartAutoPlay();
+    });
 
-      function startAutoPlay() {
-        clearInterval(autoPlay);
+    previousButton.addEventListener("click", () => {
+      previousSlide();
+      restartAutoPlay();
+    });
 
-        autoPlay = setInterval(() => {
-          nextSlide();
-        }, 15000);
-      }
-
-      function restartAutoPlay() {
-        startAutoPlay();
-      }
-
-      nextButton.addEventListener("click", () => {
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === " ") {
+        event.preventDefault();
         nextSlide();
         restartAutoPlay();
-      });
+      }
 
-      previousButton.addEventListener("click", () => {
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
         previousSlide();
         restartAutoPlay();
-      });
-
-      /*
-        Capture the keyboard event before GitHub, buttons, or other elements
-        can interfere with it.
-      */
-      document.addEventListener(
-        "keydown",
-        (event) => {
-          const key = event.key;
-
-          if (
-            key === "ArrowRight" ||
-            key === "ArrowLeft" ||
-            key === "PageDown" ||
-            key === "PageUp" ||
-            key === "Home" ||
-            key === "End" ||
-            key === " "
-          ) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-
-          if (key === "ArrowRight" || key === "PageDown" || key === " ") {
-            nextSlide();
-            restartAutoPlay();
-          }
-
-          if (key === "ArrowLeft" || key === "PageUp") {
-            previousSlide();
-            restartAutoPlay();
-          }
-
-          if (key === "Home") {
-            showSlide(0);
-            restartAutoPlay();
-          }
-
-          if (key === "End") {
-            showSlide(slides.length - 1);
-            restartAutoPlay();
-          }
-        },
-        true
-      );
-
-      let touchStartX = 0;
-
-      document.addEventListener("touchstart", (event) => {
-        touchStartX = event.changedTouches[0].screenX;
-      });
-
-      document.addEventListener("touchend", (event) => {
-        const touchEndX = event.changedTouches[0].screenX;
-        const distance = touchStartX - touchEndX;
-
-        if (Math.abs(distance) > 50) {
-          if (distance > 0) {
-            nextSlide();
-          } else {
-            previousSlide();
-          }
-
-          restartAutoPlay();
-        }
-      });
-
-      createDots();
-      showSlide(0);
-      startAutoPlay();
+      }
     });
+
+    let touchStartX = 0;
+
+    document.addEventListener("touchstart", (event) => {
+      touchStartX = event.changedTouches[0].screenX;
+    });
+
+    document.addEventListener("touchend", (event) => {
+      const touchEndX = event.changedTouches[0].screenX;
+      const distance = touchStartX - touchEndX;
+
+      if (Math.abs(distance) > 50) {
+        if (distance > 0) {
+          nextSlide();
+        } else {
+          previousSlide();
+        }
+
+        restartAutoPlay();
+      }
+    });
+
+    showSlide(0);
+    startAutoPlay();
   </script>
 </body>
 </html>
